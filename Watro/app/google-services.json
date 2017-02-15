@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "749743423499",
+    "firebase_url": "https://watro-c0aaf.firebaseio.com",
+    "project_id": "watro-c0aaf",
+    "storage_bucket": "watro-c0aaf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:749743423499:android:3210db90edfbe5a3",
+        "android_client_info": {
+          "package_name": "com.watro.clickityclack.watro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "749743423499-hs4h9v2b9pr2687s6f3itlvh4sanuh1k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_BoRJybfCGGCyqAqdL5gpMhLf9Xsgvbs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
