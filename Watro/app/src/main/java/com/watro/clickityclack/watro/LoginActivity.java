@@ -78,7 +78,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // internet operation that will take time, a progress dialog is used
 
         // Setting the message of the progress dialog
-        progressDialog.setMessage("Registering User...");
+        progressDialog.setMessage("Logging In...");
 
         progressDialog.show();
 

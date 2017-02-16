@@ -33,7 +33,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
         textViewUserEmail = (TextView) findViewById(R.id.textViewUserEmail);
-        textViewUserEmail.setText("Welcome " + user.getEmail());
+        textViewUserEmail.setText("Welcome, " + user.getEmail() + "!");
 
         buttonLogOut = (Button) findViewById(R.id.buttonLogOut);
 
