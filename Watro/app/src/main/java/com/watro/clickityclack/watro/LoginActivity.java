@@ -37,9 +37,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         // Check if user has logged in already
         if (firebaseAuth.getCurrentUser() != null) {
-            // User has already logged in. Start profile activity right away.
+            // User has already logged in. Start reports activity right away.
             finish();
-            startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+            startActivity(new Intent(getApplicationContext(), ReportsActivity.class));
         }
 
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
@@ -90,10 +90,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         progressDialog.dismiss();
 
                         if (task.isSuccessful()) {
-                            // Login successful. Start profile activity.
+                            // Login successful. Start reports activity.
 
                             finish();
-                            startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                            startActivity(new Intent(getApplicationContext(), ReportsActivity.class));
                         } else {
                             // Login was unsuccessful
 
