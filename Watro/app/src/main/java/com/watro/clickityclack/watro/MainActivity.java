@@ -7,10 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,27 +16,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import static java.lang.String.valueOf;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button buttonRegister;
     private EditText editTextEmail;
-    private EditText editTextFirstName;
-    private EditText editTextLastName;
-    private EditText editTextHomeAddress;
     private EditText editTextPassword;
-
-    private DatabaseReference databaseReference;
-
-    private Spinner spinnerUserType;
-    private ArrayAdapter<CharSequence> userTypeAdapter;
-
     private TextView textViewSignIn;
+
     private ProgressDialog progressDialog;
 
     // The Firebase authentication object that will be used to register the user on the server
@@ -52,29 +37,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         firebaseAuth = FirebaseAuth.getInstance();
 
         // Check if user has logged in already
-
         if (firebaseAuth.getCurrentUser() != null) {
-            // User has already logged in. Start reports activity right away.
+            // User has already logged in. Start profile activity right away.
             finish();
-            startActivity(new Intent(getApplicationContext(), ReportsActivity.class));
+            startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
         }
-
-        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         progressDialog = new ProgressDialog(this);
 
         buttonRegister = (Button) findViewById(R.id.buttonRegister);
 
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
-        editTextFirstName = (EditText) findViewById(R.id.editTextFirstName);
-        editTextLastName = (EditText) findViewById(R.id.editTextLastName);
-        editTextHomeAddress = (EditText) findViewById(R.id.editTextHomeAddress);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
-
-        spinnerUserType = (Spinner) findViewById(R.id.spinnerUserType);
-        userTypeAdapter = ArrayAdapter.createFromResource(this, R.array.userTypes, R.layout.support_simple_spinner_dropdown_item);
-        userTypeAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        spinnerUserType.setAdapter(userTypeAdapter);
 
         textViewSignIn = (TextView) findViewById(R.id.textViewSignIn);
 
@@ -82,49 +56,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textViewSignIn.setOnClickListener(this);
     }
 
-    private void saveUserInformation(FirebaseUser firebaseUser) {
-        String email = String.valueOf(editTextEmail.getText()).trim();
-        String firstName = valueOf(editTextFirstName.getText()).trim();
-        String lastName = valueOf(editTextLastName.getText()).trim();
-        String homeAddress = valueOf(editTextHomeAddress.getText()).trim();
-
-        String userType = String.valueOf(spinnerUserType.getSelectedItem());
-
-        BasicUser basicUser = new BasicUser(firstName, lastName, email, String.valueOf(firebaseUser.getUid()), homeAddress, userType);
-
-        // Use the unique ID of the logged-in user to save user's information into Firebase database
-        databaseReference.child(firebaseUser.getUid()).setValue(basicUser);
-    }
-
     private void registerUser() {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
-        String firstName = editTextFirstName.getText().toString().trim();
-        String lastName = editTextLastName.getText().toString().trim();
-        String userType = valueOf(spinnerUserType.getSelectedItem());
 
         if (TextUtils.isEmpty(email)) {
+            // E-mail is empty
             Toast.makeText(this, "Please enter your e-mail", Toast.LENGTH_LONG).show();
+
+            // Stop the function from executing further
             return;
         }
 
-        if (TextUtils.isEmpty(firstName)) {
-            Toast.makeText(this, "Please enter your first name", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        if (TextUtils.isEmpty(lastName)) {
-            Toast.makeText(this, "Please enter your last name", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        if (TextUtils.isEmpty(userType)) {
-            Toast.makeText(this, "Please select the user type", Toast.LENGTH_LONG).show();
-            return;
-        }
 
         if (TextUtils.isEmpty(password)) {
+            // Password is empty
             Toast.makeText(this, "Please enter your password", Toast.LENGTH_LONG).show();
+
+            // Stop the function from executing further
             return;
         }
 
@@ -148,17 +97,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         progressDialog.dismiss();
 
                         if (task.isSuccessful()) {
-                            // User is successfully registered and logged in.
-                            // Now, we need to save the user's information
-                            FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                            saveUserInformation(firebaseUser);
+                            // User is successfully registered and logged in
 
                             // Display a toast notifying the user that registration was successful
                             Toast.makeText(MainActivity.this, "Registration Successful!", Toast.LENGTH_LONG).show();
 
-                            // Registration successful. Start Reports Activity.
+                            // Registration successful. Start profile activity.\
                             finish();
-                            startActivity(new Intent(getApplicationContext(), ReportsActivity.class));
+                            startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                         } else {
                             // Registration was unsuccessful
 

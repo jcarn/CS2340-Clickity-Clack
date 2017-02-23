@@ -1,8 +1,6 @@
-package com.watro.clickityclack.watro;
-
 public class Administrator extends SuperUser {
 
-    public Administrator(String email, String id) {
-        super(email, id);
-    }
+    public Administrator(String e, String id) {
+        super(e, id);
+    }   
 }

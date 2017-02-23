@@ -1,9 +1,3 @@
 <resources>
     <string name="app_name">Watro</string>
-    <string-array name="userTypes">
-        <item>User</item>
-        <item>Worker</item>
-        <item>Manager</item>
-        <item>Administrator</item>
-    </string-array>
 </resources>
