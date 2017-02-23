@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_profile"
     android:layout_width="match_parent"
@@ -11,28 +12,102 @@
     android:background="@drawable/gradient_background"
     tools:context="com.watro.clickityclack.watro.ProfileActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true">
+        android:weightSum="1"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
-        <TextView
-            android:textAlignment="center"
-            android:layout_width="match_parent"
+        <ImageButton
+            android:layout_width="62dp"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:inputType="textPersonName"
-            android:text="User Registration"
-            android:id="@+id/textViewUserEmail" />
+            app:srcCompat="?attr/actionModeCloseDrawable"
+            android:id="@+id/returnButton"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true" />
 
         <Button
             android:text="Log Out"
             android:textAlignment="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/buttonLogOut"
-            android:layout_gravity="center_horizontal" />
-    </LinearLayout>
+            android:id="@+id/logOutButton"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.01"
+            android:layout_centerInParent="false"
+            android:layout_centerHorizontal="false"
+            android:layout_centerVertical="false"
+            android:layout_alignParentBottom="false"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true" />
+
+        <EditText
+            android:layout_width="309dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="First Name Not Available"
+            android:ems="10"
+            android:id="@+id/editTextFirstName"
+            android:layout_below="@+id/editTextEmail"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_vertical|center_horizontal" />
+
+        <EditText
+            android:layout_width="309dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:inputType="textEmailAddress"
+            android:hint="Email Not Available"
+            android:ems="10"
+            android:id="@+id/editTextEmail"
+            android:layout_marginTop="117dp"
+            android:layout_below="@+id/logOutButton"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_vertical|center_horizontal" />
+
+        <Button
+            android:text="Save Changes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="100dp"
+            android:id="@+id/buttonSaveChanges" />
+
+        <EditText
+            android:layout_width="309dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="Last Name Not Available"
+            android:ems="10"
+            android:id="@+id/editTextLastName"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_below="@+id/editTextFirstName"
+            android:layout_alignLeft="@+id/editTextFirstName"
+            android:layout_alignStart="@+id/editTextFirstName" />
+
+        <EditText
+            android:layout_width="309dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="Home Address Not Available"
+            android:ems="10"
+            android:id="@+id/editTextHomeAddress"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_below="@+id/editTextLastName"
+            android:layout_centerHorizontal="true" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="169dp"
+            android:layout_below="@+id/editTextHomeAddress"
+            android:id="@+id/spinnerUserType" />
+
+    </RelativeLayout>
+
 </RelativeLayout>
