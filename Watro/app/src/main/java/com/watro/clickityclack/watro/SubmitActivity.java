@@ -29,27 +29,23 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
 
     private ImageButton returnButton;
 
-    EditText editTextEmail;
-    EditText editTextFirstName;
-    EditText editTextLastName;
-    EditText editTextHomeAddress;
-    Spinner spinnerUserType;
-    Button buttonSaveChanges;
-
-    private ArrayAdapter<CharSequence> userTypeAdapter;
+    EditText editTextAddress;
+    Spinner spinnerWaterType;
+    Spinner spinnerWaterCondition;
+    Button buttonSubmitReport;
 
     FirebaseUser currentUser;
 
-    private Button buttonLogOut;
+    private Button submitButton;
 
-    private SuperUser superUser;
+    private Report newReport;
 
     private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_submit);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -58,20 +54,15 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
         if (currentUser == null) {
             // User has not logged in
             finish();
-            startActivity(new Intent(this, LoginActivity.class));
+            startActivity(new Intent(this, SubmitActivity.class));
         }
 
-        buttonSaveChanges = (Button) findViewById(R.id.buttonSaveChanges);
+        buttonSubmitReport = (Button) findViewById(R.id.buttonSaveChanges);
 
-        editTextEmail = (EditText) findViewById(R.id.editTextEmail);
-        editTextFirstName = (EditText) findViewById(R.id.editTextFirstName);
-        editTextLastName = (EditText) findViewById(R.id.editTextLastName);
-        editTextHomeAddress = (EditText) findViewById(R.id.editTextHomeAddress);
-
-        spinnerUserType = (Spinner) findViewById(R.id.spinnerUserType);
-        userTypeAdapter = ArrayAdapter.createFromResource(this, R.array.userTypes, R.layout.support_simple_spinner_dropdown_item);
-        userTypeAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        spinnerUserType.setAdapter(userTypeAdapter);
+        spinnerWaterType = (Spinner) findViewById(R.id.spinnerWaterType);
+        spinnerWaterCondition = (Spinner) findViewById(R.id.spinnerWaterCondition);
+        spinnerWaterType.setAdapter(new ArrayAdapter<Report.WaterType>(this, android.R.layout.simple_spinner_item, Report.WaterType.values()));
+        spinnerWaterCondition.setAdapter(new ArrayAdapter<Report.WaterCondition>(this, android.R.layout.simple_spinner_item, Report.WaterCondition.values()));
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -82,45 +73,7 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
 
                 // TODO: Stop iterating over all User HashMaps and go straight to info from user id
                 for (DataSnapshot child : children) {
-                    HashMap<String, String> userInfoHashMap = (HashMap<String, String>) child.getValue();
-
-                    if (userInfoHashMap.get("id").equals(currentUser.getUid())) {
-                        // TODO: Add checks for if any of the following User properties is null
-                        String firstName = userInfoHashMap.get("firstName");
-                        String lastName = userInfoHashMap.get("lastName");
-                        String email = userInfoHashMap.get("email");
-                        String homeAddress = userInfoHashMap.get("homeAddress");
-                        String userType = userInfoHashMap.get("userType");
-                        String id = userInfoHashMap.get("id");
-
-                        if (userType.equals("User")) {
-                            superUser = new BasicUser(firstName, lastName, email, id, homeAddress, userType);
-
-                            editTextEmail.setText(((BasicUser) superUser).getEmail());
-                            editTextFirstName.setText(((BasicUser) superUser).getFirstName());
-                            editTextLastName.setText(((BasicUser) superUser).getLastName());
-                            editTextHomeAddress.setText(((BasicUser) superUser).getHomeAddress());
-                        } else if (userType.equals("Worker")) {
-                            superUser = new Worker(firstName, lastName, email, id, homeAddress, userType);
-
-                            editTextEmail.setText(superUser.getEmail());
-                            editTextFirstName.setText(((Worker) superUser).getFirstName());
-                            editTextLastName.setText(((Worker) superUser).getLastName());
-                            editTextHomeAddress.setText(((Worker) superUser).getHomeAddress());
-                        } else if (userType.equals("Manager")) {
-                            superUser = new Manager(firstName, lastName, email, id, homeAddress, userType);
-
-                            editTextEmail.setText(superUser.getEmail());
-                            editTextFirstName.setText(((Manager) superUser).getFirstName());
-                            editTextLastName.setText(((Manager) superUser).getLastName());
-                            editTextHomeAddress.setText(((Manager) superUser).getHomeAddress());
-                        } else if (userType.equals("Administrator")) {
-                            superUser = new Administrator(email, id);
-
-                            // TODO: Add more info for Administrator (firstName, lastName, etc.)
-                            editTextEmail.setText(superUser.getEmail());
-                        }
-                    }
+                    //all you Henry, do crazy firebase wizard magic
                 }
             }
 
@@ -132,44 +85,26 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
 
         returnButton = (ImageButton) findViewById(R.id.returnButton);
 
-        buttonLogOut = (Button) findViewById(R.id.logOutButton);
-
-        buttonLogOut.setOnClickListener(this);
         returnButton.setOnClickListener(this);
-        buttonSaveChanges.setOnClickListener(this);
+        submitButton.setOnClickListener(this);
     }
 
-    private void saveUserInformation(FirebaseUser firebaseUser) {
-        String email = String.valueOf(editTextEmail.getText()).trim();
-        String firstName = valueOf(editTextFirstName.getText()).trim();
-        String lastName = valueOf(editTextLastName.getText()).trim();
-        String homeAddress = valueOf(editTextHomeAddress.getText()).trim();
-
-        String userType = String.valueOf(spinnerUserType.getSelectedItem());
-
-        BasicUser basicUser = new BasicUser(firstName, lastName, email, String.valueOf(firebaseUser.getUid()), homeAddress, userType);
-
-        // Use the unique ID of the logged-in user to save user's information into Firebase database
-        databaseReference.child(firebaseUser.getUid()).setValue(basicUser);
+    private void saveReport() { //idk what type a report is from firebase's persective
+        //save report, @HenrySaba you got this
     }
 
     @Override
     public void onClick(View v) {
-        if (v == buttonLogOut) {
-            firebaseAuth.signOut();
-            finish();
-            startActivity(new Intent(this, LoginActivity.class));
-        }
 
         if (v == returnButton) {
             finish();
             startActivity(new Intent(this, ReportsActivity.class));
         }
 
-        if (v == buttonSaveChanges) {
-            saveUserInformation(currentUser);
+        if (v == submitButton) {
+            saveReport(); //once again, not sure what to send it here
 
-            Toast.makeText(this, "Changes Saved", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Report Submitted", Toast.LENGTH_LONG).show();
         }
     }
 }

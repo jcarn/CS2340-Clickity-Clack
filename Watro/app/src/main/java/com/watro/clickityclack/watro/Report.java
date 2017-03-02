@@ -12,12 +12,37 @@ public class Report {
     private String reportNumber;
     private String reporterID;
     private String streetAddress;
-    private enum waterType {
-        BOTTLED, WELL, STREAM, LAKE, SPRING, OTHER
+
+    public enum WaterType {
+        BOTTLED("Bottled"), WELL("Well"), STREAM("Stream"), LAKE("Lake"), SPRING("Spring"), OTHER("Other");
+
+        private final String text;
+
+        WaterType(String t) {
+            this.text = t;
+        }
+
+        private String text() { return text; }
+
+        @Override public String toString(){
+            return text;
+        }
     }
 
-    private enum waterCondition {
-        WASTE, TREATABLE_CLEAR, TREATABLE_MUDDY, POTABLE
+    public enum WaterCondition {
+        WASTE("Waste"), TREATABLE_CLEAR("Clear and Treatable"), TREATABLE_MUDDY("Muddy but Treatable"), POTABLE("Potable");
+
+        private final String text;
+
+        WaterCondition(String t) {
+            this.text = t;
+        }
+
+        private String text() { return text; }
+
+        @Override public String toString(){
+            return text;
+        }
     }
 
     public Date getReportDate() {
