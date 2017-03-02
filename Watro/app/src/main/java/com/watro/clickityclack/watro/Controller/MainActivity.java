@@ -1,4 +1,4 @@
-package com.watro.clickityclack.watro;
+package com.watro.clickityclack.watro.Controller;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -21,6 +21,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.watro.clickityclack.watro.Model.BasicUser;
+import com.watro.clickityclack.watro.R;
 
 import static java.lang.String.valueOf;
 
