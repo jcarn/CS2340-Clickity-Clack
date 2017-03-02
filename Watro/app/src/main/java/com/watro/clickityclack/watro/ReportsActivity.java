@@ -29,8 +29,7 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
             startActivity(new Intent(this, ProfileActivity.class));
         }
         if (v == submitReportButton) {
-            // line below will be implemented after John creates SubmitReportsActivity
-            //startActivity(new Intent(this, SubmitReportsActivity.class));
+            startActivity(new Intent(this, SubmitActivity.class));
         }
     }
 }

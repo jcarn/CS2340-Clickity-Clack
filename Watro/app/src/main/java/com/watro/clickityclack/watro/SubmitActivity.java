@@ -57,7 +57,6 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
             startActivity(new Intent(this, SubmitActivity.class));
         }
 
-        buttonSubmitReport = (Button) findViewById(R.id.buttonSaveChanges);
 
         spinnerWaterType = (Spinner) findViewById(R.id.spinnerWaterType);
         spinnerWaterCondition = (Spinner) findViewById(R.id.spinnerWaterCondition);
@@ -84,6 +83,8 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
         });
 
         returnButton = (ImageButton) findViewById(R.id.returnButton);
+        submitButton = (Button) findViewById(R.id.buttonSubmitReport);
+
 
         returnButton.setOnClickListener(this);
         submitButton.setOnClickListener(this);
