@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_profile"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/gradient_background"
+    tools:context="com.watro.clickityclack.watro.ProfileActivity">
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <ImageButton
+            android:layout_width="62dp"
+            android:layout_height="wrap_content"
+            app:srcCompat="?attr/actionModeCloseDrawable"
+            android:id="@+id/returnButton"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true" />
+
+        <Button
+            android:text="Submit Report"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonSubmitReport"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="61dp" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinnerWaterType"
+            android:layout_below="@+id/editTextAddress"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:layout_width="309dp"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="Enter Water Site Address"
+            android:ems="10"
+            android:id="@+id/editTextAddress"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_below="@+id/returnButton"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="84dp" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinnerWaterCondition"
+            android:layout_marginTop="25dp"
+            android:layout_below="@+id/spinnerWaterType"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

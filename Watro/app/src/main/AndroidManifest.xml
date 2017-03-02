@@ -19,6 +19,7 @@
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".ProfileActivity" />
+        <activity android:name=".SubmitActivity" />
         <activity android:name=".ReportsActivity" > </activity>
     </application>
 
