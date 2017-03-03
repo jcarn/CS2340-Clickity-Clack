@@ -1,6 +1,6 @@
-package com.watro.clickityclack.watro;
+package com.watro.clickityclack.watro.Model;
 
-abstract class SuperUser {
+public abstract class SuperUser {
     
     protected String email;
     protected String id;

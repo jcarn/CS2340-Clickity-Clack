@@ -1,4 +1,4 @@
-package com.watro.clickityclack.watro;
+package com.watro.clickityclack.watro.Controller;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -18,8 +18,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.HashMap;
+import com.watro.clickityclack.watro.Model.Report;
+import com.watro.clickityclack.watro.R;
 
 import static java.lang.String.valueOf;
 
@@ -59,8 +59,8 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
 
 
         spinnerWaterType = (Spinner) findViewById(R.id.spinnerWaterType);
-        spinnerWaterCondition = (Spinner) findViewById(R.id.spinnerWaterCondition);
         spinnerWaterType.setAdapter(new ArrayAdapter<Report.WaterType>(this, android.R.layout.simple_spinner_item, Report.WaterType.values()));
+        spinnerWaterCondition = (Spinner) findViewById(R.id.spinnerWaterCondition);
         spinnerWaterCondition.setAdapter(new ArrayAdapter<Report.WaterCondition>(this, android.R.layout.simple_spinner_item, Report.WaterCondition.values()));
 
         databaseReference = FirebaseDatabase.getInstance().getReference();

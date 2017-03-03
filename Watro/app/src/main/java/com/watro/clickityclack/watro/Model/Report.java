@@ -1,4 +1,4 @@
-package com.watro.clickityclack.watro;
+package com.watro.clickityclack.watro.Model;
 import java.util.Date;
 
 /**

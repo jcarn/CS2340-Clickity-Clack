@@ -1,4 +1,4 @@
-package com.watro.clickityclack.watro;
+package com.watro.clickityclack.watro.Controller;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +18,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.watro.clickityclack.watro.Model.Administrator;
+import com.watro.clickityclack.watro.Model.BasicUser;
+import com.watro.clickityclack.watro.Model.Manager;
+import com.watro.clickityclack.watro.Model.SuperUser;
+import com.watro.clickityclack.watro.Model.Worker;
+import com.watro.clickityclack.watro.R;
 
 import java.util.HashMap;
 
