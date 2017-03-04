@@ -12,6 +12,8 @@ public class Report {
     private String reportNumber;
     private String reporterID;
     private String streetAddress;
+    private WaterType type;
+    private WaterCondition condition;
 
     public enum WaterType {
         BOTTLED("Bottled"), WELL("Well"), STREAM("Stream"), LAKE("Lake"), SPRING("Spring"), OTHER("Other");
@@ -43,6 +45,22 @@ public class Report {
         @Override public String toString(){
             return text;
         }
+    }
+
+    public WaterType getWaterType() {
+        return type;
+    }
+
+    public void setWaterType(WaterType wT) {
+        this.type = wT;
+    }
+    
+    public WaterCondition getWaterCondition() {
+        return condition;
+    }
+
+    public void setWaterCondition(WaterCondition wC) {
+        this.condition = wC;
     }
 
     public Date getReportDate() {
