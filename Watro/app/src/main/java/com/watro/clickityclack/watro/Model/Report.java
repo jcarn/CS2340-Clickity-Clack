@@ -1,19 +1,16 @@
 package com.watro.clickityclack.watro.Model;
-import java.util.Date;
 
 /**
  * Created by John on 2/28/2017.
  */
 
 public class Report {
-
-
-    private Date reportDate;
-    private String reportNumber;
+    private String reportDate;
+    private String reportID;
     private String reporterID;
     private String streetAddress;
-    private WaterType type;
-    private WaterCondition condition;
+    private WaterType waterType;
+    private WaterCondition waterCondition;
 
     public enum WaterType {
         BOTTLED("Bottled"), WELL("Well"), STREAM("Stream"), LAKE("Lake"), SPRING("Spring"), OTHER("Other");
@@ -48,35 +45,55 @@ public class Report {
     }
 
     public WaterType getWaterType() {
-        return type;
+        return waterType;
     }
 
-    public void setWaterType(WaterType wT) {
-        this.type = wT;
+    public void setWaterType(String waterType) {
+        if (waterType.equals("Bottled")) {
+            this.waterType = WaterType.BOTTLED;
+        } else if (waterType.equals("Well")) {
+            this.waterType = WaterType.WELL;
+        } else if (waterType.equals("Stream")) {
+            this.waterType = WaterType.STREAM;
+        } else if (waterType.equals("Lake")) {
+            this.waterType = WaterType.LAKE;
+        } else if (waterType.equals("Spring")) {
+            this.waterType = WaterType.SPRING;
+        } else if (waterType.equals("Other")) {
+            this.waterType = WaterType.OTHER;
+        }
     }
     
     public WaterCondition getWaterCondition() {
-        return condition;
+        return waterCondition;
     }
 
-    public void setWaterCondition(WaterCondition wC) {
-        this.condition = wC;
+    public void setWaterCondition(String waterCondition) {
+        if (waterCondition.equals("Waste")) {
+            this.waterCondition = WaterCondition.WASTE;
+        } else if (waterCondition.equals("Clear and Treatable")) {
+            this.waterCondition = WaterCondition.TREATABLE_CLEAR;
+        } else if (waterCondition.equals("Muddy but Treatable")) {
+            this.waterCondition = WaterCondition.TREATABLE_MUDDY;
+        } else if (waterCondition.equals("Potable")) {
+            this.waterCondition = WaterCondition.POTABLE;
+        }
     }
 
-    public Date getReportDate() {
+    public String getReportDate() {
         return reportDate;
     }
 
-    public void setReportDate(Date reportDate) {
+    public void setReportDate(String reportDate) {
         this.reportDate = reportDate;
     }
 
-    public String getReportNumber() {
-        return reportNumber;
+    public String getReportID() {
+        return reportID;
     }
 
-    public void setReportNumber(String reportNumber) {
-        this.reportNumber = reportNumber;
+    public void setReportID(String reportID) {
+        this.reportID = reportID;
     }
 
     public String getReporterID() {
