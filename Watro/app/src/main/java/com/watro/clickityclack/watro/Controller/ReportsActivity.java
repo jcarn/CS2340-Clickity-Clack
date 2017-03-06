@@ -13,6 +13,7 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
 
     private ImageButton settingsButton;
     private Button submitReportButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

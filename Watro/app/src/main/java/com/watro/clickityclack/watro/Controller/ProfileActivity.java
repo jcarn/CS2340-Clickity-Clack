@@ -67,7 +67,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             startActivity(new Intent(this, LoginActivity.class));
         }
 
-        DatabaseReference reportDataBaseReference = databaseReference.child("Users");
+//        DatabaseReference reportDataBaseReference = databaseReference.child("Users");
 
         buttonSaveChanges = (Button) findViewById(R.id.buttonSaveChanges);
 
