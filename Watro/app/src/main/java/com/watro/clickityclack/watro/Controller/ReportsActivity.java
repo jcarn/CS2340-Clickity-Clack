@@ -1,14 +1,18 @@
-package com.watro.clickityclack.watro;
+package com.watro.clickityclack.watro.Controller;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+
+import com.watro.clickityclack.watro.R;
 
 public class ReportsActivity extends AppCompatActivity implements View.OnClickListener  {
 
     private ImageButton settingsButton;
+    private Button submitReportButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,14 +20,19 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_reports);
 
         settingsButton = (ImageButton) findViewById(R.id.settingsButton);
+        submitReportButton = (Button) findViewById(R.id.submitReportButton);
 
         settingsButton.setOnClickListener(this);
+        submitReportButton.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         if (v == settingsButton) {
             startActivity(new Intent(this, ProfileActivity.class));
+        }
+        if (v == submitReportButton) {
+            startActivity(new Intent(this, SubmitActivity.class));
         }
     }
 }

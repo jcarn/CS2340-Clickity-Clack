@@ -1,4 +1,4 @@
-package com.watro.clickityclack.watro;
+package com.watro.clickityclack.watro.Model;
 
 public class BasicUser extends SuperUser {
 

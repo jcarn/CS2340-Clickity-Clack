@@ -1,4 +1,4 @@
-package com.watro.clickityclack.watro;
+package com.watro.clickityclack.watro.Controller;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +18,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.watro.clickityclack.watro.Model.Administrator;
+import com.watro.clickityclack.watro.Model.BasicUser;
+import com.watro.clickityclack.watro.Model.Manager;
+import com.watro.clickityclack.watro.Model.SuperUser;
+import com.watro.clickityclack.watro.Model.Worker;
+import com.watro.clickityclack.watro.R;
 
 import java.util.HashMap;
 
@@ -61,6 +67,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             startActivity(new Intent(this, LoginActivity.class));
         }
 
+//        DatabaseReference reportDataBaseReference = databaseReference.child("Users");
+
         buttonSaveChanges = (Button) findViewById(R.id.buttonSaveChanges);
 
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
@@ -82,43 +90,47 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
                 // TODO: Stop iterating over all User HashMaps and go straight to info from user id
                 for (DataSnapshot child : children) {
-                    HashMap<String, String> userInfoHashMap = (HashMap<String, String>) child.getValue();
+                    if (child.getKey().equals("Users")) {
+                        for (DataSnapshot userChild : child.getChildren()) {
+                            HashMap<String, String> userInfoHashMap = (HashMap<String, String>) userChild.getValue();
 
-                    if (userInfoHashMap.get("id").equals(currentUser.getUid())) {
-                        // TODO: Add checks for if any of the following User properties is null
-                        String firstName = userInfoHashMap.get("firstName");
-                        String lastName = userInfoHashMap.get("lastName");
-                        String email = userInfoHashMap.get("email");
-                        String homeAddress = userInfoHashMap.get("homeAddress");
-                        String userType = userInfoHashMap.get("userType");
-                        String id = userInfoHashMap.get("id");
+                            if (userInfoHashMap.get("id").equals(currentUser.getUid())) {
+                                // TODO: Add checks for if any of the following User properties is null
+                                String firstName = userInfoHashMap.get("firstName");
+                                String lastName = userInfoHashMap.get("lastName");
+                                String email = userInfoHashMap.get("email");
+                                String homeAddress = userInfoHashMap.get("homeAddress");
+                                String userType = userInfoHashMap.get("userType");
+                                String id = userInfoHashMap.get("id");
 
-                        if (userType.equals("User")) {
-                            superUser = new BasicUser(firstName, lastName, email, id, homeAddress, userType);
+                                if (userType.equals("User")) {
+                                    superUser = new BasicUser(firstName, lastName, email, id, homeAddress, userType);
 
-                            editTextEmail.setText(((BasicUser) superUser).getEmail());
-                            editTextFirstName.setText(((BasicUser) superUser).getFirstName());
-                            editTextLastName.setText(((BasicUser) superUser).getLastName());
-                            editTextHomeAddress.setText(((BasicUser) superUser).getHomeAddress());
-                        } else if (userType.equals("Worker")) {
-                            superUser = new Worker(firstName, lastName, email, id, homeAddress, userType);
+                                    editTextEmail.setText(((BasicUser) superUser).getEmail());
+                                    editTextFirstName.setText(((BasicUser) superUser).getFirstName());
+                                    editTextLastName.setText(((BasicUser) superUser).getLastName());
+                                    editTextHomeAddress.setText(((BasicUser) superUser).getHomeAddress());
+                                } else if (userType.equals("Worker")) {
+                                    superUser = new Worker(firstName, lastName, email, id, homeAddress, userType);
 
-                            editTextEmail.setText(superUser.getEmail());
-                            editTextFirstName.setText(((Worker) superUser).getFirstName());
-                            editTextLastName.setText(((Worker) superUser).getLastName());
-                            editTextHomeAddress.setText(((Worker) superUser).getHomeAddress());
-                        } else if (userType.equals("Manager")) {
-                            superUser = new Manager(firstName, lastName, email, id, homeAddress, userType);
+                                    editTextEmail.setText(superUser.getEmail());
+                                    editTextFirstName.setText(((Worker) superUser).getFirstName());
+                                    editTextLastName.setText(((Worker) superUser).getLastName());
+                                    editTextHomeAddress.setText(((Worker) superUser).getHomeAddress());
+                                } else if (userType.equals("Manager")) {
+                                    superUser = new Manager(firstName, lastName, email, id, homeAddress, userType);
 
-                            editTextEmail.setText(superUser.getEmail());
-                            editTextFirstName.setText(((Manager) superUser).getFirstName());
-                            editTextLastName.setText(((Manager) superUser).getLastName());
-                            editTextHomeAddress.setText(((Manager) superUser).getHomeAddress());
-                        } else if (userType.equals("Administrator")) {
-                            superUser = new Administrator(email, id);
+                                    editTextEmail.setText(superUser.getEmail());
+                                    editTextFirstName.setText(((Manager) superUser).getFirstName());
+                                    editTextLastName.setText(((Manager) superUser).getLastName());
+                                    editTextHomeAddress.setText(((Manager) superUser).getHomeAddress());
+                                } else if (userType.equals("Administrator")) {
+                                    superUser = new Administrator(email, id);
 
-                            // TODO: Add more info for Administrator (firstName, lastName, etc.)
-                            editTextEmail.setText(superUser.getEmail());
+                                    // TODO: Add more info for Administrator (firstName, lastName, etc.)
+                                    editTextEmail.setText(superUser.getEmail());
+                                }
+                            }
                         }
                     }
                 }
