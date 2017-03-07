@@ -12,6 +12,9 @@ public class Report {
     private WaterType waterType;
     private WaterCondition waterCondition;
 
+    /**
+     * Possible types of water
+     */
     public enum WaterType {
         BOTTLED("Bottled"), WELL("Well"), STREAM("Stream"), LAKE("Lake"), SPRING("Spring"), OTHER("Other");
 
@@ -28,6 +31,9 @@ public class Report {
         }
     }
 
+    /**
+     * Possible conditions of water
+     */
     public enum WaterCondition {
         WASTE("Waste"), TREATABLE_CLEAR("Clear and Treatable"), TREATABLE_MUDDY("Muddy but Treatable"), POTABLE("Potable");
 
@@ -44,10 +50,18 @@ public class Report {
         }
     }
 
+    /**
+     * Getter of water type enum
+     * @return enum type of water
+     */
     public WaterType getWaterType() {
         return waterType;
     }
 
+    /**
+     * Setter of waterType enum
+     * @param waterType string matching type of water
+     */
     public void setWaterType(String waterType) {
         if (waterType.equals("Bottled")) {
             this.waterType = WaterType.BOTTLED;
@@ -63,11 +77,19 @@ public class Report {
             this.waterType = WaterType.OTHER;
         }
     }
-    
+
+    /**
+     * Getter of WaterCondtion Enum
+     * @return enum condition of the water
+     */
     public WaterCondition getWaterCondition() {
         return waterCondition;
     }
 
+    /**
+     * Setter of water condition enum
+     * @param waterCondition String matching desired water type
+     */
     public void setWaterCondition(String waterCondition) {
         if (waterCondition.equals("Waste")) {
             this.waterCondition = WaterCondition.WASTE;
@@ -80,34 +102,64 @@ public class Report {
         }
     }
 
+    /**
+     * Getter of report date
+     * @return String date report was filed
+     */
     public String getReportDate() {
         return reportDate;
     }
 
+    /**
+     * Setter for report date
+     * @param reportDate date report was submitted
+     */
     public void setReportDate(String reportDate) {
         this.reportDate = reportDate;
     }
 
+    /**
+     * Getter of generated report ID
+     * @return String unique ID of report
+     */
     public String getReportID() {
         return reportID;
     }
 
+    /**
+     * Setter of report ID
+     * @param reportID new unique ID of report
+     */
     public void setReportID(String reportID) {
         this.reportID = reportID;
     }
 
+    /**
+     * Getter for ID of the report's reporter
+     * @return String unique ID of reporter
+     */
     public String getReporterID() {
         return reporterID;
     }
 
-    public void setReporterID(String reporterID) {
-        this.reporterID = reporterID;
-    }
+    /**
+     * Setter for report's reporter ID
+     * @param reporterID ID of reporting user
+     */
+    public void setReporterID(String reporterID) { this.reporterID = reporterID;}
 
+    /**
+     * Getter of report's address
+     * @return String report's location
+     */
     public String getStreetAddress() {
         return streetAddress;
     }
 
+    /**
+     * Setter of report's address
+     * @param streetAddress address of Report
+     */
     public void setStreetAddress(String streetAddress) {
         this.streetAddress = streetAddress;
     }
