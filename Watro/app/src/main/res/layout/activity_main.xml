@@ -71,7 +71,6 @@
             android:layout_height="wrap_content" />
 
         <Button
-            android:layout_margin="15dp"
             android:id="@+id/buttonRegister"
             android:text="Register"
             android:layout_width="match_parent"

@@ -67,8 +67,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             startActivity(new Intent(this, LoginActivity.class));
         }
 
-//        DatabaseReference reportDataBaseReference = databaseReference.child("Users");
-
         buttonSaveChanges = (Button) findViewById(R.id.buttonSaveChanges);
 
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
@@ -83,54 +81,52 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        DatabaseReference usersDataBaseReference = databaseReference.child("Users");
+
+        usersDataBaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
 
                 // TODO: Stop iterating over all User HashMaps and go straight to info from user id
-                for (DataSnapshot child : children) {
-                    if (child.getKey().equals("Users")) {
-                        for (DataSnapshot userChild : child.getChildren()) {
-                            HashMap<String, String> userInfoHashMap = (HashMap<String, String>) userChild.getValue();
+                for (DataSnapshot user : children) {
+                    HashMap<String, String> userIdToUserInfoHashMap = (HashMap<String, String>) user.getValue();
 
-                            if (userInfoHashMap.get("id").equals(currentUser.getUid())) {
-                                // TODO: Add checks for if any of the following User properties is null
-                                String firstName = userInfoHashMap.get("firstName");
-                                String lastName = userInfoHashMap.get("lastName");
-                                String email = userInfoHashMap.get("email");
-                                String homeAddress = userInfoHashMap.get("homeAddress");
-                                String userType = userInfoHashMap.get("userType");
-                                String id = userInfoHashMap.get("id");
+                    if (userIdToUserInfoHashMap.get("id").equals(currentUser.getUid())) {
+                        // TODO: Add checks for if any of the following User properties is null
+                        String firstName = userIdToUserInfoHashMap.get("firstName");
+                        String lastName = userIdToUserInfoHashMap.get("lastName");
+                        String email = userIdToUserInfoHashMap.get("email");
+                        String homeAddress = userIdToUserInfoHashMap.get("homeAddress");
+                        String userType = userIdToUserInfoHashMap.get("userType");
+                        String id = userIdToUserInfoHashMap.get("id");
 
-                                if (userType.equals("User")) {
-                                    superUser = new BasicUser(firstName, lastName, email, id, homeAddress, userType);
+                        if (userType.equals("User")) {
+                            superUser = new BasicUser(firstName, lastName, email, id, homeAddress, userType);
 
-                                    editTextEmail.setText(((BasicUser) superUser).getEmail());
-                                    editTextFirstName.setText(((BasicUser) superUser).getFirstName());
-                                    editTextLastName.setText(((BasicUser) superUser).getLastName());
-                                    editTextHomeAddress.setText(((BasicUser) superUser).getHomeAddress());
-                                } else if (userType.equals("Worker")) {
-                                    superUser = new Worker(firstName, lastName, email, id, homeAddress, userType);
+                            editTextEmail.setText(((BasicUser) superUser).getEmail());
+                            editTextFirstName.setText(((BasicUser) superUser).getFirstName());
+                            editTextLastName.setText(((BasicUser) superUser).getLastName());
+                            editTextHomeAddress.setText(((BasicUser) superUser).getHomeAddress());
+                        } else if (userType.equals("Worker")) {
+                            superUser = new Worker(firstName, lastName, email, id, homeAddress, userType);
 
-                                    editTextEmail.setText(superUser.getEmail());
-                                    editTextFirstName.setText(((Worker) superUser).getFirstName());
-                                    editTextLastName.setText(((Worker) superUser).getLastName());
-                                    editTextHomeAddress.setText(((Worker) superUser).getHomeAddress());
-                                } else if (userType.equals("Manager")) {
-                                    superUser = new Manager(firstName, lastName, email, id, homeAddress, userType);
+                            editTextEmail.setText(superUser.getEmail());
+                            editTextFirstName.setText(((Worker) superUser).getFirstName());
+                            editTextLastName.setText(((Worker) superUser).getLastName());
+                            editTextHomeAddress.setText(((Worker) superUser).getHomeAddress());
+                        } else if (userType.equals("Manager")) {
+                            superUser = new Manager(firstName, lastName, email, id, homeAddress, userType);
 
-                                    editTextEmail.setText(superUser.getEmail());
-                                    editTextFirstName.setText(((Manager) superUser).getFirstName());
-                                    editTextLastName.setText(((Manager) superUser).getLastName());
-                                    editTextHomeAddress.setText(((Manager) superUser).getHomeAddress());
-                                } else if (userType.equals("Administrator")) {
-                                    superUser = new Administrator(email, id);
+                            editTextEmail.setText(superUser.getEmail());
+                            editTextFirstName.setText(((Manager) superUser).getFirstName());
+                            editTextLastName.setText(((Manager) superUser).getLastName());
+                            editTextHomeAddress.setText(((Manager) superUser).getHomeAddress());
+                        } else if (userType.equals("Administrator")) {
+                            superUser = new Administrator(email, id);
 
-                                    // TODO: Add more info for Administrator (firstName, lastName, etc.)
-                                    editTextEmail.setText(superUser.getEmail());
-                                }
-                            }
+                            // TODO: Add more info for Administrator (firstName, lastName, etc.)
+                            editTextEmail.setText(superUser.getEmail());
                         }
                     }
                 }
@@ -152,17 +148,27 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void saveUserInformation(FirebaseUser firebaseUser) {
-        String email = String.valueOf(editTextEmail.getText()).trim();
-        String firstName = valueOf(editTextFirstName.getText()).trim();
-        String lastName = valueOf(editTextLastName.getText()).trim();
-        String homeAddress = valueOf(editTextHomeAddress.getText()).trim();
+        SuperUser currUserWithUpdatedInfo = new BasicUser("","","","","","");
 
-        String userType = String.valueOf(spinnerUserType.getSelectedItem());
+        String updatedEmail = String.valueOf(editTextEmail.getText()).trim();
+        String updatedFirstName = valueOf(editTextFirstName.getText()).trim();
+        String updatedLastName = valueOf(editTextLastName.getText()).trim();
+        String updatedHomeAddress = valueOf(editTextHomeAddress.getText()).trim();
 
-        BasicUser basicUser = new BasicUser(firstName, lastName, email, String.valueOf(firebaseUser.getUid()), homeAddress, userType);
+        String updatedUserType = String.valueOf(spinnerUserType.getSelectedItem());
+
+        if (updatedUserType.equals("User")) {
+            currUserWithUpdatedInfo = new BasicUser(updatedFirstName, updatedLastName, updatedEmail, firebaseUser.getUid(), updatedHomeAddress, updatedUserType);
+        } else if (updatedUserType.equals("Worker")) {
+            currUserWithUpdatedInfo = new Worker(updatedFirstName, updatedLastName, updatedEmail, firebaseUser.getUid(), updatedHomeAddress, updatedUserType);
+        } else if (updatedUserType.equals("Manager")) {
+            currUserWithUpdatedInfo = new Manager(updatedFirstName, updatedLastName, updatedEmail, firebaseUser.getUid(), updatedHomeAddress, updatedUserType);
+        } else if (updatedUserType.equals("Administrator")) {
+            currUserWithUpdatedInfo = new Administrator(updatedEmail, firebaseUser.getUid());
+        }
 
         // Use the unique ID of the logged-in user to save user's information into Firebase database
-        databaseReference.child(firebaseUser.getUid()).setValue(basicUser);
+        databaseReference.child("Users").child(firebaseUser.getUid()).setValue(currUserWithUpdatedInfo);
     }
 
     @Override
