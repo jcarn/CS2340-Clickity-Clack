@@ -101,7 +101,6 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
 
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 HashMap<String, Report> reportHashCodeToReportHashMap = new HashMap<>();
-                HashMap<String, HashMap> reportStringToReportHashCodesToReportHashMap = new HashMap<>();
 
                 // iterating over every report
                 for (DataSnapshot child : children) {
@@ -123,10 +122,9 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
                 }
 
                 reportHashCodeToReportHashMap.put(String.valueOf(report.hashCode()), report);
-                reportStringToReportHashCodesToReportHashMap.put("Reports", reportHashCodeToReportHashMap);
 
                 if (submitButtonPressed[0]) {
-                    databaseReference.setValue(reportStringToReportHashCodesToReportHashMap);
+                    databaseReference.child("Reports").setValue(reportHashCodeToReportHashMap);
                     submitButtonPressed[0] = false;
                 }
             }

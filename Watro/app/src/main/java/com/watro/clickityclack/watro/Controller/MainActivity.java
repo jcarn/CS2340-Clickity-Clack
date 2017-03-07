@@ -19,10 +19,20 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.watro.clickityclack.watro.Model.Administrator;
 import com.watro.clickityclack.watro.Model.BasicUser;
+import com.watro.clickityclack.watro.Model.Manager;
+import com.watro.clickityclack.watro.Model.Report;
+import com.watro.clickityclack.watro.Model.SuperUser;
+import com.watro.clickityclack.watro.Model.Worker;
 import com.watro.clickityclack.watro.R;
+
+import java.util.HashMap;
 
 import static java.lang.String.valueOf;
 
@@ -85,17 +95,62 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void saveUserInformation(FirebaseUser firebaseUser) {
-        String email = String.valueOf(editTextEmail.getText()).trim();
-        String firstName = valueOf(editTextFirstName.getText()).trim();
-        String lastName = valueOf(editTextLastName.getText()).trim();
-        String homeAddress = valueOf(editTextHomeAddress.getText()).trim();
+        final boolean[] registerButtonPressed = {true};
 
-        String userType = String.valueOf(spinnerUserType.getSelectedItem());
+        String newUserEmail = String.valueOf(editTextEmail.getText()).trim();
+        String newUserFirstName = valueOf(editTextFirstName.getText()).trim();
+        String newUserLastName = valueOf(editTextLastName.getText()).trim();
+        String newUserHomeAddress = valueOf(editTextHomeAddress.getText()).trim();
+        String newUserType = String.valueOf(spinnerUserType.getSelectedItem());
 
-        BasicUser basicUser = new BasicUser(firstName, lastName, email, String.valueOf(firebaseUser.getUid()), homeAddress, userType);
+        final SuperUser newUser = new BasicUser(newUserFirstName, newUserLastName, newUserEmail, String.valueOf(firebaseUser.getUid()), newUserHomeAddress, newUserType);
 
-        // Use the unique ID of the logged-in user to save user's information into Firebase database
-        databaseReference.child(firebaseUser.getUid()).setValue(basicUser);
+        DatabaseReference usersDataBaseReference = databaseReference.child("Users");
+
+        usersDataBaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                HashMap<String, SuperUser> userIdToUserHashMap = new HashMap<>();
+
+                // iterating over every report
+                for (DataSnapshot userIdToUserInfoMapping : children) {
+                    SuperUser currUser = new BasicUser("","","","","","");
+
+                    HashMap<String, String> userIdToUserInfoHashMap = (HashMap<String, String>) userIdToUserInfoMapping.getValue();
+
+                    String currUserFirstName = userIdToUserInfoHashMap.get("firstName");
+                    String currUserLastName = userIdToUserInfoHashMap.get("lastName");
+                    String currUserEmail = userIdToUserInfoHashMap.get("email");
+                    String currUserHomeAddress = userIdToUserInfoHashMap.get("homeAddress");
+                    String currUserType = userIdToUserInfoHashMap.get("userType");
+                    String currUserId = userIdToUserInfoHashMap.get("id");
+
+                    if (currUserType.equals("User")) {
+                        currUser = new BasicUser(currUserFirstName, currUserLastName, currUserEmail, currUserId, currUserHomeAddress, currUserType);
+                    } else if (currUserType.equals("Worker")) {
+                        currUser = new Worker(currUserFirstName, currUserLastName, currUserEmail, currUserId, currUserHomeAddress, currUserType);
+                    } else if (currUserType.equals("Manager")) {
+                        currUser = new Manager(currUserFirstName, currUserLastName, currUserEmail, currUserId, currUserHomeAddress, currUserType);
+                    } else if (currUserType.equals("Administrator")) {
+                        currUser = new Administrator(currUserEmail, currUserId);
+                    }
+
+                    userIdToUserHashMap.put(String.valueOf(currUser.getId()), currUser);
+                }
+
+                userIdToUserHashMap.put(String.valueOf(newUser.getId()), newUser);
+
+                if (registerButtonPressed[0]) {
+                    databaseReference.child("Users").setValue(userIdToUserHashMap);
+                    registerButtonPressed[0] = false;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
     }
 
     private void registerUser() {
