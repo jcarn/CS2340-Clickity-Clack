@@ -1,4 +1,4 @@
-package com.watro.clickityclack.watro;
+package com.watro.clickityclack.watro.Controller;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +18,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.watro.clickityclack.watro.Model.Administrator;
+import com.watro.clickityclack.watro.Model.BasicUser;
+import com.watro.clickityclack.watro.Model.Manager;
+import com.watro.clickityclack.watro.Model.SuperUser;
+import com.watro.clickityclack.watro.Model.Worker;
+import com.watro.clickityclack.watro.R;
 
 import java.util.HashMap;
 
@@ -75,23 +81,25 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        DatabaseReference usersDataBaseReference = databaseReference.child("Users");
+
+        usersDataBaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
 
                 // TODO: Stop iterating over all User HashMaps and go straight to info from user id
-                for (DataSnapshot child : children) {
-                    HashMap<String, String> userInfoHashMap = (HashMap<String, String>) child.getValue();
+                for (DataSnapshot user : children) {
+                    HashMap<String, String> userIdToUserInfoHashMap = (HashMap<String, String>) user.getValue();
 
-                    if (userInfoHashMap.get("id").equals(currentUser.getUid())) {
+                    if (userIdToUserInfoHashMap.get("id").equals(currentUser.getUid())) {
                         // TODO: Add checks for if any of the following User properties is null
-                        String firstName = userInfoHashMap.get("firstName");
-                        String lastName = userInfoHashMap.get("lastName");
-                        String email = userInfoHashMap.get("email");
-                        String homeAddress = userInfoHashMap.get("homeAddress");
-                        String userType = userInfoHashMap.get("userType");
-                        String id = userInfoHashMap.get("id");
+                        String firstName = userIdToUserInfoHashMap.get("firstName");
+                        String lastName = userIdToUserInfoHashMap.get("lastName");
+                        String email = userIdToUserInfoHashMap.get("email");
+                        String homeAddress = userIdToUserInfoHashMap.get("homeAddress");
+                        String userType = userIdToUserInfoHashMap.get("userType");
+                        String id = userIdToUserInfoHashMap.get("id");
 
                         if (userType.equals("User")) {
                             superUser = new BasicUser(firstName, lastName, email, id, homeAddress, userType);
@@ -140,17 +148,27 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void saveUserInformation(FirebaseUser firebaseUser) {
-        String email = String.valueOf(editTextEmail.getText()).trim();
-        String firstName = valueOf(editTextFirstName.getText()).trim();
-        String lastName = valueOf(editTextLastName.getText()).trim();
-        String homeAddress = valueOf(editTextHomeAddress.getText()).trim();
+        SuperUser currUserWithUpdatedInfo = new BasicUser("","","","","","");
 
-        String userType = String.valueOf(spinnerUserType.getSelectedItem());
+        String updatedEmail = String.valueOf(editTextEmail.getText()).trim();
+        String updatedFirstName = valueOf(editTextFirstName.getText()).trim();
+        String updatedLastName = valueOf(editTextLastName.getText()).trim();
+        String updatedHomeAddress = valueOf(editTextHomeAddress.getText()).trim();
 
-        BasicUser basicUser = new BasicUser(firstName, lastName, email, String.valueOf(firebaseUser.getUid()), homeAddress, userType);
+        String updatedUserType = String.valueOf(spinnerUserType.getSelectedItem());
+
+        if (updatedUserType.equals("User")) {
+            currUserWithUpdatedInfo = new BasicUser(updatedFirstName, updatedLastName, updatedEmail, firebaseUser.getUid(), updatedHomeAddress, updatedUserType);
+        } else if (updatedUserType.equals("Worker")) {
+            currUserWithUpdatedInfo = new Worker(updatedFirstName, updatedLastName, updatedEmail, firebaseUser.getUid(), updatedHomeAddress, updatedUserType);
+        } else if (updatedUserType.equals("Manager")) {
+            currUserWithUpdatedInfo = new Manager(updatedFirstName, updatedLastName, updatedEmail, firebaseUser.getUid(), updatedHomeAddress, updatedUserType);
+        } else if (updatedUserType.equals("Administrator")) {
+            currUserWithUpdatedInfo = new Administrator(updatedEmail, firebaseUser.getUid());
+        }
 
         // Use the unique ID of the logged-in user to save user's information into Firebase database
-        databaseReference.child(firebaseUser.getUid()).setValue(basicUser);
+        databaseReference.child("Users").child(firebaseUser.getUid()).setValue(currUserWithUpdatedInfo);
     }
 
     @Override

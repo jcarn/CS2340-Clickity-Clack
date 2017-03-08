@@ -1,4 +1,4 @@
-package com.watro.clickityclack.watro;
+package com.watro.clickityclack.watro.Controller;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,10 +7,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import com.watro.clickityclack.watro.R;
+
 public class ReportsActivity extends AppCompatActivity implements View.OnClickListener  {
 
     private ImageButton settingsButton;
     private Button submitReportButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
