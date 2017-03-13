@@ -9,6 +9,8 @@ public class Report {
     private String reportID;
     private String reporterID;
     private String streetAddress;
+    private String waterT;
+    private String waterC;
     private WaterType waterType;
     private WaterCondition waterCondition;
 
@@ -54,8 +56,8 @@ public class Report {
      * Getter of water type enum
      * @return enum type of water
      */
-    public WaterType getWaterType() {
-        return waterType;
+    public String getWaterType() {
+        return waterT.toString();
     }
 
     /**
@@ -75,15 +77,19 @@ public class Report {
             this.waterType = WaterType.SPRING;
         } else if (waterType.equals("Other")) {
             this.waterType = WaterType.OTHER;
+        } else {
+            return;
         }
+        this.waterType.text = waterType;
+        waterT = waterType;
     }
 
     /**
      * Getter of WaterCondtion Enum
      * @return enum condition of the water
      */
-    public WaterCondition getWaterCondition() {
-        return waterCondition;
+    public String getWaterCondition() {
+        return waterCondition.toString();
     }
 
     /**
@@ -91,6 +97,7 @@ public class Report {
      * @param waterCondition String matching desired water type
      */
     public void setWaterCondition(String waterCondition) {
+        waterCondition.text = wat
         if (waterCondition.equals("Waste")) {
             this.waterCondition = WaterCondition.WASTE;
         } else if (waterCondition.equals("Clear and Treatable")) {
@@ -99,7 +106,11 @@ public class Report {
             this.waterCondition = WaterCondition.TREATABLE_MUDDY;
         } else if (waterCondition.equals("Potable")) {
             this.waterCondition = WaterCondition.POTABLE;
+        } else {
+            return;
         }
+        waterC = waterCondition;
+        this.waterCondition.text = waterCondition;
     }
 
     /**
