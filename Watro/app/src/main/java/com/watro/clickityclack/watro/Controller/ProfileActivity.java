@@ -108,6 +108,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                             editTextFirstName.setText(((BasicUser) superUser).getFirstName());
                             editTextLastName.setText(((BasicUser) superUser).getLastName());
                             editTextHomeAddress.setText(((BasicUser) superUser).getHomeAddress());
+                            spinnerUserType.setSelection(userTypeAdapter.getPosition("User"));
                         } else if (userType.equals("Worker")) {
                             superUser = new Worker(firstName, lastName, email, id, homeAddress, userType);
 
@@ -115,6 +116,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                             editTextFirstName.setText(((Worker) superUser).getFirstName());
                             editTextLastName.setText(((Worker) superUser).getLastName());
                             editTextHomeAddress.setText(((Worker) superUser).getHomeAddress());
+                            spinnerUserType.setSelection(userTypeAdapter.getPosition("Worker"));
                         } else if (userType.equals("Manager")) {
                             superUser = new Manager(firstName, lastName, email, id, homeAddress, userType);
 
@@ -122,8 +124,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                             editTextFirstName.setText(((Manager) superUser).getFirstName());
                             editTextLastName.setText(((Manager) superUser).getLastName());
                             editTextHomeAddress.setText(((Manager) superUser).getHomeAddress());
+                            spinnerUserType.setSelection(userTypeAdapter.getPosition("Manager"));
                         } else if (userType.equals("Administrator")) {
                             superUser = new Administrator(email, id);
+                            spinnerUserType.setSelection(userTypeAdapter.getPosition("Administrator"));
 
                             // TODO: Add more info for Administrator (firstName, lastName, etc.)
                             editTextEmail.setText(superUser.getEmail());
