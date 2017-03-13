@@ -3,6 +3,7 @@ package com.watro.clickityclack.watro.Controller;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -76,11 +77,9 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
 
     private void saveReport() {
         final boolean[] submitButtonPressed = {true};
-
         final Report report = new Report();
         String waterType = String.valueOf(spinnerWaterType.getSelectedItem());
         String waterCondition = String.valueOf(spinnerWaterCondition.getSelectedItem());
-
         calendar = Calendar.getInstance();
         String reportDate = Integer.valueOf(calendar.get(Calendar.MONTH)) + 1 + "-"
                 + calendar.get(Calendar.DAY_OF_MONTH)
@@ -145,7 +144,11 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         if (v == submitButton) {
-            saveReport();
+            if (!editTextAddress.getText().toString().equals("")) {
+                saveReport();
+            } else {
+                Toast.makeText(this, "Please enter the water site address", Toast.LENGTH_LONG).show();
+            }
         }
     }
 }
