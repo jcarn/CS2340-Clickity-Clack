@@ -80,7 +80,6 @@ public class Report {
         } else {
             return;
         }
-        this.waterType.text = waterType;
         waterT = waterType;
     }
 
@@ -97,7 +96,6 @@ public class Report {
      * @param waterCondition String matching desired water type
      */
     public void setWaterCondition(String waterCondition) {
-        waterCondition.text = wat
         if (waterCondition.equals("Waste")) {
             this.waterCondition = WaterCondition.WASTE;
         } else if (waterCondition.equals("Clear and Treatable")) {
@@ -110,7 +108,6 @@ public class Report {
             return;
         }
         waterC = waterCondition;
-        this.waterCondition.text = waterCondition;
     }
 
     /**
