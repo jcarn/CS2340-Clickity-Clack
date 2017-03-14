@@ -31,6 +31,10 @@ public abstract class SuperUser {
         this.email = email;
     }
 
+    /**
+     * Getter of id
+     * @return String id of user
+     */
     public String getId() {
         return id;
     }
