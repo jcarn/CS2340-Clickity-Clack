@@ -1,4 +1,5 @@
 package com.watro.clickityclack.watro.Model;
+import com.google.android.gms.maps.model.LatLng;
 
 /**
  * Created by John on 2/28/2017.
@@ -13,6 +14,45 @@ public class Report {
     private String waterC;
     private WaterType waterType;
     private WaterCondition waterCondition;
+    private String latitude;
+
+    /**
+     * Getter for latitude
+     *
+     * @return latitude
+     */
+    public String getLatitude() {
+        return latitude;
+    }
+
+    /**
+     * Setter for latitude
+     *
+     * @param latitude
+     */
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    /**
+     * Getter for longitude
+     *
+     * @return longitude
+     */
+    public String getLongitude() {
+        return longitude;
+    }
+
+    /**
+     * Setter for longitude
+     *
+     * @param longitude
+     */
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    private String longitude;
 
     /**
      * Possible types of water
@@ -171,5 +211,11 @@ public class Report {
     public void setStreetAddress(String streetAddress) {
         this.streetAddress = streetAddress;
     }
+
+    /**
+     * Setter of Report's location
+     * @return report location
+     */
+    public LatLng getLocation() {return new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));}
 
 }

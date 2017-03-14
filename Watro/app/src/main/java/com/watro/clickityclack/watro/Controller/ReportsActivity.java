@@ -12,6 +12,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -49,8 +50,6 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onMapReady(final GoogleMap googleMap) {
-        // Add a marker in Sydney, Australia,
-        // and move the map's camera to the same location.
         HashMap<String, Report> reportHashCodeToReportHashMap = new HashMap<String,Report>();
 
         //TODO: Henry make this actually have real values
@@ -84,17 +83,19 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
                 }
 
                 LatLng rep;
-                int avgLat = 0, avgLong = 0, num = 0;
+                float avgLat = 0, avgLong = 0;
+                int num = 0;
                 for (String key : reportHashCodeToReportHashMap.keySet()) {
                     num++;
-                    rep = addressToLatLng(reportHashCodeToReportHashMap.get(key).getStreetAddress());
+                    rep = reportHashCodeToReportHashMap.get(key).getLocation();
                     avgLat += rep.latitude;
                     avgLat += rep.longitude;
                     googleMap.addMarker(new MarkerOptions().position(rep)
-                            .title(reportHashCodeToReportHashMap.get(key).getStreetAddress()));
+                            .title(reportHashCodeToReportHashMap.get(key).getStreetAddress())
+                            .snippet(reportHashCodeToReportHashMap.get(key).getWaterType() + ": " + reportHashCodeToReportHashMap.get(key).getWaterCondition()));
                 }
 
-                LatLng average = new LatLng(avgLat, avgLong);
+                LatLng average = new LatLng(avgLat / num, avgLong / num);
                 googleMap.moveCamera(CameraUpdateFactory.newLatLng(average));
                 //TODO: replace the average with the user's current location
 
@@ -107,12 +108,6 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
             public void onCancelled(DatabaseError databaseError) {}
         });
     }
-
-    private LatLng addressToLatLng(String address) {
-        //TODO: Implement, either Uche or me way later tonight}
-        return new LatLng(33.8, 84.4);
-    }
-
 
     @Override
     public void onClick(View v) {
