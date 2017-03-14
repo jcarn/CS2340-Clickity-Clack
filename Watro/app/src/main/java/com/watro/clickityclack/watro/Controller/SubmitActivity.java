@@ -1,6 +1,13 @@
 package com.watro.clickityclack.watro.Controller;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +26,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.watro.clickityclack.watro.Model.GPS;
+import com.watro.clickityclack.watro.Model.LocationFinder;
 import com.watro.clickityclack.watro.Model.Report;
 import com.watro.clickityclack.watro.R;
 
@@ -52,14 +61,15 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
 
         currentUser  = firebaseAuth.getCurrentUser();
 
+        //HashMap<String, Double> newmap = LocationFinder.getCoordinates(this);
+        //double latitude = newmap.get("Latitude");
+        //double longitude = newmap.get("Longitude");
         if (currentUser == null) {
             // User has not logged in
             finish();
             startActivity(new Intent(this, SubmitActivity.class));
         }
-
         editTextAddress = (EditText) findViewById(R.id.editTextAddress);
-
         spinnerWaterType = (Spinner) findViewById(R.id.spinnerWaterType);
         spinnerWaterType.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Report.WaterType.values()));
         spinnerWaterCondition = (Spinner) findViewById(R.id.spinnerWaterCondition);
@@ -73,6 +83,7 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
 
         returnButton.setOnClickListener(this);
         submitButton.setOnClickListener(this);
+
     }
 
     private void saveReport() {
@@ -150,5 +161,25 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
                 Toast.makeText(this, "Please enter the water site address", Toast.LENGTH_LONG).show();
             }
         }
+    }
+    public HashMap<String, Double> getCoordinates() {
+        HashMap<String, Double> coordinatesHashMap = new HashMap<>();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            Location location = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            coordinatesHashMap.put("Longitude", location.getLongitude());
+            coordinatesHashMap.put("Latitude", location.getLatitude());
+            return coordinatesHashMap;
+        }
+        return null;
     }
 }
