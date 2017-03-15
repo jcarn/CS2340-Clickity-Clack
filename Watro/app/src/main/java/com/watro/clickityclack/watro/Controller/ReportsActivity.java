@@ -1,5 +1,4 @@
 package com.watro.clickityclack.watro.Controller;
-
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,17 +11,15 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
 import com.watro.clickityclack.watro.Model.Report;
 import com.watro.clickityclack.watro.R;
 
 import java.util.HashMap;
 
-public class ReportsActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback    {
+public class ReportsActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback {
 
     private ImageButton settingsButton;
     private Button submitReportButton;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,11 +30,9 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
 
         settingsButton.setOnClickListener(this);
         submitReportButton.setOnClickListener(this);
-
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         // Add a marker in Sydney, Australia,
