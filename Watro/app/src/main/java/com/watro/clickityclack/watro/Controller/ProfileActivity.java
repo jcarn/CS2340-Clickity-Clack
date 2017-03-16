@@ -27,6 +27,7 @@ import com.watro.clickityclack.watro.R;
 
 import java.util.HashMap;
 
+import static android.widget.Toast.makeText;
 import static java.lang.String.valueOf;
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
@@ -91,6 +92,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 for (DataSnapshot user : children) {
                     HashMap<String, String> userIdToUserInfoHashMap = (HashMap<String, String>) user.getValue();
 
+
                     if (userIdToUserInfoHashMap.get("id").equals(currentUser.getUid())) {
                         // TODO: Add checks for if any of the following User properties is null
                         String firstName = userIdToUserInfoHashMap.get("firstName");
@@ -99,6 +101,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                         String homeAddress = userIdToUserInfoHashMap.get("homeAddress");
                         String userType = userIdToUserInfoHashMap.get("userType");
                         String id = userIdToUserInfoHashMap.get("id");
+
 
                         if (userType.equals("User")) {
                             superUser = new BasicUser(firstName, lastName, email, id, homeAddress, userType);
@@ -188,9 +191,14 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         }
 
         if (v == buttonSaveChanges) {
-            saveUserInformation(currentUser);
 
-            Toast.makeText(this, "Changes Saved", Toast.LENGTH_LONG).show();
+            if (String.valueOf(editTextFirstName.getText()).equals("") || String.valueOf(editTextLastName.getText()).equals("") || String.valueOf(editTextEmail.getText()).equals("") || String.valueOf(editTextHomeAddress.getText()).equals("")) {
+                makeText(this, "Field cannot be left blank.", Toast.LENGTH_LONG).show();
+            } else {
+                saveUserInformation(currentUser);
+                makeText(this, "Changes Saved", Toast.LENGTH_LONG).show();
+            }
         }
+
     }
 }
