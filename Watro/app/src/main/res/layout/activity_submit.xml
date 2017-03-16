@@ -58,32 +58,6 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="84dp" />
 
-        <EditText
-            android:layout_width="309dp"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="Enter Longitude"
-            android:ems="10"
-            android:id="@+id/editTextLongitude"
-            android:gravity="center_vertical|center_horizontal"
-            android:layout_above="@+id/buttonSubmitReport"
-            android:layout_alignLeft="@+id/editTextAddress"
-            android:layout_alignStart="@+id/editTextAddress"
-            android:layout_marginBottom="22dp" />
-
-        <EditText
-            android:layout_width="309dp"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="Enter Latitude"
-            android:ems="10"
-            android:id="@+id/editTextLatitude"
-            android:gravity="center_vertical|center_horizontal"
-            android:layout_above="@+id/editTextLongitude"
-            android:layout_alignLeft="@+id/editTextLongitude"
-            android:layout_alignStart="@+id/editTextLongitude"
-            android:layout_marginBottom="45dp" />
-
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -88,9 +88,7 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
             finish();
             startActivity(new Intent(this, SubmitActivity.class));
         }
-        editTextAddress = (EditText) findViewById(R.id.editTextAddress);`
-        editTextLatitude = (EditText) findViewById(R.id.editTextLatitude);
-        editTextLongitude = (EditText) findViewById(R.id.editTextLongitude);
+        editTextAddress = (EditText) findViewById(R.id.editTextAddress);
 
 
 
@@ -124,8 +122,8 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
         report.setStreetAddress(String.valueOf(editTextAddress.getText()).trim());
         report.setWaterType(waterType);
         report.setWaterCondition(waterCondition);
-        report.setLatitude(String.valueOf(editTextLatitude.getText()).trim());
-        report.setLongitude(String.valueOf(editTextLongitude.getText()).trim());
+        report.setLatitude(String.valueOf(curLatitude));
+        report.setLongitude(String.valueOf(curLongitude));
 
         DatabaseReference reportDataBaseReference = databaseReference.child("Reports");
 
@@ -210,13 +208,13 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
         if (lastLocation != null) {
             curLatitude = lastLocation.getLatitude();
             curLongitude = lastLocation.getLongitude();
+
             Geocoder geocoder = new Geocoder(this, Locale.getDefault());
             try {
                 List<Address> addressList = geocoder.getFromLocation(curLatitude, curLongitude,1);
                 Address address = addressList.get(0);
                 editTextAddress.setText(address.getAddressLine(0) + " "
-                        + address.getLocality() + ", " + address.getAdminArea()
-                        + " " + address.getPostalCode());
+                        + address.getLocality() + ", " + address.getAdminArea());
             } catch (IOException e) {
                 Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
