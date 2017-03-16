@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.watro.clickityclack.watro.Model.DatabaseManager;
+import com.watro.clickityclack.watro.Model.LoginManager;
 import com.watro.clickityclack.watro.R;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -66,7 +68,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             return;
         }
 
-
         if (TextUtils.isEmpty(password)) {
             // Password is empty
             Toast.makeText(this, "Please enter your password", Toast.LENGTH_LONG).show();
@@ -100,10 +101,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                             // Display a toast notifying the user that registration was not successful
                             Toast.makeText(LoginActivity.this, "Registration Failed.\n" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-
                         }
                     }
                 });
+
+//        LoginManager loginManager = new LoginManager();
+//        boolean isLoginSuccessful = true;
+//
+//        try {
+//            loginManager.loginWithFirebase(this, email, password);
+//        } catch (Exception e) {
+//            progressDialog.dismiss();
+//
+//            isLoginSuccessful = false;
+//            Toast.makeText(LoginActivity.this, "Registration Failed.\n" + e.getMessage(), Toast.LENGTH_LONG).show();
+//        }
+//
+//        progressDialog.dismiss();
+//
+//        if (isLoginSuccessful) {
+//            finish();
+//            startActivity(new Intent(getApplicationContext(), ReportsActivity.class));
+//        }
     }
 
     @Override
