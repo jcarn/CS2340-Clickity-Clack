@@ -18,9 +18,12 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -45,6 +48,8 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
     private ImageButton returnButton;
 
     EditText editTextAddress;
+    EditText editTextLatitude;
+    EditText editTextLongitude;
     Spinner spinnerWaterType;
     Spinner spinnerWaterCondition;
 
@@ -83,7 +88,12 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
             finish();
             startActivity(new Intent(this, SubmitActivity.class));
         }
-        editTextAddress = (EditText) findViewById(R.id.editTextAddress);
+        editTextAddress = (EditText) findViewById(R.id.editTextAddress);`
+        editTextLatitude = (EditText) findViewById(R.id.editTextLatitude);
+        editTextLongitude = (EditText) findViewById(R.id.editTextLongitude);
+
+
+
         spinnerWaterType = (Spinner) findViewById(R.id.spinnerWaterType);
         spinnerWaterType.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Report.WaterType.values()));
         spinnerWaterCondition = (Spinner) findViewById(R.id.spinnerWaterCondition);
@@ -114,6 +124,8 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
         report.setStreetAddress(String.valueOf(editTextAddress.getText()).trim());
         report.setWaterType(waterType);
         report.setWaterCondition(waterCondition);
+        report.setLatitude(String.valueOf(editTextLatitude.getText()).trim());
+        report.setLongitude(String.valueOf(editTextLongitude.getText()).trim());
 
         DatabaseReference reportDataBaseReference = databaseReference.child("Reports");
 
@@ -168,10 +180,12 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         if (v == submitButton) {
-            if (!editTextAddress.getText().toString().equals("")) {
+            if (!editTextAddress.getText().toString().equals("") ||
+                    !editTextLongitude.getText().toString().equals("") ||
+                    !editTextLatitude.getText().toString().equals("")) {
                 saveReport();
             } else {
-                Toast.makeText(this, "Please enter the water site address", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Please fill all fields", Toast.LENGTH_LONG).show();
             }
         }
     }
