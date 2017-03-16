@@ -85,6 +85,7 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
                 LatLng rep;
                 float avgLat = 0, avgLong = 0;
                 int num = 0;
+                LatLng average;
                 for (String key : reportHashCodeToReportHashMap.keySet()) {
                     num++;
                     rep = reportHashCodeToReportHashMap.get(key).getLocation();
@@ -95,8 +96,11 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
                             .snippet(reportHashCodeToReportHashMap.get(key).getWaterType() + ": " + reportHashCodeToReportHashMap.get(key).getWaterCondition()));
                 }
 
-                LatLng average = new LatLng(avgLat / num, avgLong / num);
-                googleMap.moveCamera(CameraUpdateFactory.newLatLng(average));
+                if (num > 0) {
+                    average = new LatLng(avgLat / num, avgLong / num);
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(average));
+                }
+
                 //TODO: replace the average with the user's current location
 
                 if (reportHashCodeToReportHashMap.size() > 0) {
