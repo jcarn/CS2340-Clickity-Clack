@@ -70,6 +70,8 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
             ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                     LOCATION_REQUEST);
+        } else {
+            buildGoogleApiClient();
         }
         setContentView(R.layout.activity_submit);
 
@@ -81,7 +83,6 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
             finish();
             startActivity(new Intent(this, SubmitActivity.class));
         }
-        buildGoogleApiClient();
         editTextAddress = (EditText) findViewById(R.id.editTextAddress);
         spinnerWaterType = (Spinner) findViewById(R.id.spinnerWaterType);
         spinnerWaterType.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Report.WaterType.values()));
@@ -230,9 +231,9 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
                 //function will make sure they granted everything access
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    mClient.connect();
+                    //mClient.connect();
+                    buildGoogleApiClient();
                 }
-                return;
             }
         }
     }
