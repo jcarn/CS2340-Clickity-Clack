@@ -1,5 +1,4 @@
 package com.watro.clickityclack.watro.Controller;
-
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +11,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
 import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
@@ -19,17 +19,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.watro.clickityclack.watro.Model.Report;
 import com.watro.clickityclack.watro.R;
 
 import java.util.HashMap;
 
-public class ReportsActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback    {
+public class ReportsActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback {
 
     private ImageButton settingsButton;
     private Button submitReportButton;
-
     private DatabaseReference databaseReference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +42,9 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
 
         settingsButton.setOnClickListener(this);
         submitReportButton.setOnClickListener(this);
-
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
-
     @Override
     public void onMapReady(final GoogleMap googleMap) {
         HashMap<String, Report> reportHashCodeToReportHashMap = new HashMap<String,Report>();

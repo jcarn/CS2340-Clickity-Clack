@@ -73,7 +73,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         editTextFirstName = (EditText) findViewById(R.id.editTextFirstName);
         editTextLastName = (EditText) findViewById(R.id.editTextLastName);
         editTextHomeAddress = (EditText) findViewById(R.id.editTextHomeAddress);
-
         spinnerUserType = (Spinner) findViewById(R.id.spinnerUserType);
         userTypeAdapter = ArrayAdapter.createFromResource(this, R.array.userTypes, R.layout.support_simple_spinner_dropdown_item);
         userTypeAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
