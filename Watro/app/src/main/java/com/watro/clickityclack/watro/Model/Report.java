@@ -15,6 +15,7 @@ public class Report {
     private WaterType waterType;
     private WaterCondition waterCondition;
     private String latitude;
+    private String longitude;
 
     /**
      * Getter for latitude
@@ -51,8 +52,6 @@ public class Report {
     public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
-
-    private String longitude;
 
     /**
      * Possible types of water
