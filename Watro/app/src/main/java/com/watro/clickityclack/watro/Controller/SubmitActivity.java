@@ -88,7 +88,7 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
             finish();
             startActivity(new Intent(this, SubmitActivity.class));
         }
-        editTextAddress = (EditText) findViewById(R.id.editTextAddress);`
+        editTextAddress = (EditText) findViewById(R.id.editTextAddress);
         editTextLatitude = (EditText) findViewById(R.id.editTextLatitude);
         editTextLongitude = (EditText) findViewById(R.id.editTextLongitude);
 
