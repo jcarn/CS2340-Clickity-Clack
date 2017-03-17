@@ -48,8 +48,6 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
     private ImageButton returnButton;
 
     EditText editTextAddress;
-    EditText editTextLatitude;
-    EditText editTextLongitude;
     Spinner spinnerWaterType;
     Spinner spinnerWaterCondition;
 
@@ -89,11 +87,7 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
             startActivity(new Intent(this, SubmitActivity.class));
         }
         editTextAddress = (EditText) findViewById(R.id.editTextAddress);
-        editTextLatitude = (EditText) findViewById(R.id.editTextLatitude);
-        editTextLongitude = (EditText) findViewById(R.id.editTextLongitude);
-
-
-
+            
         spinnerWaterType = (Spinner) findViewById(R.id.spinnerWaterType);
         spinnerWaterType.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Report.WaterType.values()));
         spinnerWaterCondition = (Spinner) findViewById(R.id.spinnerWaterCondition);
