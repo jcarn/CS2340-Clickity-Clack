@@ -22,11 +22,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".Controller.LoginActivity" />
         <activity android:name=".Controller.ProfileActivity" />
         <activity android:name=".Controller.SubmitActivity" />
-        <activity android:name=".Controller.ReportsActivity" > </activity>
+        <activity android:name=".Controller.ReportsActivity"></activity>
+        <activity android:name=".Controller.PurityReportActivity"></activity>
     </application>
 
 </manifest>

@@ -4,7 +4,9 @@ public abstract class SuperUser {
     
     protected String email;
     protected String id;
+    public SuperUser() {
 
+    }
     /**
      * Constructor for general user class from which all others inherit
      * @param email email of user in form: name@host.ext

@@ -8,6 +8,12 @@ public class BasicUser extends SuperUser {
     protected String userType;
 
     /**
+     * Default Constructor
+     */
+    public BasicUser() {
+        super();
+    }
+    /**
      * Constructor for the basic user
      * @param firstName first name of user
      * @param lastName surname of user
