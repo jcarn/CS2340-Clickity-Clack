@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -18,12 +19,9 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
-
-import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -31,6 +29,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.watro.clickityclack.watro.Model.PurityReport;
 import com.watro.clickityclack.watro.Model.Report;
 import com.watro.clickityclack.watro.R;
 
@@ -40,32 +39,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-public class SubmitActivity extends AppCompatActivity implements View.OnClickListener,
+public class SubmitPurityReportActivity extends AppCompatActivity implements View.OnClickListener,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private FirebaseAuth firebaseAuth;
-
-    private ImageButton returnButton;
-
-    EditText editTextAddress;
-    Spinner spinnerWaterType;
-    Spinner spinnerWaterCondition;
-
-    private Calendar calendar;
-
     FirebaseUser currentUser;
-
-    private Button submitButton;
-
     private DatabaseReference databaseReference;
+
     protected GoogleApiClient mClient;
     protected Location lastLocation;
     protected double curLatitude;
     protected double curLongitude;
     protected final int LOCATION_REQUEST = 100;
+
+    private Calendar calendar;
+
+    private ImageButton returnButton;
+    private Button submitButton;
+    private EditText editTextAddress;
+    private EditText editTextVirus;
+    private EditText editTextContaminant;
+    private Spinner spinnerOverallCondition;
+    private ArrayAdapter<CharSequence> overallConditionAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         //Immediately ask for permission if necessary
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -76,7 +76,7 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
         } else {
             buildGoogleApiClient();
         }
-        setContentView(R.layout.activity_submit);
+        setContentView(R.layout.activity_submit_purity_report);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -84,93 +84,87 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
         if (currentUser == null) {
             // User has not logged in
             finish();
-            startActivity(new Intent(this, SubmitActivity.class));
+            startActivity(new Intent(this, SubmitPurityReportActivity.class));
         }
+
+        setContentView(R.layout.activity_submit_purity_report);
+        returnButton = (ImageButton) findViewById(R.id.returnButton);
+        returnButton.setOnClickListener(this);
+        submitButton = (Button) findViewById(R.id.buttonSubmitPurityReport);
+        submitButton.setOnClickListener(this);
         editTextAddress = (EditText) findViewById(R.id.editTextAddress);
-            
-        spinnerWaterType = (Spinner) findViewById(R.id.spinnerWaterType);
-        spinnerWaterType.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Report.WaterType.values()));
-        spinnerWaterCondition = (Spinner) findViewById(R.id.spinnerWaterCondition);
-        spinnerWaterCondition.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Report.WaterCondition.values()));
+        editTextVirus = (EditText) findViewById(R.id.editTextVirus);
+        editTextContaminant = (EditText) findViewById(R.id.editContaminant);
+        spinnerOverallCondition = (Spinner) findViewById(R.id.spinnerOverallCondition);
+        overallConditionAdapter = ArrayAdapter.createFromResource(this, R.array.overallCondition, R.layout.support_simple_spinner_dropdown_item);
+        overallConditionAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        spinnerOverallCondition.setAdapter(overallConditionAdapter);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
-
-        returnButton = (ImageButton) findViewById(R.id.returnButton);
-        submitButton = (Button) findViewById(R.id.buttonSubmitReport);
-        returnButton.setOnClickListener(this);
-        submitButton.setOnClickListener(this);
-
     }
 
     private void saveReport() {
         final boolean[] submitButtonPressed = {true};
-        final Report report = new Report();
-        String waterType = String.valueOf(spinnerWaterType.getSelectedItem());
-        String waterCondition = String.valueOf(spinnerWaterCondition.getSelectedItem());
+        final PurityReport report = new PurityReport();
+        String waterCondition = String.valueOf(spinnerOverallCondition.getSelectedItem());
         calendar = Calendar.getInstance();
-        String reportDate = calendar.get(Calendar.MONTH) + 1 + "-"
-                + calendar.get(Calendar.DAY_OF_MONTH)
-                + "-" + calendar.get(Calendar.YEAR);
+        String reportDate = calendar.get(Calendar.MONTH) + 1 + "-" + calendar.get(Calendar.DAY_OF_MONTH) + "-" + calendar.get(Calendar.YEAR);
 
         report.setReportDate(reportDate);
-        report.setReportID(String.valueOf(report.hashCode()));
+        report.setReporterID(String.valueOf(report.hashCode()));
         report.setReporterID(currentUser.getUid());
         report.setStreetAddress(String.valueOf(editTextAddress.getText()).trim());
-        report.setWaterType(waterType);
         report.setWaterCondition(waterCondition);
         report.setLatitude(String.valueOf(curLatitude));
         report.setLongitude(String.valueOf(curLongitude));
+        report.setVirusPPM(String.valueOf(editTextVirus.getText()).trim());
+        report.setContaminantPPM(String.valueOf(editTextContaminant.getText()).trim());
 
-        DatabaseReference reportDataBaseReference = databaseReference.child("Reports");
-
+        DatabaseReference reportDataBaseReference = databaseReference.child("PurityReports");
         reportDataBaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                HashMap<String, Report> reportHashCodeToReportHashMap = new HashMap<>();
+                HashMap<String, PurityReport> reportHashCodeToReportHashMap = new HashMap<>();
 
-                // iterating over every report
+                //iterating over every report
                 for (DataSnapshot child : children) {
-                    Report currReport = child.getValue(Report.class);
+                    PurityReport currReport = child.getValue(PurityReport.class);
 
-                    // for some reason, Firebase can't retrieve the enum properties correctly from
-                    // the database. Therefore, the next few lines retrieve them.
-
-                    // TODO: FIX THE REASON BEHIND WHY FIREBASE KEEPS DELETING THE ENUM PROPERTIES
                     HashMap<String, String> currReportPropertiesHashMap = (HashMap<String, String>) child.getValue();
-                    if (currReportPropertiesHashMap.get("waterType") != null) {
-                        currReport.setWaterType(currReportPropertiesHashMap.get("waterType"));
-                    }
                     if (currReportPropertiesHashMap.get("waterCondition") != null) {
                         currReport.setWaterCondition(currReportPropertiesHashMap.get("waterCondition"));
                     }
 
-                    reportHashCodeToReportHashMap.put(String.valueOf(currReport.getReportID()), currReport);
-                }
+                    reportHashCodeToReportHashMap.put(String.valueOf(currReport.getReporterID()), currReport);
 
-                reportHashCodeToReportHashMap.put(String.valueOf(report.hashCode()), report);
+                    reportHashCodeToReportHashMap.put(String.valueOf(report.hashCode()), report);
 
-                if (submitButtonPressed[0]) {
-                    databaseReference.child("Reports").setValue(reportHashCodeToReportHashMap);
-                    submitButtonPressed[0] = false;
+                    if (submitButtonPressed[0]) {
+                        databaseReference.child("PurityReports").setValue(reportHashCodeToReportHashMap);
+                        submitButtonPressed[0] = false;
+                    }
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+
             }
         });
 
         Toast.makeText(this, "Report Submitted", Toast.LENGTH_LONG).show();
+
+
     }
+
+
 
     @Override
     public void onClick(View v) {
-
         if (v == returnButton) {
             finish();
-            startActivity(new Intent(this, ReportsActivity.class));
+            startActivity(new Intent(this, PurityReportActivity.class));
         }
 
         if (v == submitButton) {

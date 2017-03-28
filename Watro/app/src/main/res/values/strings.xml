@@ -6,4 +6,9 @@
         <item>Manager</item>
         <item>Administrator</item>
     </string-array>
+    <string-array name="overallCondition">
+        <item>Safe</item>
+        <item>Treatable</item>
+        <item>Unsafe</item>
+    </string-array>
 </resources>
