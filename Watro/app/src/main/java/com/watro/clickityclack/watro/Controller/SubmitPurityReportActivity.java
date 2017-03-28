@@ -5,9 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.watro.clickityclack.watro.Model.PurityReport;
@@ -20,6 +22,8 @@ public class SubmitPurityReportActivity extends AppCompatActivity implements Vie
     private EditText editTextAddress;
     private EditText editTextVirus;
     private EditText editTextContaminant;
+    private Spinner spinnerOverallCondition;
+    private ArrayAdapter<CharSequence> overallConditionAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,10 @@ public class SubmitPurityReportActivity extends AppCompatActivity implements Vie
         editTextAddress = (EditText) findViewById(R.id.editTextAddress);
         editTextVirus = (EditText) findViewById(R.id.editTextVirus);
         editTextContaminant = (EditText) findViewById(R.id.editContaminant);
+        spinnerOverallCondition = (Spinner) findViewById(R.id.spinnerOverallCondition);
+        overallConditionAdapter = ArrayAdapter.createFromResource(this, R.array.overallCondition, R.layout.support_simple_spinner_dropdown_item);
+        overallConditionAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        spinnerOverallCondition.setAdapter(overallConditionAdapter);
     }
 
     @Override
