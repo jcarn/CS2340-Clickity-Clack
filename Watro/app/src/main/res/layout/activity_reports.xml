@@ -46,11 +46,9 @@
         android:id="@+id/purityReportButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="17dp"
-        android:layout_marginStart="17dp"
         android:text="Purity Report"
         android:layout_above="@+id/map"
-        android:layout_toRightOf="@+id/settingsButton"
-        android:layout_toEndOf="@+id/settingsButton" />
+        android:layout_toLeftOf="@+id/submitReportButton"
+        android:layout_toStartOf="@+id/submitReportButton" />
 
 </RelativeLayout>
