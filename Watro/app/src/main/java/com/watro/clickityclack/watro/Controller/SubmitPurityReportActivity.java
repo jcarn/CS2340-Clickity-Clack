@@ -62,6 +62,7 @@ public class SubmitPurityReportActivity extends AppCompatActivity implements Vie
     private Spinner spinnerOverallCondition;
     private ArrayAdapter<CharSequence> overallConditionAdapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,20 +131,12 @@ public class SubmitPurityReportActivity extends AppCompatActivity implements Vie
                 //iterating over every report
                 for (DataSnapshot child : children) {
                     PurityReport currReport = child.getValue(PurityReport.class);
-
-                    HashMap<String, String> currReportPropertiesHashMap = (HashMap<String, String>) child.getValue();
-                    if (currReportPropertiesHashMap.get("waterCondition") != null) {
-                        currReport.setWaterCondition(currReportPropertiesHashMap.get("waterCondition"));
-                    }
-
-                    reportHashCodeToReportHashMap.put(String.valueOf(currReport.getReporterID()), currReport);
-
-                    reportHashCodeToReportHashMap.put(String.valueOf(report.hashCode()), report);
-
-                    if (submitButtonPressed[0]) {
-                        databaseReference.child("PurityReports").setValue(reportHashCodeToReportHashMap);
-                        submitButtonPressed[0] = false;
-                    }
+                    reportHashCodeToReportHashMap.put(String.valueOf(currReport.getReportID()), currReport);
+                }
+                reportHashCodeToReportHashMap.put(String.valueOf(report.hashCode()), report);
+                if (submitButtonPressed[0]) {
+                    databaseReference.child("PurityReports").setValue(reportHashCodeToReportHashMap);
+                    submitButtonPressed[0] = false;
                 }
             }
 

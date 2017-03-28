@@ -191,7 +191,6 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
                 LatLng average;
                 for (String key : reportHashCodeToReportHashMap.keySet()) {
                     num++;
-                    //rep = reportHashCodeToReportHashMap.get(key).getLocation();
                     rep = reportHashCodeToReportHashMap.get(key);
                     avgLat += Double.parseDouble(rep.getLatitude());
                     avgLong += Double.parseDouble(rep.getLongitude());

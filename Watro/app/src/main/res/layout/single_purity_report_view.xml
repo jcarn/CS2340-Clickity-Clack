@@ -42,17 +42,24 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
     <TextView
-        android:id="@+id/waterTypeTextView"
+        android:id="@+id/overallConditionTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Change this fam: "
+        android:text="Overall Condition: "
         android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
     <TextView
-        android:id="@+id/waterConditionTextView"
+        android:id="@+id/virusPPMTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Water fadfdsCondition"
+        android:text="Virus PPM: "
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+    <TextView
+        android:id="@+id/contaminantPPMTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Contaminant PPM: "
         android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
 </LinearLayout>

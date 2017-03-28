@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -18,23 +19,94 @@ import com.google.firebase.database.ValueEventListener;
 import com.watro.clickityclack.watro.Model.Administrator;
 import com.watro.clickityclack.watro.Model.BasicUser;
 import com.watro.clickityclack.watro.Model.Manager;
+import com.watro.clickityclack.watro.Model.PurityAdapter;
+import com.watro.clickityclack.watro.Model.PurityModel;
+import com.watro.clickityclack.watro.Model.PurityReport;
 import com.watro.clickityclack.watro.Model.Worker;
 import com.watro.clickityclack.watro.R;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PurityReportActivity extends AppCompatActivity implements View.OnClickListener {
     private Button submitPurityReportButton;
     private ImageButton returnButton;
+    private ListView purityReportListView;
+    private PurityAdapter adapter;
+    ArrayList<PurityModel> models;
+    ArrayList<String> workerIDs;
+    private DatabaseReference databaseReference;
+    private FirebaseAuth firebaseAuth;
+    FirebaseUser currentUser;
+    String reportDate;
+    String reportID;
+    String workerID;
+    String location;
+    String overallCondition;
+    String virusPPM;
+    String contaminantPPM;
+    String name;
+    PurityModel pureModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_purity_report);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference purityReference = databaseReference.child("PurityReports");
+        models = new ArrayList<>();
+        workerIDs = new ArrayList<>();
+        purityReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                for (DataSnapshot child: children)  {
+                    PurityReport pureReport = (PurityReport) child.getValue(PurityReport.class);
+                    reportDate = pureReport.getReportDate();
+                    reportID = pureReport.getReportID();
+                    location = pureReport.getStreetAddress();
+                    overallCondition = pureReport.getWaterCondition();
+                    virusPPM = pureReport.getVirusPPM();
+                    contaminantPPM = pureReport.getContaminantPPM();
+                    workerID = pureReport.getReporterID();
+                    pureModel = new PurityModel(reportDate, reportID, null, location, overallCondition, virusPPM,contaminantPPM);
+                    workerIDs.add(workerID);
+                    models.add(pureModel);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        final DatabaseReference userReference = databaseReference.child("Users");
+        userReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int index = 0;
+                for (String x: workerIDs) {
+                    BasicUser user = (BasicUser) dataSnapshot.child(x).getValue(BasicUser.class);
+                    models.get(index).setWorkerName(user.getFirstName() + " " + user.getLastName());
+                    index++;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         submitPurityReportButton = (Button) findViewById(R.id.submitPurityReportButton);
         returnButton = (ImageButton) findViewById(R.id.returnButton);
+        purityReportListView = (ListView) findViewById(R.id.purityReportListView);
+
         submitPurityReportButton.setOnClickListener(this);
         returnButton.setOnClickListener(this);
+        adapter = new PurityAdapter(models, getApplicationContext());
+        purityReportListView.setAdapter(adapter);
     }
 
     @Override
