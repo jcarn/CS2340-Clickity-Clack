@@ -40,7 +40,7 @@ public class PurityReportActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onClick(View v) {
         if (v == submitPurityReportButton) {
-            int changeThis = 0;
+            startActivity(new Intent(this, SubmitPurityReportActivity.class));
         }
         if (v == returnButton) {
             startActivity(new Intent(this, ReportsActivity.class));
