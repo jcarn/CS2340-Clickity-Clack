@@ -15,69 +15,70 @@ import java.util.ArrayList;
  * Created by Uche Nkadi on 3/28/2017.
  */
 
-public class SourceAdapter extends ArrayAdapter<SourceModel> {
-    private ArrayList<SourceModel> sourceList;
+public class PurityAdapter extends ArrayAdapter<PurityModel> {
+    ArrayList<PurityModel> pureList;
     Context mContext;
-
-    public SourceAdapter(ArrayList<SourceModel> data, Context context) {
-        super(context, R.layout.single_source_report_view, data);
-        this.sourceList = data;
+    public PurityAdapter(ArrayList<PurityModel> data, Context context) {
+        super(context, R.layout.single_purity_report_view, data);
+        this.pureList = data;
         this.mContext = context;
     }
-
     // View lookup cache
     private static class ViewHolder {
         TextView txtDate;
         TextView txtReportId;
         TextView txtReporterName;
         TextView txtLocation;
-        TextView txtWaterType;
-        TextView txtWaterCondition;
+        TextView txtOverallCondition;
+        TextView txtVirusPPM;
+        TextView txtContaminantPPM;
     }
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        SourceModel sourceModel = getItem(position);
+        PurityModel pureModel = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
-        ViewHolder viewHolder; // view lookup cache stored in tag
+        PurityAdapter.ViewHolder viewHolder; // view lookup cache stored in tag
 
         final View result;
 
         if (convertView == null) {
 
-            viewHolder = new ViewHolder();
+            viewHolder = new PurityAdapter.ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.single_source_report_view, parent, false);
+            convertView = inflater.inflate(R.layout.single_purity_report_view, parent, false);
             viewHolder.txtDate = (TextView) convertView.findViewById(R.id.dateTextView);
             viewHolder.txtReportId = (TextView) convertView.findViewById(R.id.reportIdTextView);
             viewHolder.txtReporterName = (TextView) convertView.findViewById(R.id.reporterNameTextView);
             viewHolder.txtLocation = (TextView) convertView.findViewById(R.id.locationTextView);
-            viewHolder.txtWaterType = (TextView) convertView.findViewById(R.id.waterTypeTextView);
-            viewHolder.txtWaterCondition = (TextView) convertView.findViewById(R.id.waterConditionTextView);
-
+            viewHolder.txtOverallCondition = (TextView) convertView.findViewById(R.id.overallConditionTextView);
+            viewHolder.txtVirusPPM = (TextView) convertView.findViewById(R.id.virusPPMTextView);
+            viewHolder.txtContaminantPPM = (TextView) convertView.findViewById(R.id.contaminantPPMTextView);
             result=convertView;
 
             convertView.setTag(viewHolder);
         } else {
-            viewHolder = (ViewHolder) convertView.getTag();
+            viewHolder = (PurityAdapter.ViewHolder) convertView.getTag();
             result=convertView;
         }
         //using placeholder string because it is bad practice to concatenate strings inside of setText
-        String placeholder = "Date: " + sourceModel.getDate();
-        viewHolder.txtDate.setText("Date: " + sourceModel.getDate());
+        String placeholder = "Date: " + pureModel.getDate();
+        viewHolder.txtDate.setText("Date: " + pureModel.getDate());
         viewHolder.txtDate.setText(placeholder);
-        placeholder = "Report ID: " + sourceModel.getReportId();
+        placeholder = "Report ID: " + pureModel.getReportId();
         viewHolder.txtReportId.setText(placeholder);
-        placeholder = "Reporter Name: " + sourceModel.getReporterName();
+        placeholder = "Reporter Name: " + pureModel.getWorkerName();
         viewHolder.txtReporterName.setText(placeholder);
-        placeholder = "Location: " + sourceModel.getLocation();
+        placeholder = "Location: " + pureModel.getLocation();
         viewHolder.txtLocation.setText(placeholder);
-        placeholder = "Water Type: " + sourceModel.getWaterType();
-        viewHolder.txtWaterType.setText(placeholder);
-        placeholder = "Water Condition: " + sourceModel.getWaterCondition();
-        viewHolder.txtWaterCondition.setText(placeholder);
+        placeholder = "Overall Condition: " + pureModel.getOverallCondition();
+        viewHolder.txtOverallCondition.setText(placeholder);
+        placeholder = "Virus PPM: " + pureModel.getVirusPPM();
+        viewHolder.txtVirusPPM.setText(placeholder);
+        placeholder = "Contaminant PPM: " + pureModel.getContaminantPPM();
+        viewHolder.txtContaminantPPM.setText(placeholder);
         // Return the completed view to render on screen
         return convertView;
     }
+
 }
