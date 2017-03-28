@@ -111,7 +111,7 @@ public class SubmitPurityReportActivity extends AppCompatActivity implements Vie
         String reportDate = calendar.get(Calendar.MONTH) + 1 + "-" + calendar.get(Calendar.DAY_OF_MONTH) + "-" + calendar.get(Calendar.YEAR);
 
         report.setReportDate(reportDate);
-        report.setReporterID(String.valueOf(report.hashCode()));
+        report.setReportID(String.valueOf(report.hashCode()));
         report.setReporterID(currentUser.getUid());
         report.setStreetAddress(String.valueOf(editTextAddress.getText()).trim());
         report.setWaterCondition(waterCondition);
@@ -120,8 +120,8 @@ public class SubmitPurityReportActivity extends AppCompatActivity implements Vie
         report.setVirusPPM(String.valueOf(editTextVirus.getText()).trim());
         report.setContaminantPPM(String.valueOf(editTextContaminant.getText()).trim());
 
-        DatabaseReference reportDataBaseReference = databaseReference.child("PurityReports");
-        reportDataBaseReference.addValueEventListener(new ValueEventListener() {
+        DatabaseReference purityReportsDataBaseReference = databaseReference.child("PurityReports");
+        purityReportsDataBaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
