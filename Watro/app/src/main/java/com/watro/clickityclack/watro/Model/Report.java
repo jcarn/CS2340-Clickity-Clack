@@ -96,7 +96,7 @@ public class Report {
      * @return enum type of water
      */
     public String getWaterType() {
-        return waterT.toString();
+        return waterT;
     }
 
     /**
@@ -127,7 +127,7 @@ public class Report {
      * @return enum condition of the water
      */
     public String getWaterCondition() {
-        return waterCondition.toString();
+        return waterC;
     }
 
     /**

@@ -1,7 +1,9 @@
 package com.watro.clickityclack.watro.Controller;
+import android.app.ListActivity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.ListViewCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -13,6 +15,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.util.Log;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,10 +27,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.watro.clickityclack.watro.Model.BasicUser;
 import com.watro.clickityclack.watro.Model.Report;
+import com.watro.clickityclack.watro.Model.SourceAdapter;
+import com.watro.clickityclack.watro.Model.SourceModel;
 import com.watro.clickityclack.watro.Model.SuperUser;
 import com.watro.clickityclack.watro.R;
 import com.watro.clickityclack.watro.Model.Report;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ReportsActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback {
@@ -35,9 +41,12 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
     private ImageButton settingsButton;
     private Button submitReportButton;
     private Button purityReportButton;
+    private ListView sourceReportListView;
+    private SourceAdapter adapter;
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
     FirebaseUser currentUser;
+    ArrayList<SourceModel> models;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +55,65 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
+        DatabaseReference reportReference = databaseReference.child("Reports");
+        //DatabaseReference userReference = databaseReference.child("Users");
+        models = new ArrayList<>();
+        reportReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                for (DataSnapshot child: children)  {
+                    Report report = (Report) child.getValue(Report.class);
+                    String reportDate = report.getReportDate();
+                    String reporterID = report.getReportID();
+                    String name = "Nothing";
+                    String location = report.getStreetAddress();
+                    String waterType = report.getWaterType();
+                    String waterCondition = report.getWaterCondition();
+                    SourceModel source = new SourceModel(reportDate, reporterID, name, location, waterType, waterCondition);
+                    models.add(source);
+
+                }
+
+                //BasicUser person = (BasicUser) databaseReference.child("Users").child(reporterID).getValue();
+                //String name =
+
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        //Fix this in order to get name using reporter ID
+//        userReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+//
+//                BasicUser user = (BasicUser) dataSnapshot.getValue(BasicUser.class);
+//
+//
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
         settingsButton = (ImageButton) findViewById(R.id.settingsButton);
         submitReportButton = (Button) findViewById(R.id.submitReportButton);
         purityReportButton = (Button) findViewById(R.id.purityReportButton);
+        sourceReportListView = (ListView) findViewById(R.id.sourceReportListView);
 
+        //models.add(new SourceModel("Some", "guy", "stole", "my", "shoes", "yesterday"));
+
+        adapter = new SourceAdapter(models, getApplicationContext());
+        sourceReportListView.setAdapter(adapter);
         settingsButton.setOnClickListener(this);
         submitReportButton.setOnClickListener(this);
         purityReportButton.setOnClickListener(this);

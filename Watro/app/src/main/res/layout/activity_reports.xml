@@ -51,4 +51,12 @@
         android:layout_toLeftOf="@+id/submitReportButton"
         android:layout_toStartOf="@+id/submitReportButton" />
 
+    <ListView
+        android:id="@+id/sourceReportListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/map"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp" />
+
 </RelativeLayout>
