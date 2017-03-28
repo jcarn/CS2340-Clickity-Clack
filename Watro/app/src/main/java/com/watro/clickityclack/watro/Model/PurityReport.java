@@ -14,8 +14,8 @@ public class PurityReport {
     private String waterCondition;
     private String latitude;
     private String longitude;
-    private double virusPPM;
-    private double contaminantPPM;
+    private String virusPPM;
+    private String contaminantPPM;
 
     public String getWaterCondition() {
         return waterCondition;
@@ -85,19 +85,19 @@ public class PurityReport {
         return reportID;
     }
 
-    public double getVirusPPM() {
+    public String getVirusPPM() {
         return virusPPM;
     }
 
-    public void setVirusPPM(double virusPPM) {
+    public void setVirusPPM(String virusPPM) {
         this.virusPPM = virusPPM;
     }
 
-    public double getContaminantPPM() {
+    public String getContaminantPPM() {
         return contaminantPPM;
     }
 
-    public void setContaminantPPM(double contaminantPPM) {
+    public void setContaminantPPM(String contaminantPPM) {
         this.contaminantPPM = contaminantPPM;
     }
 
