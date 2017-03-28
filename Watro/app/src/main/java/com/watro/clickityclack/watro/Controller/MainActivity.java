@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     } else if (currUserType.equals("Manager")) {
                         currUser = new Manager(currUserFirstName, currUserLastName, currUserEmail, currUserId, currUserHomeAddress, currUserType);
                     } else if (currUserType.equals("Administrator")) {
-                        currUser = new Administrator(currUserEmail, currUserId);
+                        currUser = new Administrator(currUserFirstName, currUserLastName, currUserEmail, currUserId, currUserHomeAddress, currUserType);
                     }
 
                     userIdToUserHashMap.put(String.valueOf(currUser.getId()), currUser);

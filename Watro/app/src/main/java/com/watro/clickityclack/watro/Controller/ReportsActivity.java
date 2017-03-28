@@ -13,13 +13,18 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.util.Log;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.watro.clickityclack.watro.Model.BasicUser;
 import com.watro.clickityclack.watro.Model.Report;
+import com.watro.clickityclack.watro.Model.SuperUser;
 import com.watro.clickityclack.watro.R;
 import com.watro.clickityclack.watro.Model.Report;
 
@@ -29,8 +34,10 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
 
     private ImageButton settingsButton;
     private Button submitReportButton;
+    private Button purityReportButton;
     private DatabaseReference databaseReference;
-
+    private FirebaseAuth firebaseAuth;
+    FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +48,36 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
 
         settingsButton = (ImageButton) findViewById(R.id.settingsButton);
         submitReportButton = (Button) findViewById(R.id.submitReportButton);
+        purityReportButton = (Button) findViewById(R.id.purityReportButton);
 
         settingsButton.setOnClickListener(this);
         submitReportButton.setOnClickListener(this);
+        purityReportButton.setOnClickListener(this);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        firebaseAuth = FirebaseAuth.getInstance();
+        currentUser = firebaseAuth.getCurrentUser();
+
+        if (currentUser == null) {
+            purityReportButton.setVisibility(View.GONE);
+        } else {
+            databaseReference = FirebaseDatabase.getInstance().getReference();
+            final DatabaseReference usersDataBaseReference = databaseReference.child("Users").child(currentUser.getUid());
+            usersDataBaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    BasicUser person = dataSnapshot.getValue(BasicUser.class);
+                    if (person.getUserType().equals("User") || person.getUserType().equals("Administrator")) {
+                        purityReportButton.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
     }
     @Override
     public void onMapReady(final GoogleMap googleMap) {
@@ -119,6 +151,9 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
         }
         if (v == submitReportButton) {
             startActivity(new Intent(this, SubmitActivity.class));
+        }
+        if (v == purityReportButton) {
+            startActivity(new Intent(this, PurityReportActivity.class));
         }
     }
 }
