@@ -47,6 +47,17 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
     private FirebaseAuth firebaseAuth;
     FirebaseUser currentUser;
     ArrayList<SourceModel> models;
+    ArrayList<String> reporterIDs;
+    String reportDate;
+    String reportID;
+    String reporterID;
+    String name;
+    String location;
+    String waterType;
+    String waterCondition;
+
+    SourceModel source;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +67,8 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
         DatabaseReference reportReference = databaseReference.child("Reports");
-        //DatabaseReference userReference = databaseReference.child("Users");
         models = new ArrayList<>();
+        reporterIDs = new ArrayList<>();
         reportReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -65,21 +76,19 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 for (DataSnapshot child: children)  {
                     Report report = (Report) child.getValue(Report.class);
-                    String reportDate = report.getReportDate();
-                    String reporterID = report.getReportID();
-                    String name = "Nothing";
-                    String location = report.getStreetAddress();
-                    String waterType = report.getWaterType();
-                    String waterCondition = report.getWaterCondition();
-                    SourceModel source = new SourceModel(reportDate, reporterID, name, location, waterType, waterCondition);
+                    reportDate = report.getReportDate();
+                    reportID = report.getReportID();
+                    location = report.getStreetAddress();
+                    waterType = report.getWaterType();
+                    waterCondition = report.getWaterCondition();
+                    reporterID = report.getReporterID();
+                    source = new SourceModel(reportDate, reportID, null, location, waterType, waterCondition);
+                    reporterIDs.add(reporterID);
                     models.add(source);
-
                 }
 
-                //BasicUser person = (BasicUser) databaseReference.child("Users").child(reporterID).getValue();
+                //BasicUser person = (BasicUser) databaseReference.child("Users").child(reportID).getValue();
                 //String name =
-
-
 
             }
 
@@ -88,29 +97,27 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
 
             }
         });
-        //Fix this in order to get name using reporter ID
-//        userReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-//
-//                BasicUser user = (BasicUser) dataSnapshot.getValue(BasicUser.class);
-//
-//
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
+        final DatabaseReference userReference = databaseReference.child("Users");
+        userReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int index = 0;
+                for (String x: reporterIDs) {
+                    BasicUser user = (BasicUser) dataSnapshot.child(x).getValue(BasicUser.class);
+                    models.get(index).setReporterName(user.getFirstName() + " " + user.getLastName());
+                    index++;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         settingsButton = (ImageButton) findViewById(R.id.settingsButton);
         submitReportButton = (Button) findViewById(R.id.submitReportButton);
         purityReportButton = (Button) findViewById(R.id.purityReportButton);
         sourceReportListView = (ListView) findViewById(R.id.sourceReportListView);
-
-        //models.add(new SourceModel("Some", "guy", "stole", "my", "shoes", "yesterday"));
 
         adapter = new SourceAdapter(models, getApplicationContext());
         sourceReportListView.setAdapter(adapter);
@@ -177,16 +184,19 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
                     reportHashCodeToReportHashMap.put(String.valueOf(currReport.getReportID()), currReport);
                 }
 
-                LatLng rep;
+                //LatLng rep;
+                Report rep;
                 float avgLat = 0, avgLong = 0;
                 int num = 0;
                 LatLng average;
                 for (String key : reportHashCodeToReportHashMap.keySet()) {
                     num++;
-                    rep = reportHashCodeToReportHashMap.get(key).getLocation();
-                    avgLat += rep.latitude;
-                    avgLat += rep.longitude;
-                    googleMap.addMarker(new MarkerOptions().position(rep)
+                    //rep = reportHashCodeToReportHashMap.get(key).getLocation();
+                    rep = reportHashCodeToReportHashMap.get(key);
+                    avgLat += Double.parseDouble(rep.getLatitude());
+                    avgLong += Double.parseDouble(rep.getLongitude());
+                    googleMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(Double.parseDouble(rep.getLatitude()), Double.parseDouble(rep.getLongitude())))
                             .title(reportHashCodeToReportHashMap.get(key).getStreetAddress())
                             .snippet(reportHashCodeToReportHashMap.get(key).getWaterType() + ": " + reportHashCodeToReportHashMap.get(key).getWaterCondition()));
                 }

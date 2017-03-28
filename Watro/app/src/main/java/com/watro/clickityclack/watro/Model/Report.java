@@ -211,10 +211,10 @@ public class Report {
         this.streetAddress = streetAddress;
     }
 
-    /**
-     * Setter of Report's location
-     * @return report location
-     */
-    public LatLng getLocation() {return new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));}
+//    /**
+//     * Setter of Report's location
+//     * @return report location
+//     */
+//    public LatLng getLocation() {return new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));}
 
 }
