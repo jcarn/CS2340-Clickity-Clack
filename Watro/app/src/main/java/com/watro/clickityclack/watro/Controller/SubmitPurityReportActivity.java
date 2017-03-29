@@ -10,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -30,7 +29,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.watro.clickityclack.watro.Model.PurityReport;
-import com.watro.clickityclack.watro.Model.Report;
 import com.watro.clickityclack.watro.R;
 
 import java.io.IOException;
@@ -248,7 +246,6 @@ public class SubmitPurityReportActivity extends AppCompatActivity implements Vie
                 //function will make sure they granted everything access
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    //mClient.connect();
                     buildGoogleApiClient();
                 }
             }

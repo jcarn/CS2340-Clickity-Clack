@@ -16,8 +16,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.watro.clickityclack.watro.Model.DatabaseManager;
-import com.watro.clickityclack.watro.Model.LoginManager;
 import com.watro.clickityclack.watro.R;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -104,25 +102,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         }
                     }
                 });
-
-//        LoginManager loginManager = new LoginManager();
-//        boolean isLoginSuccessful = true;
-//
-//        try {
-//            loginManager.loginWithFirebase(this, email, password);
-//        } catch (Exception e) {
-//            progressDialog.dismiss();
-//
-//            isLoginSuccessful = false;
-//            Toast.makeText(LoginActivity.this, "Registration Failed.\n" + e.getMessage(), Toast.LENGTH_LONG).show();
-//        }
-//
-//        progressDialog.dismiss();
-//
-//        if (isLoginSuccessful) {
-//            finish();
-//            startActivity(new Intent(getApplicationContext(), ReportsActivity.class));
-//        }
     }
 
     @Override

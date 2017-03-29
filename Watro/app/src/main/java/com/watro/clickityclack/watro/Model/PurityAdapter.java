@@ -63,7 +63,7 @@ public class PurityAdapter extends ArrayAdapter<PurityModel> {
         }
         //using placeholder string because it is bad practice to concatenate strings inside of setText
         String placeholder = "Date: " + pureModel.getDate();
-        viewHolder.txtDate.setText("Date: " + pureModel.getDate());
+        viewHolder.txtDate.setText(placeholder);
         viewHolder.txtDate.setText(placeholder);
         placeholder = "Report ID: " + pureModel.getReportId();
         viewHolder.txtReportId.setText(placeholder);
