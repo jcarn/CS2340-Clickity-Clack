@@ -176,6 +176,7 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
         if (v == submitButton) {
             if (!editTextAddress.getText().toString().equals("")) {
                 saveReport();
+                startActivity(new Intent(this, ReportsActivity.class));
             } else {
                 Toast.makeText(this, "Please fill all fields", Toast.LENGTH_LONG).show();
             }

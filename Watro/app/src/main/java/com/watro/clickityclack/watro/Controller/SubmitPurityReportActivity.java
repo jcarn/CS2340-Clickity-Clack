@@ -157,6 +157,7 @@ public class SubmitPurityReportActivity extends AppCompatActivity implements Vie
     public void onClick(View v) {
         if (v == returnButton) {
             finish();
+//            startActivity(new Intent(this, PurityReportActivity.class));
             startActivity(new Intent(this, PurityReportActivity.class));
         }
 
@@ -182,6 +183,7 @@ public class SubmitPurityReportActivity extends AppCompatActivity implements Vie
 
             if (!editTextAddress.getText().toString().equals("") && virusIsNum && contaminantIsNum) {
                 saveReport();
+                startActivity(new Intent(this, PurityReportActivity.class));
             } else if (!virusIsNum || !contaminantIsNum) {
                 Toast.makeText(this, "Virus and Contaminant PPM must be numbers", Toast.LENGTH_LONG).show();
             } else {
