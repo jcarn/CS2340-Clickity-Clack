@@ -50,7 +50,8 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
     EditText editTextAddress;
     Spinner spinnerWaterType;
     Spinner spinnerWaterCondition;
-
+    private ArrayAdapter<CharSequence> waterTypeAdapter;
+    private ArrayAdapter<CharSequence> waterConditionAdapter;
     private Calendar calendar;
 
     FirebaseUser currentUser;
@@ -89,9 +90,11 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
         editTextAddress = (EditText) findViewById(R.id.editTextAddress);
             
         spinnerWaterType = (Spinner) findViewById(R.id.spinnerWaterType);
-        spinnerWaterType.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Report.WaterType.values()));
+        waterTypeAdapter = ArrayAdapter.createFromResource(this, R.array.waterTypes, android.R.layout.simple_spinner_dropdown_item);
+        spinnerWaterType.setAdapter(waterTypeAdapter);
+        waterConditionAdapter = ArrayAdapter.createFromResource(this, R.array.waterCondition, android.R.layout.simple_spinner_dropdown_item);
         spinnerWaterCondition = (Spinner) findViewById(R.id.spinnerWaterCondition);
-        spinnerWaterCondition.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Report.WaterCondition.values()));
+        spinnerWaterCondition.setAdapter(waterConditionAdapter);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 

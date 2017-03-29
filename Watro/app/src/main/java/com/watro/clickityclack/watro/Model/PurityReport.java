@@ -1,7 +1,5 @@
 package com.watro.clickityclack.watro.Model;
 
-import com.google.android.gms.maps.model.LatLng;
-
 /**
  * Created by Uche Nkadi on 3/27/2017.
  */
@@ -140,9 +138,4 @@ public class PurityReport {
         this.streetAddress = streetAddress;
     }
 
-//    /**
-//     * Setter of Report's location
-//     * @return report location
-//     */
-//    public LatLng getLocation() {return new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));}
 }

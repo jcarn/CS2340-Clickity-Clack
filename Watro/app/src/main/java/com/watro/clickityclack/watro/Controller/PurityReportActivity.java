@@ -1,7 +1,6 @@
 package com.watro.clickityclack.watro.Controller;
 
 import android.content.Intent;
-import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,24 +8,18 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.watro.clickityclack.watro.Model.Administrator;
 import com.watro.clickityclack.watro.Model.BasicUser;
-import com.watro.clickityclack.watro.Model.Manager;
 import com.watro.clickityclack.watro.Model.PurityAdapter;
 import com.watro.clickityclack.watro.Model.PurityModel;
 import com.watro.clickityclack.watro.Model.PurityReport;
-import com.watro.clickityclack.watro.Model.Worker;
 import com.watro.clickityclack.watro.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class PurityReportActivity extends AppCompatActivity implements View.OnClickListener {
     private Button submitPurityReportButton;
@@ -36,8 +29,6 @@ public class PurityReportActivity extends AppCompatActivity implements View.OnCl
     ArrayList<PurityModel> models;
     ArrayList<String> workerIDs;
     private DatabaseReference databaseReference;
-    private FirebaseAuth firebaseAuth;
-    FirebaseUser currentUser;
     String reportDate;
     String reportID;
     String workerID;
@@ -45,7 +36,6 @@ public class PurityReportActivity extends AppCompatActivity implements View.OnCl
     String overallCondition;
     String virusPPM;
     String contaminantPPM;
-    String name;
     PurityModel pureModel;
 
     @Override
@@ -71,7 +61,7 @@ public class PurityReportActivity extends AppCompatActivity implements View.OnCl
                     virusPPM = pureReport.getVirusPPM();
                     contaminantPPM = pureReport.getContaminantPPM();
                     workerID = pureReport.getReporterID();
-                    pureModel = new PurityModel(reportDate, reportID, null, location, overallCondition, virusPPM,contaminantPPM);
+                    pureModel = new PurityModel(reportDate, reportID, "", location, overallCondition, virusPPM,contaminantPPM);
                     workerIDs.add(workerID);
                     models.add(pureModel);
                 }

@@ -1,18 +1,13 @@
 package com.watro.clickityclack.watro.Model;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.watro.clickityclack.watro.Controller.LoginActivity;
-import com.watro.clickityclack.watro.Controller.ReportsActivity;
 
-import java.util.concurrent.Executor;
 
 /**
  * Created by henrysaba on 3/8/17.

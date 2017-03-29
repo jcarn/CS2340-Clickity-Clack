@@ -45,7 +45,6 @@ public class SourceAdapter extends ArrayAdapter<SourceModel> {
         final View result;
 
         if (convertView == null) {
-
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.single_source_report_view, parent, false);
