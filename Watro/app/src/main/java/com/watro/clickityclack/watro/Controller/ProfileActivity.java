@@ -22,6 +22,7 @@ import com.watro.clickityclack.watro.Model.Administrator;
 import com.watro.clickityclack.watro.Model.BasicUser;
 import com.watro.clickityclack.watro.Model.Manager;
 import com.watro.clickityclack.watro.Model.SuperUser;
+import com.watro.clickityclack.watro.Model.UserSingleton;
 import com.watro.clickityclack.watro.Model.Worker;
 import com.watro.clickityclack.watro.R;
 
@@ -52,6 +53,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private SuperUser superUser;
 
     private DatabaseReference databaseReference;
+    UserSingleton singleton = UserSingleton.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,24 +84,18 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         databaseReference = FirebaseDatabase.getInstance().getReference();
         //This is getting the specific reference to the current User using their Uid
         DatabaseReference currentUserReference = databaseReference.child("Users").child(currentUser.getUid());
-
         currentUserReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // get all of the information for the current user
                 BasicUser user = dataSnapshot.getValue(BasicUser.class);
-                String firstName = user.getFirstName();
-                String lastName = user.getLastName();
-                String email = user.getEmail();
-                String homeAddress = user.getHomeAddress();
-                String userType = user.getUserType();
-                String id = user.getId();
+                editTextEmail.setText(user.getEmail());
+                singleton.setUserType(user.getUserType());
+                editTextFirstName.setText(user.getFirstName());
+                editTextLastName.setText(user.getLastName());
+                editTextHomeAddress.setText(user.getHomeAddress());
+                spinnerUserType.setSelection(userTypeAdapter.getPosition(singleton.getUserType()));
 
-                editTextEmail.setText(email);
-                editTextFirstName.setText(firstName);
-                editTextLastName.setText(lastName);
-                editTextHomeAddress.setText(homeAddress);
-                spinnerUserType.setSelection(userTypeAdapter.getPosition(userType));
             }
 
             @Override
@@ -107,6 +103,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
             }
         });
+
+
 
         returnButton = (ImageButton) findViewById(R.id.returnButton);
 
@@ -126,6 +124,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         String updatedHomeAddress = valueOf(editTextHomeAddress.getText()).trim();
 
         String updatedUserType = String.valueOf(spinnerUserType.getSelectedItem());
+        singleton.setUserType(updatedUserType);
 
         if (updatedUserType.equals("User")) {
             currUserWithUpdatedInfo = new BasicUser(updatedFirstName, updatedLastName, updatedEmail, firebaseUser.getUid(), updatedHomeAddress, updatedUserType);

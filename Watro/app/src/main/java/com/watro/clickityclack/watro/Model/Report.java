@@ -143,6 +143,6 @@ public class Report {
     public void setStreetAddress(String streetAddress) {
         this.streetAddress = streetAddress;
     }
-    
+
 
 }
