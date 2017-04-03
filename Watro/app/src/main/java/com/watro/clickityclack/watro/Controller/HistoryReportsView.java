@@ -90,8 +90,6 @@ public class HistoryReportsView extends AppCompatActivity {
 
             }
         });
-
-        graph.addSeries(series);
     }
 
 }
