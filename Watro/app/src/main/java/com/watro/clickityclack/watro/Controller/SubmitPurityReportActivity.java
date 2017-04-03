@@ -29,6 +29,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.watro.clickityclack.watro.Model.PurityReport;
+import com.watro.clickityclack.watro.Model.UserSingleton;
 import com.watro.clickityclack.watro.R;
 
 import java.io.IOException;
@@ -59,6 +60,7 @@ public class SubmitPurityReportActivity extends AppCompatActivity implements Vie
     private EditText editTextContaminant;
     private Spinner spinnerOverallCondition;
     private ArrayAdapter<CharSequence> overallConditionAdapter;
+    UserSingleton singleton = UserSingleton.getInstance();
 
 
     @Override
@@ -155,8 +157,11 @@ public class SubmitPurityReportActivity extends AppCompatActivity implements Vie
     public void onClick(View v) {
         if (v == returnButton) {
             finish();
-//            startActivity(new Intent(this, PurityReportActivity.class));
-            startActivity(new Intent(this, PurityReportActivity.class));
+            if (singleton.getUserType().equals("Worker")) {
+                startActivity(new Intent(this, ReportsActivity.class));
+            } else {
+                startActivity(new Intent(this, PurityReportActivity.class));
+            }
         }
 
         if (v == submitButton) {
@@ -181,7 +186,11 @@ public class SubmitPurityReportActivity extends AppCompatActivity implements Vie
 
             if (!editTextAddress.getText().toString().equals("") && virusIsNum && contaminantIsNum) {
                 saveReport();
-                startActivity(new Intent(this, PurityReportActivity.class));
+                if (singleton.getUserType().equals("Worker")) {
+                    startActivity(new Intent(this, ReportsActivity.class));
+                } else {
+                    startActivity(new Intent(this, PurityReportActivity.class));
+                }
             } else if (!virusIsNum || !contaminantIsNum) {
                 Toast.makeText(this, "Virus and Contaminant PPM must be numbers", Toast.LENGTH_LONG).show();
             } else {

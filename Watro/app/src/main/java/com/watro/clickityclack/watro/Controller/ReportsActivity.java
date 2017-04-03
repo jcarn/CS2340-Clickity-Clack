@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -25,6 +26,7 @@ import com.watro.clickityclack.watro.Model.BasicUser;
 import com.watro.clickityclack.watro.Model.Report;
 import com.watro.clickityclack.watro.Model.SourceAdapter;
 import com.watro.clickityclack.watro.Model.SourceModel;
+import com.watro.clickityclack.watro.Model.UserSingleton;
 import com.watro.clickityclack.watro.R;
 
 import java.util.ArrayList;
@@ -49,7 +51,7 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
     String location;
     String waterType;
     String waterCondition;
-
+    UserSingleton singleton = UserSingleton.getInstance();
     SourceModel source;
 
 
@@ -108,6 +110,7 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
 
             }
         });
+
         settingsButton = (ImageButton) findViewById(R.id.settingsButton);
         submitReportButton = (Button) findViewById(R.id.submitReportButton);
         purityReportButton = (Button) findViewById(R.id.purityReportButton);
@@ -125,6 +128,10 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
 
         if (currentUser == null) {
             purityReportButton.setVisibility(View.GONE);
+        } else if (singleton.exists()) {
+            if (singleton.getUserType().equals("User") || singleton.getUserType().equals("Administrator")) {
+                purityReportButton.setVisibility(View.GONE);
+            }
         } else {
             databaseReference = FirebaseDatabase.getInstance().getReference();
             final DatabaseReference usersDataBaseReference = databaseReference.child("Users").child(currentUser.getUid());
@@ -132,7 +139,8 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     BasicUser person = dataSnapshot.getValue(BasicUser.class);
-                    if (person.getUserType().equals("User") || person.getUserType().equals("Administrator")) {
+                    singleton.setUserType(person.getUserType());
+                    if (singleton.getUserType().equals("User") || singleton.getUserType().equals("Administrator")) {
                         purityReportButton.setVisibility(View.GONE);
                     }
                 }
@@ -219,8 +227,13 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
         if (v == submitReportButton) {
             startActivity(new Intent(this, SubmitActivity.class));
         }
+        //If they are even able to see the purity report button, they are a worker or manager
         if (v == purityReportButton) {
-            startActivity(new Intent(this, PurityReportActivity.class));
+            if (singleton.getUserType().equals("Worker")) {
+                startActivity(new Intent(this, SubmitPurityReportActivity.class));
+            } else {
+                startActivity(new Intent(this, PurityReportActivity.class));
+            }
         }
     }
 }

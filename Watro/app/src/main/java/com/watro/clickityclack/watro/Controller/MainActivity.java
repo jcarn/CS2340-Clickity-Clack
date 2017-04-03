@@ -30,6 +30,7 @@ import com.watro.clickityclack.watro.Model.Administrator;
 import com.watro.clickityclack.watro.Model.BasicUser;
 import com.watro.clickityclack.watro.Model.Manager;
 import com.watro.clickityclack.watro.Model.SuperUser;
+import com.watro.clickityclack.watro.Model.UserSingleton;
 import com.watro.clickityclack.watro.Model.Worker;
 import com.watro.clickityclack.watro.R;
 
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     // The Firebase authentication object that will be used to register the user on the server
     private FirebaseAuth firebaseAuth;
+    UserSingleton singleton = UserSingleton.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,9 +105,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String newUserLastName = valueOf(editTextLastName.getText()).trim();
         String newUserHomeAddress = valueOf(editTextHomeAddress.getText()).trim();
         String newUserType = String.valueOf(spinnerUserType.getSelectedItem());
+        singleton.setUserType(newUserType);
 
         final SuperUser newUser = new BasicUser(newUserFirstName, newUserLastName, newUserEmail, String.valueOf(firebaseUser.getUid()), newUserHomeAddress, newUserType);
-
         DatabaseReference usersDataBaseReference = databaseReference.child("Users");
 
         usersDataBaseReference.addValueEventListener(new ValueEventListener() {
@@ -198,34 +200,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // A listener is also attached to track execution of method. In this case, we want to know
         // when registration communication with server is done.
         firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    // The Task object contains info on whether registration was successful or not
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        // Remove progress dialog from screen
-                        progressDialog.dismiss();
+            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                // The Task object contains info on whether registration was successful or not
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    // Remove progress dialog from screen
+                    progressDialog.dismiss();
 
-                        if (task.isSuccessful()) {
-                            // User is successfully registered and logged in.
-                            // Now, we need to save the user's information
-                            FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                            saveUserInformation(firebaseUser);
+                    if (task.isSuccessful()) {
+                        // User is successfully registered and logged in.
+                        // Now, we need to save the user's information
+                        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                        saveUserInformation(firebaseUser);
 
-                            // Display a toast notifying the user that registration was successful
-                            Toast.makeText(MainActivity.this, "Registration Successful!", Toast.LENGTH_LONG).show();
+                        // Display a toast notifying the user that registration was successful
+                        Toast.makeText(MainActivity.this, "Registration Successful!", Toast.LENGTH_LONG).show();
 
-                            // Registration successful. Start Reports Activity.
-                            finish();
-                            startActivity(new Intent(getApplicationContext(), ReportsActivity.class));
-                        } else {
-                            // Registration was unsuccessful
+                        // Registration successful. Start Reports Activity.
+                        finish();
+                        startActivity(new Intent(getApplicationContext(), ReportsActivity.class));
+                    } else {
+                        // Registration was unsuccessful
 
-                            // Display a toast notifying the user that registration was not successful
-                            Toast.makeText(MainActivity.this, "Registration Failed.\n" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        // Display a toast notifying the user that registration was not successful
+                        Toast.makeText(MainActivity.this, "Registration Failed.\n" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
 
-                        }
                     }
-                });
+                }
+            });
     }
 
     @Override
