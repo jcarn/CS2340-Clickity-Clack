@@ -93,6 +93,7 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
 
             }
         });
+
         final DatabaseReference userReference = databaseReference.child("Users");
         userReference.addValueEventListener(new ValueEventListener() {
             @Override

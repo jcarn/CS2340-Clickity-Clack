@@ -38,4 +38,15 @@
         android:layout_below="@+id/submitPurityReportButton"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="52dp" />
+
+    <Button
+        android:id="@+id/viewHistoryButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View History"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/submitPurityReportButton"
+        android:layout_toStartOf="@+id/submitPurityReportButton"
+        android:layout_marginRight="19dp"
+        android:layout_marginEnd="19dp" />
 </RelativeLayout>
