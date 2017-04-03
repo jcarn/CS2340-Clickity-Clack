@@ -21,8 +21,12 @@ import com.watro.clickityclack.watro.R;
 
 import java.util.ArrayList;
 
+import static com.watro.clickityclack.watro.R.layout.activity_history_reports_view;
+
 public class PurityReportActivity extends AppCompatActivity implements View.OnClickListener {
     private Button submitPurityReportButton;
+    private Button viewHistoryButton;
+
     private ImageButton returnButton;
     private ListView purityReportListView;
     private PurityAdapter adapter;
@@ -86,13 +90,14 @@ public class PurityReportActivity extends AppCompatActivity implements View.OnCl
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
         submitPurityReportButton = (Button) findViewById(R.id.submitPurityReportButton);
         returnButton = (ImageButton) findViewById(R.id.returnButton);
         purityReportListView = (ListView) findViewById(R.id.purityReportListView);
+        viewHistoryButton = (Button) findViewById(R.id.viewHistoryButton);
 
+        viewHistoryButton.setOnClickListener(this);
         submitPurityReportButton.setOnClickListener(this);
         returnButton.setOnClickListener(this);
         adapter = new PurityAdapter(models, getApplicationContext());
@@ -101,6 +106,9 @@ public class PurityReportActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onClick(View v) {
+        if (v == viewHistoryButton) {
+            startActivity(new Intent(this, HistoryReportsView.class));
+        }
         if (v == submitPurityReportButton) {
             startActivity(new Intent(this, SubmitPurityReportActivity.class));
         }
