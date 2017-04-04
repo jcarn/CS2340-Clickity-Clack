@@ -25,4 +25,8 @@
         <item>Muddy but Treatable</item>
         <item>Potable</item>
     </string-array>
+    <string-array name="virusOrContaminant">
+        <item>Virus PPM</item>
+        <item>Contaminant PPM</item>
+    </string-array>
 </resources>
