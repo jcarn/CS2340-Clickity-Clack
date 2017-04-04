@@ -7,10 +7,12 @@ import com.google.firebase.auth.FirebaseAuth;
  */
 
 public class DatabaseManager {
-    private FirebaseAuth firebaseAuth;
 
+    /**
+     * Default Constructor
+     */
     public DatabaseManager() {
-        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
 
     }

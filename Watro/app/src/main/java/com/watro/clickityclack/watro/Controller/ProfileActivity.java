@@ -159,6 +159,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             } else {
                 saveUserInformation(currentUser);
                 makeText(this, "Changes Saved", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(this, ReportsActivity.class));
             }
         }
 

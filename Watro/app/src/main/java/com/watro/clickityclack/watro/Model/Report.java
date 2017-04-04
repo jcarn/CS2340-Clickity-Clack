@@ -51,15 +51,15 @@ public class Report {
     }
 
     /**
-     * Getter of water type enum
-     * @return enum type of water
+     * Getter of water type
+     * @return String type of water
      */
     public String getWaterType() {
         return waterT;
     }
 
     /**
-     * Setter of waterType enum
+     * Setter of waterType
      * @param waterType string matching type of water
      */
     public void setWaterType(String waterType) {
@@ -67,15 +67,15 @@ public class Report {
     }
 
     /**
-     * Getter of WaterCondtion Enum
-     * @return enum condition of the water
+     * Getter of WaterCondition
+     * @return String condition of the water
      */
     public String getWaterCondition() {
         return waterC;
     }
 
     /**
-     * Setter of water condition enum
+     * Setter of water condition
      * @param waterCondition String matching desired water type
      */
     public void setWaterCondition(String waterCondition) {
