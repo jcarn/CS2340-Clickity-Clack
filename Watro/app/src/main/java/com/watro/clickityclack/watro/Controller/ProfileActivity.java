@@ -95,7 +95,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 editTextHomeAddress.setText(user.getHomeAddress());
                 singleton.setUserType(user.getUserType());
                 spinnerUserType.setSelection(userTypeAdapter.getPosition(user.getUserType()));
-
             }
 
             @Override
