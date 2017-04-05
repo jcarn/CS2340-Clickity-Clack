@@ -1,18 +1,13 @@
 package com.watro.clickityclack.watro.Model;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.watro.clickityclack.watro.Controller.LoginActivity;
-import com.watro.clickityclack.watro.Controller.ReportsActivity;
 
-import java.util.concurrent.Executor;
 
 /**
  * Created by henrysaba on 3/8/17.
@@ -21,10 +16,19 @@ import java.util.concurrent.Executor;
 public class LoginManager {
     private FirebaseAuth firebaseAuth;
 
+    /**
+     * Default Constructor
+     */
     public LoginManager() {
         firebaseAuth = FirebaseAuth.getInstance();
     }
 
+    /**
+     * Logs into firebase
+     * @param activity current activity
+     * @param email email of user
+     * @param password password of user
+     */
     public void loginWithFirebase(Activity activity, String email, String password) throws Exception {
 
         firebaseAuth.signInWithEmailAndPassword(email, password)

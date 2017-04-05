@@ -1,18 +1,27 @@
 package com.watro.clickityclack.watro.Model;
 
 /**
- * Created by John on 2/28/2017.
+ * Created by Uche Nkadi on 3/27/2017.
  */
 
-public class Report {
+public class PurityReport {
     private String reportDate;
     private String reportID;
     private String reporterID;
     private String streetAddress;
-    private String waterT;
-    private String waterC;
+    private String waterCondition;
     private String latitude;
     private String longitude;
+    private String virusPPM;
+    private String contaminantPPM;
+
+    public String getWaterCondition() {
+        return waterCondition;
+    }
+
+    public void setWaterCondition(String waterCondition) {
+        this.waterCondition = waterCondition;
+    }
 
     /**
      * Getter for latitude
@@ -51,38 +60,6 @@ public class Report {
     }
 
     /**
-     * Getter of water type
-     * @return String type of water
-     */
-    public String getWaterType() {
-        return waterT;
-    }
-
-    /**
-     * Setter of waterType
-     * @param waterType string matching type of water
-     */
-    public void setWaterType(String waterType) {
-        waterT = waterType;
-    }
-
-    /**
-     * Getter of WaterCondition
-     * @return String condition of the water
-     */
-    public String getWaterCondition() {
-        return waterC;
-    }
-
-    /**
-     * Setter of water condition
-     * @param waterCondition String matching desired water type
-     */
-    public void setWaterCondition(String waterCondition) {
-        waterC = waterCondition;
-    }
-
-    /**
      * Getter of report date
      * @return String date report was filed
      */
@@ -107,7 +84,40 @@ public class Report {
     }
 
     /**
+     * Getter for virusPPM
+     * @return String number of viruses in water in PPM
+     */
+    public String getVirusPPM() {
+        return virusPPM;
+    }
+
+    /**
+     * Setter for virusPPM
+     * @param virusPPM number of viruses in water in PPM
+     */
+    public void setVirusPPM(String virusPPM) {
+        this.virusPPM = virusPPM;
+    }
+
+    /**
+     * Getter for contaminantPPM
+     * @return String number of contaminants in water in PPM
+     */
+    public String getContaminantPPM() {
+        return contaminantPPM;
+    }
+
+    /**
+     * Setter for contaminantPPM
+     * @param contaminantPPM number of contaminants in water in PPM
+     */
+    public void setContaminantPPM(String contaminantPPM) {
+        this.contaminantPPM = contaminantPPM;
+    }
+
+    /**
      * Setter of report ID
+
      * @param reportID new unique ID of report
      */
     public void setReportID(String reportID) {
@@ -143,6 +153,5 @@ public class Report {
     public void setStreetAddress(String streetAddress) {
         this.streetAddress = streetAddress;
     }
-
 
 }

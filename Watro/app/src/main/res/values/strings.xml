@@ -6,4 +6,27 @@
         <item>Manager</item>
         <item>Administrator</item>
     </string-array>
+    <string-array name="overallCondition">
+        <item>Safe</item>
+        <item>Treatable</item>
+        <item>Unsafe</item>
+    </string-array>
+    <string-array name="waterTypes">
+        <item>Bottled</item>
+        <item>Well</item>
+        <item>Stream</item>
+        <item>Lake</item>
+        <item>Spring</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="waterCondition">
+        <item>Waste</item>
+        <item>Clear and Treatable</item>
+        <item>Muddy but Treatable</item>
+        <item>Potable</item>
+    </string-array>
+    <string-array name="virusOrContaminant">
+        <item>Virus PPM</item>
+        <item>Contaminant PPM</item>
+    </string-array>
 </resources>

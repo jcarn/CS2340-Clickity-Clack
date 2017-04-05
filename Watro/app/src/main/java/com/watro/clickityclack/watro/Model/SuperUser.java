@@ -6,6 +6,12 @@ public abstract class SuperUser {
     protected String id;
 
     /**
+     * Default Constructor
+     */
+    public SuperUser() {
+
+    }
+    /**
      * Constructor for general user class from which all others inherit
      * @param email email of user in form: name@host.ext
      * @param id firebase generated ID of user

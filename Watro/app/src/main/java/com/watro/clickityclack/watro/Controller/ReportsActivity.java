@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.Toast;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -12,24 +15,44 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import android.util.Log;
-
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.watro.clickityclack.watro.Model.BasicUser;
 import com.watro.clickityclack.watro.Model.Report;
+import com.watro.clickityclack.watro.Model.SourceAdapter;
+import com.watro.clickityclack.watro.Model.SourceModel;
+import com.watro.clickityclack.watro.Model.UserSingleton;
 import com.watro.clickityclack.watro.R;
-import com.watro.clickityclack.watro.Model.Report;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ReportsActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback {
 
     private ImageButton settingsButton;
     private Button submitReportButton;
+    private Button purityReportButton;
+    private ListView sourceReportListView;
+    private SourceAdapter adapter;
     private DatabaseReference databaseReference;
+    private FirebaseAuth firebaseAuth;
+    FirebaseUser currentUser;
+    ArrayList<SourceModel> models;
+    ArrayList<String> reporterIDs;
+    String reportDate;
+    String reportID;
+    String reporterID;
+    String name;
+    String location;
+    String waterType;
+    String waterCondition;
+    UserSingleton singleton = UserSingleton.getInstance();
+    SourceModel source;
 
 
     @Override
@@ -39,13 +62,96 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
+        DatabaseReference reportReference = databaseReference.child("Reports");
+        models = new ArrayList<>();
+        reporterIDs = new ArrayList<>();
+        reportReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                for (DataSnapshot child: children)  {
+                    Report report = (Report) child.getValue(Report.class);
+                    reportDate = report.getReportDate();
+                    reportID = report.getReportID();
+                    location = report.getStreetAddress();
+                    waterType = report.getWaterType();
+                    waterCondition = report.getWaterCondition();
+                    reporterID = report.getReporterID();
+                    source = new SourceModel(reportDate, reportID, "", location, waterType, waterCondition);
+                    reporterIDs.add(reporterID);
+                    models.add(source);
+                }
+
+                //BasicUser person = (BasicUser) databaseReference.child("Users").child(reportID).getValue();
+                //String name =
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        final DatabaseReference userReference = databaseReference.child("Users");
+        userReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int index = 0;
+                for (String x: reporterIDs) {
+                    BasicUser user = (BasicUser) dataSnapshot.child(x).getValue(BasicUser.class);
+                    models.get(index).setReporterName(user.getFirstName() + " " + user.getLastName());
+                    index++;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         settingsButton = (ImageButton) findViewById(R.id.settingsButton);
         submitReportButton = (Button) findViewById(R.id.submitReportButton);
+        purityReportButton = (Button) findViewById(R.id.purityReportButton);
+        sourceReportListView = (ListView) findViewById(R.id.sourceReportListView);
 
+        adapter = new SourceAdapter(models, getApplicationContext());
+        sourceReportListView.setAdapter(adapter);
         settingsButton.setOnClickListener(this);
         submitReportButton.setOnClickListener(this);
+        purityReportButton.setOnClickListener(this);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        firebaseAuth = FirebaseAuth.getInstance();
+        currentUser = firebaseAuth.getCurrentUser();
+
+        if (currentUser == null) {
+            purityReportButton.setVisibility(View.GONE);
+        } else if (singleton.exists()) {
+            if (singleton.getUserType().equals("User") || singleton.getUserType().equals("Administrator")) {
+                purityReportButton.setVisibility(View.GONE);
+            }
+        } else {
+            databaseReference = FirebaseDatabase.getInstance().getReference();
+            final DatabaseReference usersDataBaseReference = databaseReference.child("Users").child(currentUser.getUid());
+            usersDataBaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    BasicUser person = dataSnapshot.getValue(BasicUser.class);
+                    singleton.setUserType(person.getUserType());
+                    if (singleton.getUserType().equals("User") || singleton.getUserType().equals("Administrator")) {
+                        purityReportButton.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
     }
     @Override
     public void onMapReady(final GoogleMap googleMap) {
@@ -81,16 +187,18 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
                     reportHashCodeToReportHashMap.put(String.valueOf(currReport.getReportID()), currReport);
                 }
 
-                LatLng rep;
+                //LatLng rep;
+                Report rep;
                 float avgLat = 0, avgLong = 0;
                 int num = 0;
                 LatLng average;
                 for (String key : reportHashCodeToReportHashMap.keySet()) {
                     num++;
-                    rep = reportHashCodeToReportHashMap.get(key).getLocation();
-                    avgLat += rep.latitude;
-                    avgLat += rep.longitude;
-                    googleMap.addMarker(new MarkerOptions().position(rep)
+                    rep = reportHashCodeToReportHashMap.get(key);
+                    avgLat += Double.parseDouble(rep.getLatitude());
+                    avgLong += Double.parseDouble(rep.getLongitude());
+                    googleMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(Double.parseDouble(rep.getLatitude()), Double.parseDouble(rep.getLongitude())))
                             .title(reportHashCodeToReportHashMap.get(key).getStreetAddress())
                             .snippet(reportHashCodeToReportHashMap.get(key).getWaterType() + ": " + reportHashCodeToReportHashMap.get(key).getWaterCondition()));
                 }
@@ -119,6 +227,14 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
         }
         if (v == submitReportButton) {
             startActivity(new Intent(this, SubmitActivity.class));
+        }
+        //If they are even able to see the purity report button, they are a worker or manager
+        if (v == purityReportButton) {
+            if (singleton.getUserType().equals("Worker")) {
+                startActivity(new Intent(this, SubmitPurityReportActivity.class));
+            } else {
+                startActivity(new Intent(this, PurityReportActivity.class));
+            }
         }
     }
 }

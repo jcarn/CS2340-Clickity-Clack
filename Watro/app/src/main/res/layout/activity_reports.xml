@@ -22,24 +22,41 @@
         android:layout_alignParentStart="true" />
 
     <Button
-        android:text="Submit report"
+        android:id="@+id/submitReportButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/submitReportButton"
         android:layout_alignBottom="@+id/settingsButton"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:text="Submit Source" />
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="240dp"
         tools:context="com.example.mapwithmarker.MapsMarkerActivity"
         android:layout_below="@+id/settingsButton"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="31dp" />
+
+    <Button
+        android:id="@+id/purityReportButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Purity Report"
+        android:layout_above="@+id/map"
+        android:layout_toLeftOf="@+id/submitReportButton"
+        android:layout_toStartOf="@+id/submitReportButton" />
+
+    <ListView
+        android:id="@+id/sourceReportListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/map"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp" />
 
 </RelativeLayout>
