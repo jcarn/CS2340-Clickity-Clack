@@ -16,10 +16,19 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LoginManager {
     private FirebaseAuth firebaseAuth;
 
+    /**
+     * Default Constructor
+     */
     public LoginManager() {
         firebaseAuth = FirebaseAuth.getInstance();
     }
 
+    /**
+     * Logs into firebase
+     * @param activity current activity
+     * @param email email of user
+     * @param password password of user
+     */
     public void loginWithFirebase(Activity activity, String email, String password) throws Exception {
 
         firebaseAuth.signInWithEmailAndPassword(email, password)

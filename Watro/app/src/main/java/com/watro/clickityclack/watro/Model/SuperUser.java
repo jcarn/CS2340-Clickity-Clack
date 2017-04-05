@@ -4,6 +4,10 @@ public abstract class SuperUser {
     
     protected String email;
     protected String id;
+
+    /**
+     * Default Constructor
+     */
     public SuperUser() {
 
     }

@@ -83,18 +83,34 @@ public class PurityReport {
         return reportID;
     }
 
+    /**
+     * Getter for virusPPM
+     * @return String number of viruses in water in PPM
+     */
     public String getVirusPPM() {
         return virusPPM;
     }
 
+    /**
+     * Setter for virusPPM
+     * @param virusPPM number of viruses in water in PPM
+     */
     public void setVirusPPM(String virusPPM) {
         this.virusPPM = virusPPM;
     }
 
+    /**
+     * Getter for contaminantPPM
+     * @return String number of contaminants in water in PPM
+     */
     public String getContaminantPPM() {
         return contaminantPPM;
     }
 
+    /**
+     * Setter for contaminantPPM
+     * @param contaminantPPM number of contaminants in water in PPM
+     */
     public void setContaminantPPM(String contaminantPPM) {
         this.contaminantPPM = contaminantPPM;
     }
