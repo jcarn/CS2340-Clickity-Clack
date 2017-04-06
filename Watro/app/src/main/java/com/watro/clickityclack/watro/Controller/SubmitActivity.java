@@ -43,27 +43,23 @@ import java.util.Locale;
 public class SubmitActivity extends AppCompatActivity implements View.OnClickListener,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-    private FirebaseAuth firebaseAuth;
 
     private ImageButton returnButton;
 
-    EditText editTextAddress;
-    Spinner spinnerWaterType;
-    Spinner spinnerWaterCondition;
-    private ArrayAdapter<CharSequence> waterTypeAdapter;
-    private ArrayAdapter<CharSequence> waterConditionAdapter;
-    private Calendar calendar;
+    private EditText editTextAddress;
+    private Spinner spinnerWaterType;
+    private Spinner spinnerWaterCondition;
 
-    FirebaseUser currentUser;
+    private FirebaseUser currentUser;
 
     private Button submitButton;
 
     private DatabaseReference databaseReference;
-    protected GoogleApiClient mClient;
-    protected Location lastLocation;
-    protected double curLatitude;
-    protected double curLongitude;
-    protected final int LOCATION_REQUEST = 100;
+    private GoogleApiClient mClient;
+    private Location lastLocation;
+    private double curLatitude;
+    private double curLongitude;
+    private final int LOCATION_REQUEST = 100;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +75,7 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
         }
         setContentView(R.layout.activity_submit);
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
         currentUser = firebaseAuth.getCurrentUser();
         if (currentUser == null) {
@@ -90,9 +86,9 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
         editTextAddress = (EditText) findViewById(R.id.editTextAddress);
             
         spinnerWaterType = (Spinner) findViewById(R.id.spinnerWaterType);
-        waterTypeAdapter = ArrayAdapter.createFromResource(this, R.array.waterTypes, android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> waterTypeAdapter = ArrayAdapter.createFromResource(this, R.array.waterTypes, android.R.layout.simple_spinner_dropdown_item);
         spinnerWaterType.setAdapter(waterTypeAdapter);
-        waterConditionAdapter = ArrayAdapter.createFromResource(this, R.array.waterCondition, android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> waterConditionAdapter = ArrayAdapter.createFromResource(this, R.array.waterCondition, android.R.layout.simple_spinner_dropdown_item);
         spinnerWaterCondition = (Spinner) findViewById(R.id.spinnerWaterCondition);
         spinnerWaterCondition.setAdapter(waterConditionAdapter);
 
@@ -110,7 +106,7 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
         final Report report = new Report();
         String waterType = String.valueOf(spinnerWaterType.getSelectedItem());
         String waterCondition = String.valueOf(spinnerWaterCondition.getSelectedItem());
-        calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
         String reportDate = calendar.get(Calendar.MONTH) + 1 + "-"
                 + calendar.get(Calendar.DAY_OF_MONTH)
                 + "-" + calendar.get(Calendar.YEAR);
@@ -186,7 +182,7 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    protected synchronized void buildGoogleApiClient() {
+    private synchronized void buildGoogleApiClient() {
         mClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)

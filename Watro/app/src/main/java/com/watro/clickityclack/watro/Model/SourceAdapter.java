@@ -13,16 +13,15 @@ import java.util.ArrayList;
 
 /**
  * Created by Uche Nkadi on 3/28/2017.
+ * This class holds information that is used in the list view for water source reports.
  */
 
 public class SourceAdapter extends ArrayAdapter<SourceModel> {
-    private ArrayList<SourceModel> sourceList;
-    Context mContext;
 
     public SourceAdapter(ArrayList<SourceModel> data, Context context) {
         super(context, R.layout.single_source_report_view, data);
-        this.sourceList = data;
-        this.mContext = context;
+        ArrayList<SourceModel> sourceList = data;
+        Context mContext = context;
     }
 
     // View lookup cache
