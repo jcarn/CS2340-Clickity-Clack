@@ -37,7 +37,6 @@ public class HistoryReportsView extends AppCompatActivity implements View.OnClic
     private PointsGraphSeries<DataPoint> series;
     private ArrayList<DataPoint> dataPoints;
     private Spinner virusOrContaminantSpinner;
-    private ArrayAdapter<CharSequence> virusOrContaminantAdapter;
     private Spinner locationSpinner;
     private ArrayAdapter<String> locationAdapter;
     private Button updateGraphButton;
@@ -50,7 +49,7 @@ public class HistoryReportsView extends AppCompatActivity implements View.OnClic
 
         graph = (GraphView) findViewById(R.id.graph);
         virusOrContaminantSpinner = (Spinner) findViewById(R.id.virusOrContaminantSpinner);
-        virusOrContaminantAdapter = ArrayAdapter.createFromResource(this, R.array.virusOrContaminant, R.layout.support_simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> virusOrContaminantAdapter = ArrayAdapter.createFromResource(this, R.array.virusOrContaminant, R.layout.support_simple_spinner_dropdown_item);
         virusOrContaminantAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         virusOrContaminantSpinner.setAdapter(virusOrContaminantAdapter);
         locationSpinner = (Spinner) findViewById(R.id.locationSpinner);
@@ -68,8 +67,8 @@ public class HistoryReportsView extends AppCompatActivity implements View.OnClic
                     locationHash.add(purityReport.getStreetAddress());
                 }
                 if (locationAdapter == null) {
-                    ArrayList<String> listOfLocations = new ArrayList<String>(locationHash);
-                    locationAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, listOfLocations);
+                    ArrayList<String> listOfLocations = new ArrayList<>(locationHash);
+                    locationAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, listOfLocations);
                     locationAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
                     locationSpinner.setAdapter(locationAdapter);
                 }
@@ -80,7 +79,7 @@ public class HistoryReportsView extends AppCompatActivity implements View.OnClic
 
             }
         });
-        //Chooosing not to show data until the user selects to update. Allows to dynamically update locations
+        //Choososing not to show data until the user selects to update. Allows to dynamically update locations
         //showData(String.valueOf(virusOrContaminantSpinner.getSelectedItem()), "");
 
     }
@@ -123,7 +122,7 @@ public class HistoryReportsView extends AppCompatActivity implements View.OnClic
                 }
                 DataPoint[] arrayConvert = new DataPoint[dataPoints.size()];
                 arrayConvert = dataPoints.toArray(arrayConvert);
-                series = new PointsGraphSeries<DataPoint>(arrayConvert);
+                series = new PointsGraphSeries<>(arrayConvert);
                 graph.addSeries(series);
             }
 

@@ -50,14 +50,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DatabaseReference databaseReference;
 
     private Spinner spinnerUserType;
-    private ArrayAdapter<CharSequence> userTypeAdapter;
 
     private TextView textViewSignIn;
     private ProgressDialog progressDialog;
 
     // The Firebase authentication object that will be used to register the user on the server
     private FirebaseAuth firebaseAuth;
-    UserSingleton singleton = UserSingleton.getInstance();
+    private final UserSingleton singleton = UserSingleton.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
 
         spinnerUserType = (Spinner) findViewById(R.id.spinnerUserType);
-        userTypeAdapter = ArrayAdapter.createFromResource(this, R.array.userTypes, R.layout.support_simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> userTypeAdapter = ArrayAdapter.createFromResource(this, R.array.userTypes, R.layout.support_simple_spinner_dropdown_item);
         userTypeAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         spinnerUserType.setAdapter(userTypeAdapter);
 
@@ -139,6 +138,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     } else if (currUserType.equals("Administrator")) {
                         currUser = new Administrator(currUserFirstName, currUserLastName, currUserEmail, currUserId, currUserHomeAddress, currUserType);
                     }
+
+//                    switch(currUserType) {
+//                        case "User":
+//                            currUser = new BasicUser(currUserFirstName, currUserLastName, currUserEmail, currUserId, currUserHomeAddress, currUserType);
+//                        case "Worker":
+//                            currUser = new Worker(currUserFirstName, currUserLastName, currUserEmail, currUserId, currUserHomeAddress, currUserType);
+//                        case "Manager":
+//                            currUser = new Manager(currUserFirstName, currUserLastName, currUserEmail, currUserId, currUserHomeAddress, currUserType);
+//                        case "Administrator":
+//                            currUser = new Administrator(currUserFirstName, currUserLastName, currUserEmail, currUserId, currUserHomeAddress, currUserType);
+//                        default:
+//                            System.out.println("UserType checking failed");
+//                    }
 
                     userIdToUserHashMap.put(String.valueOf(currUser.getId()), currUser);
                 }

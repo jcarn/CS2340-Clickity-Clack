@@ -1,16 +1,11 @@
 package com.watro.clickityclack.watro.Model;
 
 public class Administrator extends SuperUser {
-    /**
-     * Constructor for Administrator
-     *
-     * @param email email of admin
-     * @param id firebase generated ID of admin
-     */
-    protected String homeAddress;
-    protected String firstName;
-    protected String lastName;
-    protected String userType;
+
+    private String homeAddress;
+    private String firstName;
+    private String lastName;
+    private String userType;
 
     /**
      * Constructor for the Administrator user

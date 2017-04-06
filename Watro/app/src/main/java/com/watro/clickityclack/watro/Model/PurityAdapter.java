@@ -13,15 +13,14 @@ import java.util.ArrayList;
 
 /**
  * Created by Uche Nkadi on 3/28/2017.
+ * This class holds information that is used in the list view for purity reports.
  */
 
 public class PurityAdapter extends ArrayAdapter<PurityModel> {
-    ArrayList<PurityModel> pureList;
-    Context mContext;
     public PurityAdapter(ArrayList<PurityModel> data, Context context) {
         super(context, R.layout.single_purity_report_view, data);
-        this.pureList = data;
-        this.mContext = context;
+        ArrayList<PurityModel> pureList = data;
+        Context mContext = context;
     }
     // View lookup cache
     private static class ViewHolder {

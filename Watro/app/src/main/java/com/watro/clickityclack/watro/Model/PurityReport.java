@@ -2,6 +2,7 @@ package com.watro.clickityclack.watro.Model;
 
 /**
  * Created by Uche Nkadi on 3/27/2017.
+ * This is the previous information holder for the purity report.
  */
 
 public class PurityReport {
@@ -35,7 +36,7 @@ public class PurityReport {
     /**
      * Setter for latitude
      *
-     * @param latitude
+     * @param latitude Set location latitude
      */
     public void setLatitude(String latitude) {
         this.latitude = latitude;
@@ -53,7 +54,7 @@ public class PurityReport {
     /**
      * Setter for longitude
      *
-     * @param longitude
+     * @param longitude Set location longitude
      */
     public void setLongitude(String longitude) {
         this.longitude = longitude;

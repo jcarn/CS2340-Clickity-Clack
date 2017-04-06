@@ -2,6 +2,7 @@ package com.watro.clickityclack.watro.Model;
 
 /**
  * Created by Uche Nkadi on 3/28/2017.
+ * This class stores information that user inputs in a water source report.
  */
 
 public class SourceModel {

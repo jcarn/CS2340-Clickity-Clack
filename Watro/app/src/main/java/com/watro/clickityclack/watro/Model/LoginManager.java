@@ -11,10 +11,11 @@ import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * Created by henrysaba on 3/8/17.
+ * This class checks user input to give users access to the app
  */
 
-public class LoginManager {
-    private FirebaseAuth firebaseAuth;
+class LoginManager {
+    private final FirebaseAuth firebaseAuth;
 
     /**
      * Default Constructor

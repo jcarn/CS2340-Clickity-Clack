@@ -26,7 +26,7 @@ import com.watro.clickityclack.watro.Model.UserSingleton;
 import com.watro.clickityclack.watro.Model.Worker;
 import com.watro.clickityclack.watro.R;
 
-import java.util.HashMap;
+//import java.util.HashMap;
 
 import static android.widget.Toast.makeText;
 import static java.lang.String.valueOf;
@@ -37,23 +37,23 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     private ImageButton returnButton;
 
-    EditText editTextEmail;
-    EditText editTextFirstName;
-    EditText editTextLastName;
-    EditText editTextHomeAddress;
-    Spinner spinnerUserType;
-    Button buttonSaveChanges;
+    private EditText editTextEmail;
+    private EditText editTextFirstName;
+    private EditText editTextLastName;
+    private EditText editTextHomeAddress;
+    private Spinner spinnerUserType;
+    private Button buttonSaveChanges;
 
     private ArrayAdapter<CharSequence> userTypeAdapter;
 
-    FirebaseUser currentUser;
+    private FirebaseUser currentUser;
 
     private Button buttonLogOut;
 
     private SuperUser superUser;
 
     private DatabaseReference databaseReference;
-    UserSingleton singleton = UserSingleton.getInstance();
+    private final UserSingleton singleton = UserSingleton.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +134,19 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         } else if (updatedUserType.equals("Administrator")) {
             currUserWithUpdatedInfo = new Administrator(updatedFirstName, updatedLastName, updatedEmail, firebaseUser.getUid(), updatedHomeAddress, updatedUserType);
         }
+
+//        switch(updatedUserType) {
+//            case "User":
+//                currUserWithUpdatedInfo = new BasicUser(updatedFirstName, updatedLastName, updatedEmail, firebaseUser.getUid(), updatedHomeAddress, updatedUserType);
+//            case "Worker":
+//                currUserWithUpdatedInfo = new Worker(updatedFirstName, updatedLastName, updatedEmail, firebaseUser.getUid(), updatedHomeAddress, updatedUserType);
+//            case "Manager":
+//                currUserWithUpdatedInfo = new Manager(updatedFirstName, updatedLastName, updatedEmail, firebaseUser.getUid(), updatedHomeAddress, updatedUserType);
+//            case "Administrator":
+//                currUserWithUpdatedInfo = new Administrator(updatedFirstName, updatedLastName, updatedEmail, firebaseUser.getUid(), updatedHomeAddress, updatedUserType);
+//            default:
+//                System.out.println("UpdatedUserType checking failed");
+//        }
 
         // Use the unique ID of the logged-in user to save user's information into Firebase database
         databaseReference.child("Users").child(firebaseUser.getUid()).setValue(currUserWithUpdatedInfo);
