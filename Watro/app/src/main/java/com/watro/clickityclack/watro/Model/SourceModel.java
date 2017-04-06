@@ -14,7 +14,7 @@ public class SourceModel {
     private String waterCondition;
 
     public SourceModel(String date, String reportId, String reporterName, String location, String waterType, String waterCondition) {
-        this.date = date;
+        setDate(date);
         this.reportId = reportId;
         this.reporterName = reporterName;
         this.location = location;
@@ -35,7 +35,11 @@ public class SourceModel {
      * @param date date report was submitted
      */
     public void setDate(String date) {
-        this.date = date;
+        if(reportDate.split("-").length == 3){
+            this.date = date;
+        } else {
+            throw new IllegalArgumentException("Date was not in valid format");
+        }
     }
 
     /**
