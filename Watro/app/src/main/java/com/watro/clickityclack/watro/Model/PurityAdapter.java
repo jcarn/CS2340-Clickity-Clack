@@ -1,6 +1,7 @@
 package com.watro.clickityclack.watro.Model;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,6 @@ import java.util.ArrayList;
 public class PurityAdapter extends ArrayAdapter<PurityModel> {
     public PurityAdapter(ArrayList<PurityModel> data, Context context) {
         super(context, R.layout.single_purity_report_view, data);
-        Context mContext = context;
     }
     // View lookup cache
     private static class ViewHolder {
@@ -31,8 +31,9 @@ public class PurityAdapter extends ArrayAdapter<PurityModel> {
         TextView txtVirusPPM;
         TextView txtContaminantPPM;
     }
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         // Get the data item for this position
         PurityModel pureModel = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
@@ -60,6 +61,8 @@ public class PurityAdapter extends ArrayAdapter<PurityModel> {
             result=convertView;
         }
         //using placeholder string because it is bad practice to concatenate strings inside of setText
+
+        assert pureModel != null;
         String placeholder = "Date: " + pureModel.getDate();
         viewHolder.txtDate.setText(placeholder);
         viewHolder.txtDate.setText(placeholder);

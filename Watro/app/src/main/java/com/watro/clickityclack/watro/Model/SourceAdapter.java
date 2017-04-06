@@ -1,6 +1,7 @@
 package com.watro.clickityclack.watro.Model;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +21,6 @@ public class SourceAdapter extends ArrayAdapter<SourceModel> {
 
     public SourceAdapter(ArrayList<SourceModel> data, Context context) {
         super(context, R.layout.single_source_report_view, data);
-        ArrayList<SourceModel> sourceList = data;
-        Context mContext = context;
     }
 
     // View lookup cache
@@ -34,8 +33,9 @@ public class SourceAdapter extends ArrayAdapter<SourceModel> {
         TextView txtWaterCondition;
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         // Get the data item for this position
         SourceModel sourceModel = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
@@ -62,6 +62,8 @@ public class SourceAdapter extends ArrayAdapter<SourceModel> {
             result=convertView;
         }
         //using placeholder string because it is bad practice to concatenate strings inside of setText
+
+        assert sourceModel != null;
         String placeholder = "Date: " + sourceModel.getDate();
         viewHolder.txtDate.setText("Date: " + sourceModel.getDate());
         viewHolder.txtDate.setText(placeholder);

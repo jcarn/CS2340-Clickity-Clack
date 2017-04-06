@@ -30,7 +30,8 @@ class LoginManager {
      * @param email email of user
      * @param password password of user
      */
-    public void loginWithFirebase(Activity activity, String email, String password) throws Exception {
+//    public void loginWithFirebase(Activity activity, String email, String password) throws Exception {
+    public void loginWithFirebase(Activity activity, String email, String password) {
 
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
