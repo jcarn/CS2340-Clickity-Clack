@@ -129,28 +129,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     String currUserType = userIdToUserInfoHashMap.get("userType");
                     String currUserId = userIdToUserInfoHashMap.get("id");
 
-                    if (currUserType.equals("User")) {
-                        currUser = new BasicUser(currUserFirstName, currUserLastName, currUserEmail, currUserId, currUserHomeAddress, currUserType);
-                    } else if (currUserType.equals("Worker")) {
-                        currUser = new Worker(currUserFirstName, currUserLastName, currUserEmail, currUserId, currUserHomeAddress, currUserType);
-                    } else if (currUserType.equals("Manager")) {
-                        currUser = new Manager(currUserFirstName, currUserLastName, currUserEmail, currUserId, currUserHomeAddress, currUserType);
-                    } else if (currUserType.equals("Administrator")) {
-                        currUser = new Administrator(currUserFirstName, currUserLastName, currUserEmail, currUserId, currUserHomeAddress, currUserType);
+                    switch (currUserType) {
+                        case "User":
+                            currUser = new BasicUser(currUserFirstName, currUserLastName, currUserEmail, currUserId, currUserHomeAddress, currUserType);
+                            break;
+                        case "Worker":
+                            currUser = new Worker(currUserFirstName, currUserLastName, currUserEmail, currUserId, currUserHomeAddress, currUserType);
+                            break;
+                        case "Manager":
+                            currUser = new Manager(currUserFirstName, currUserLastName, currUserEmail, currUserId, currUserHomeAddress, currUserType);
+                            break;
+                        case "Administrator":
+                            currUser = new Administrator(currUserFirstName, currUserLastName, currUserEmail, currUserId, currUserHomeAddress, currUserType);
+                            break;
                     }
-
-//                    switch(currUserType) {
-//                        case "User":
-//                            currUser = new BasicUser(currUserFirstName, currUserLastName, currUserEmail, currUserId, currUserHomeAddress, currUserType);
-//                        case "Worker":
-//                            currUser = new Worker(currUserFirstName, currUserLastName, currUserEmail, currUserId, currUserHomeAddress, currUserType);
-//                        case "Manager":
-//                            currUser = new Manager(currUserFirstName, currUserLastName, currUserEmail, currUserId, currUserHomeAddress, currUserType);
-//                        case "Administrator":
-//                            currUser = new Administrator(currUserFirstName, currUserLastName, currUserEmail, currUserId, currUserHomeAddress, currUserType);
-//                        default:
-//                            System.out.println("UserType checking failed");
-//                    }
 
                     userIdToUserHashMap.put(String.valueOf(currUser.getId()), currUser);
                 }
@@ -235,7 +227,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         // Registration was unsuccessful
 
                         // Display a toast notifying the user that registration was not successful
-                        Toast.makeText(MainActivity.this, "Registration Failed.\n" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        if (task.getException() != null) {
+                            Toast.makeText(MainActivity.this, "Registration Failed.\n" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(MainActivity.this, "Registration Failed.\n", Toast.LENGTH_LONG).show();
+                        }
 
                     }
                 }
