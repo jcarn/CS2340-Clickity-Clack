@@ -89,12 +89,15 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // get all of the information for the current user
                 BasicUser user = dataSnapshot.getValue(BasicUser.class);
-                editTextEmail.setText(user.getEmail());
-                editTextFirstName.setText(user.getFirstName());
-                editTextLastName.setText(user.getLastName());
-                editTextHomeAddress.setText(user.getHomeAddress());
-                singleton.setUserType(user.getUserType());
-                spinnerUserType.setSelection(userTypeAdapter.getPosition(user.getUserType()));
+
+                if (user != null) {
+                    editTextEmail.setText(user.getEmail());
+                    editTextFirstName.setText(user.getFirstName());
+                    editTextLastName.setText(user.getLastName());
+                    editTextHomeAddress.setText(user.getHomeAddress());
+                    singleton.setUserType(user.getUserType());
+                    spinnerUserType.setSelection(userTypeAdapter.getPosition(user.getUserType()));
+                }
             }
 
             @Override
