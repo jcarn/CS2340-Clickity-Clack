@@ -104,7 +104,7 @@ public class SourceModel {
     }
 
     /**
-     * Getter of WaterCondtion
+     * Getter of WaterCondition
      * @return String condition of the water
      */
     public String getWaterCondition() {

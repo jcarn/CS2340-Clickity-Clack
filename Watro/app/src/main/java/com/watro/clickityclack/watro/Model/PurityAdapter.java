@@ -19,7 +19,6 @@ import java.util.ArrayList;
 public class PurityAdapter extends ArrayAdapter<PurityModel> {
     public PurityAdapter(ArrayList<PurityModel> data, Context context) {
         super(context, R.layout.single_purity_report_view, data);
-        ArrayList<PurityModel> pureList = data;
         Context mContext = context;
     }
     // View lookup cache

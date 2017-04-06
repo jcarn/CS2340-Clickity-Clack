@@ -38,7 +38,7 @@ class LoginManager {
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if (!task.isSuccessful()) {
-//                            throw new Exception("fhdfg");
+//                            throw new Exception("");
                         } else {
 
                         }

@@ -229,7 +229,7 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
                 + connectionResult.getErrorCode(), Toast.LENGTH_LONG).show();
     }
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
             case LOCATION_REQUEST: {
                 // If request is cancelled, the result arrays are empty.

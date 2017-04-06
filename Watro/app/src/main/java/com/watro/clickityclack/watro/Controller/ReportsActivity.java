@@ -66,7 +66,7 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
 
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 for (DataSnapshot child: children)  {
-                    Report report = (Report) child.getValue(Report.class);
+                    Report report = child.getValue(Report.class);
                     reportDate = report.getReportDate();
                     reportID = report.getReportID();
                     location = report.getStreetAddress();
@@ -95,7 +95,7 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
             public void onDataChange(DataSnapshot dataSnapshot) {
                 int index = 0;
                 for (String x: reporterIDs) {
-                    BasicUser user = (BasicUser) dataSnapshot.child(x).getValue(BasicUser.class);
+                    BasicUser user = dataSnapshot.child(x).getValue(BasicUser.class);
                     models.get(index).setReporterName(user.getFirstName() + " " + user.getLastName());
                     index++;
                 }
@@ -150,12 +150,12 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
     }
     @Override
     public void onMapReady(final GoogleMap googleMap) {
-        HashMap<String, Report> reportHashCodeToReportHashMap = new HashMap<>();
+        //HashMap<String, Report> reportHashCodeToReportHashMap = new HashMap<>();
 
         //TODO: Henry make this actually have real values
 
         DatabaseReference reportDataBaseReference = databaseReference.child("Reports");
-        final boolean[] isHashMapReady = {false};
+        //        final boolean[] isHashMapReady = {false};
 
         reportDataBaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -205,9 +205,9 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
 
                 //TODO: replace the average with the user's current location
 
-                if (reportHashCodeToReportHashMap.size() > 0) {
-                    isHashMapReady[0] = true;
-                }
+                //                if (reportHashCodeToReportHashMap.size() > 0) {
+                //                   isHashMapReady[0] = true;
+                //                }
             }
 
             @Override

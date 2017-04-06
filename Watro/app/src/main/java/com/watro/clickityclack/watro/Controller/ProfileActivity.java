@@ -50,8 +50,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     private Button buttonLogOut;
 
-    private SuperUser superUser;
-
     private DatabaseReference databaseReference;
     private final UserSingleton singleton = UserSingleton.getInstance();
 
@@ -125,28 +123,20 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         String updatedUserType = String.valueOf(spinnerUserType.getSelectedItem());
         singleton.setUserType(updatedUserType);
 
-        if (updatedUserType.equals("User")) {
-            currUserWithUpdatedInfo = new BasicUser(updatedFirstName, updatedLastName, updatedEmail, firebaseUser.getUid(), updatedHomeAddress, updatedUserType);
-        } else if (updatedUserType.equals("Worker")) {
-            currUserWithUpdatedInfo = new Worker(updatedFirstName, updatedLastName, updatedEmail, firebaseUser.getUid(), updatedHomeAddress, updatedUserType);
-        } else if (updatedUserType.equals("Manager")) {
-            currUserWithUpdatedInfo = new Manager(updatedFirstName, updatedLastName, updatedEmail, firebaseUser.getUid(), updatedHomeAddress, updatedUserType);
-        } else if (updatedUserType.equals("Administrator")) {
-            currUserWithUpdatedInfo = new Administrator(updatedFirstName, updatedLastName, updatedEmail, firebaseUser.getUid(), updatedHomeAddress, updatedUserType);
+        switch (updatedUserType) {
+            case "User":
+                currUserWithUpdatedInfo = new BasicUser(updatedFirstName, updatedLastName, updatedEmail, firebaseUser.getUid(), updatedHomeAddress, updatedUserType);
+                break;
+            case "Worker":
+                currUserWithUpdatedInfo = new Worker(updatedFirstName, updatedLastName, updatedEmail, firebaseUser.getUid(), updatedHomeAddress, updatedUserType);
+                break;
+            case "Manager":
+                currUserWithUpdatedInfo = new Manager(updatedFirstName, updatedLastName, updatedEmail, firebaseUser.getUid(), updatedHomeAddress, updatedUserType);
+                break;
+            case "Administrator":
+                currUserWithUpdatedInfo = new Administrator(updatedFirstName, updatedLastName, updatedEmail, firebaseUser.getUid(), updatedHomeAddress, updatedUserType);
+                break;
         }
-
-//        switch(updatedUserType) {
-//            case "User":
-//                currUserWithUpdatedInfo = new BasicUser(updatedFirstName, updatedLastName, updatedEmail, firebaseUser.getUid(), updatedHomeAddress, updatedUserType);
-//            case "Worker":
-//                currUserWithUpdatedInfo = new Worker(updatedFirstName, updatedLastName, updatedEmail, firebaseUser.getUid(), updatedHomeAddress, updatedUserType);
-//            case "Manager":
-//                currUserWithUpdatedInfo = new Manager(updatedFirstName, updatedLastName, updatedEmail, firebaseUser.getUid(), updatedHomeAddress, updatedUserType);
-//            case "Administrator":
-//                currUserWithUpdatedInfo = new Administrator(updatedFirstName, updatedLastName, updatedEmail, firebaseUser.getUid(), updatedHomeAddress, updatedUserType);
-//            default:
-//                System.out.println("UpdatedUserType checking failed");
-//        }
 
         // Use the unique ID of the logged-in user to save user's information into Firebase database
         databaseReference.child("Users").child(firebaseUser.getUid()).setValue(currUserWithUpdatedInfo);
