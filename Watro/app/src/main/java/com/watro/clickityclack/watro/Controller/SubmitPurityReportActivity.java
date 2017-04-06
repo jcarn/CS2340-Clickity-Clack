@@ -162,13 +162,12 @@ public class SubmitPurityReportActivity extends AppCompatActivity implements Vie
         }
 
         if (v == submitButton) {
-            float x = 0;
-            boolean virusIsNum = false;
-            boolean contaminantIsNum = false;
+            float x;
+            boolean virusIsNum;
+            boolean contaminantIsNum;
             try {
                 x = Float.parseFloat(editTextVirus.getText().toString());
                 virusIsNum = true;
-
             } catch (NumberFormatException e) {
                 virusIsNum = false;
             }
@@ -176,7 +175,6 @@ public class SubmitPurityReportActivity extends AppCompatActivity implements Vie
             try {
                 x = Float.parseFloat(editTextContaminant.getText().toString());
                 contaminantIsNum = true;
-
             } catch (NumberFormatException e) {
                 contaminantIsNum = false;
             }
@@ -244,7 +242,7 @@ public class SubmitPurityReportActivity extends AppCompatActivity implements Vie
                 + connectionResult.getErrorCode(), Toast.LENGTH_LONG).show();
     }
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
             case LOCATION_REQUEST: {
                 // If request is cancelled, the result arrays are empty.

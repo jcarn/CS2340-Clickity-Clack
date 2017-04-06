@@ -54,7 +54,7 @@ public class PurityReportActivity extends AppCompatActivity implements View.OnCl
 
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 for (DataSnapshot child: children)  {
-                    PurityReport pureReport = (PurityReport) child.getValue(PurityReport.class);
+                    PurityReport pureReport = child.getValue(PurityReport.class);
                     reportDate = pureReport.getReportDate();
                     reportID = pureReport.getReportID();
                     location = pureReport.getStreetAddress();
@@ -79,7 +79,7 @@ public class PurityReportActivity extends AppCompatActivity implements View.OnCl
             public void onDataChange(DataSnapshot dataSnapshot) {
                 int index = 0;
                 for (String x: workerIDs) {
-                    BasicUser user = (BasicUser) dataSnapshot.child(x).getValue(BasicUser.class);
+                    BasicUser user = dataSnapshot.child(x).getValue(BasicUser.class);
                     models.get(index).setWorkerName(user.getFirstName() + " " + user.getLastName());
                     index++;
                 }
