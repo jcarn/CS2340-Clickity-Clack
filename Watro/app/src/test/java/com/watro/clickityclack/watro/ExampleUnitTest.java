@@ -14,4 +14,10 @@ public class ExampleUnitTest {
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testDate() {
+        String badDate = "022317";
+        SourceModel sourceMod = new SourceModel(badDate, "goodID", "Johny B. Good", "Georgia Tech", "Potable", "Lake");
+    }
 }
