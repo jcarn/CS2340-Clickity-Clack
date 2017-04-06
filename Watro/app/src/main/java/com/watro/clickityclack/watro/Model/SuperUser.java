@@ -1,5 +1,7 @@
 package com.watro.clickityclack.watro.Model;
 
+import java.util.IllegalFormatCodePointException;
+
 public abstract class SuperUser {
     
     protected String email;
@@ -13,7 +15,8 @@ public abstract class SuperUser {
      * @param id firebase generated ID of user
      */
     public SuperUser(String email, String id) {
-        this.email = email;
+        setEmail(email);
+        //this.email = email;
         this.id = id;
     }
 
@@ -30,7 +33,12 @@ public abstract class SuperUser {
      * @param email new email of user
      */
     public void setEmail(String email) {
-        this.email = email;
+        if (email.contains("@") && email.contains(".com") && email.indexOf("@") < email.indexOf(".com")
+                && (email.indexOf(".com") - email.indexOf("@")) != 1) {
+            this.email = email;
+        } else {
+            throw new IllegalArgumentException("Email has Invalid Format");
+        }
     }
 
     /**
