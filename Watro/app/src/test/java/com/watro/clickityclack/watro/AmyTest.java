@@ -8,11 +8,12 @@ import static org.junit.Assert.*;
 
 /**
  * Created by AmyDao on 4/6/17.
+ * Junit test checking virusppm format
  */
 
 public class AmyTest {
 
-    public PurityModel pm = new PurityModel("date", "reportID", "workerName", "location", "overallCondition", "virusPPM", "contaminantPPM");
+    private final PurityModel pm = new PurityModel("date", "reportID", "workerName", "location", "overallCondition", "virusPPM", "contaminantPPM");
 
     @Test(expected = NumberFormatException.class)
     public void testBlankVirusPPM() throws Exception {

@@ -39,7 +39,7 @@ public class PurityAdapter extends ArrayAdapter<PurityModel> {
         // Check if an existing view is being reused, otherwise inflate the view
         PurityAdapter.ViewHolder viewHolder; // view lookup cache stored in tag
 
-        final View result;
+//        final View result;
 
         if (convertView == null) {
 
@@ -53,12 +53,12 @@ public class PurityAdapter extends ArrayAdapter<PurityModel> {
             viewHolder.txtOverallCondition = (TextView) convertView.findViewById(R.id.overallConditionTextView);
             viewHolder.txtVirusPPM = (TextView) convertView.findViewById(R.id.virusPPMTextView);
             viewHolder.txtContaminantPPM = (TextView) convertView.findViewById(R.id.contaminantPPMTextView);
-            result=convertView;
+//            result=convertView;
 
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (PurityAdapter.ViewHolder) convertView.getTag();
-            result=convertView;
+//            result=convertView;
         }
         //using placeholder string because it is bad practice to concatenate strings inside of setText
 
