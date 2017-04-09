@@ -98,8 +98,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             // Login was unsuccessful
 
                             // Display a toast notifying the user that registration was not successful
-                            Toast.makeText(LoginActivity.this, "Registration Failed.\n" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                        }
+                            if (task.getException() != null) {
+                                Toast.makeText(LoginActivity.this, "Registration Failed.\n" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Registration Failed.\n", Toast.LENGTH_LONG).show();
+                            }                        }
                     }
                 });
     }

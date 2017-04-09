@@ -2,6 +2,7 @@ package com.watro.clickityclack.watro.Model;
 
 /**
  * Created by Uche Nkadi on 3/28/2017.
+ * This class holds information that user inputs in a water purity report.
  */
 
 public class PurityModel {
@@ -126,7 +127,39 @@ public class PurityModel {
      * @param virusPPM number of viruses in water in PPM
      */
     public void setVirusPPM(String virusPPM) {
-        this.virusPPM = virusPPM;
+        float x = Float.parseFloat(virusPPM);
+        try {
+            x = Float.parseFloat(virusPPM);
+            if(x < 0) {
+                this.virusPPM = "-1";
+            } else {
+                this.virusPPM = String.format("%f", x);
+            }
+        } catch (NumberFormatException e) {
+            this.virusPPM = "-1";
+        }
+    }
+
+    /**
+     * Setter for virusPPM
+     * @param virusPPM number of viruses in water in PPM
+     */
+    public boolean setVirusPPMtest(String virusPPM) {
+        float x = Float.parseFloat(virusPPM);
+        try {
+            x = Float.parseFloat(virusPPM);
+            if(x < 0) {
+                this.virusPPM = "-1";
+                return false;
+            } else {
+                this.virusPPM = String.format("%f", x);
+                return true;
+            }
+        } catch (NumberFormatException e) {
+            this.virusPPM = "-1";
+            return false;
+        }
+
     }
 
     /**
@@ -142,6 +175,37 @@ public class PurityModel {
      * @param contaminantPPM number of contaminants in water in PPM
      */
     public void setContaminantPPM(String contaminantPPM) {
-        this.contaminantPPM = contaminantPPM;
+        float x = Float.parseFloat(contaminantPPM);
+        try {
+            x = Float.parseFloat(contaminantPPM);
+            if(x < 0) {
+                this.contaminantPPM = "-1";
+            } else {
+                this.contaminantPPM = String.format("%f", x);
+            }
+        } catch (NumberFormatException e) {
+            this.contaminantPPM = "-1";
+        }
+    }
+
+    /**
+     * Setter for contaminantPPM
+     * @param contaminantPPM number of contaminants in water in PPM
+     */
+    public boolean setContaminantPPMtest(String contaminantPPM) {
+        float x = Float.parseFloat(contaminantPPM);
+        try {
+            x = Float.parseFloat(contaminantPPM);
+            if(x < 0) {
+                this.contaminantPPM = "-1";
+                return false;
+            } else {
+                this.contaminantPPM = String.format("%f", x);
+                return true;
+            }
+        } catch (NumberFormatException e) {
+            this.contaminantPPM = "-1";
+            return false;
+        }
     }
 }
