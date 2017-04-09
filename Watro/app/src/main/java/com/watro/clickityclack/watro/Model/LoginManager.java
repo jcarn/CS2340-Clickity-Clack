@@ -11,16 +11,27 @@ import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * Created by henrysaba on 3/8/17.
+ * This class checks user input to give users access to the app
  */
 
-public class LoginManager {
-    private FirebaseAuth firebaseAuth;
+class LoginManager {
+    private final FirebaseAuth firebaseAuth;
 
+    /**
+     * Default Constructor
+     */
     public LoginManager() {
         firebaseAuth = FirebaseAuth.getInstance();
     }
 
-    public void loginWithFirebase(Activity activity, String email, String password) throws Exception {
+    /**
+     * Logs into firebase
+     * @param activity current activity
+     * @param email email of user
+     * @param password password of user
+     */
+//    public void loginWithFirebase(Activity activity, String email, String password) throws Exception {
+    public void loginWithFirebase(Activity activity, String email, String password) {
 
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
@@ -28,7 +39,7 @@ public class LoginManager {
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if (!task.isSuccessful()) {
-//                            throw new Exception("fhdfg");
+//                            throw new Exception("");
                         } else {
 
                         }

@@ -4,9 +4,13 @@ import java.util.IllegalFormatCodePointException;
 
 public abstract class SuperUser {
     
-    protected String email;
-    protected String id;
-    public SuperUser() {
+    private String email;
+    private String id;
+
+    /**
+     * Default Constructor
+     */
+    SuperUser() {
 
     }
     /**
@@ -16,7 +20,6 @@ public abstract class SuperUser {
      */
     public SuperUser(String email, String id) {
         setEmail(email);
-        //this.email = email;
         this.id = id;
     }
 

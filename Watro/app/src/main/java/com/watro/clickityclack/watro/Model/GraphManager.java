@@ -7,8 +7,9 @@ import com.watro.clickityclack.watro.R;
 
 /**
  * Created by henrysaba on 4/3/17.
+ * This is to manage the history graph.
  */
 
-public class GraphManager {
+class GraphManager {
 
 }

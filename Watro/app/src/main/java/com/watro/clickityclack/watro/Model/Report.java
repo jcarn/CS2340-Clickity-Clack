@@ -2,6 +2,7 @@ package com.watro.clickityclack.watro.Model;
 
 /**
  * Created by John on 2/28/2017.
+ * This is the old information holder for water source reports.
  */
 
 public class Report {
@@ -26,7 +27,7 @@ public class Report {
     /**
      * Setter for latitude
      *
-     * @param latitude
+     * @param latitude set location lat
      */
     public void setLatitude(String latitude) {
         this.latitude = latitude;
@@ -44,22 +45,22 @@ public class Report {
     /**
      * Setter for longitude
      *
-     * @param longitude
+     * @param longitude set location long
      */
     public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
 
     /**
-     * Getter of water type enum
-     * @return enum type of water
+     * Getter of water type
+     * @return String type of water
      */
     public String getWaterType() {
         return waterT;
     }
 
     /**
-     * Setter of waterType enum
+     * Setter of waterType
      * @param waterType string matching type of water
      */
     public void setWaterType(String waterType) {
@@ -67,15 +68,15 @@ public class Report {
     }
 
     /**
-     * Getter of WaterCondtion Enum
-     * @return enum condition of the water
+     * Getter of WaterCondition
+     * @return String condition of the water
      */
     public String getWaterCondition() {
         return waterC;
     }
 
     /**
-     * Setter of water condition enum
+     * Setter of water condition
      * @param waterCondition String matching desired water type
      */
     public void setWaterCondition(String waterCondition) {

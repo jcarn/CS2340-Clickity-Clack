@@ -1,7 +1,5 @@
 package com.watro.clickityclack.watro.Controller;
 
-import android.graphics.Point;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,28 +14,20 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.PointsGraphSeries;
-import com.jjoe64.graphview.series.Series;
-import com.watro.clickityclack.watro.Model.PurityModel;
 import com.watro.clickityclack.watro.Model.PurityReport;
-import com.watro.clickityclack.watro.Model.Report;
 import com.watro.clickityclack.watro.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 
 public class HistoryReportsView extends AppCompatActivity implements View.OnClickListener {
 
     private DatabaseReference databaseReference;
     private GraphView graph;
-    private ArrayList<PurityReport> purityReportsArrayList;
-    private HashMap<Integer, Integer> monthToVirusPPMHashMap;
     private PointsGraphSeries<DataPoint> series;
     private ArrayList<DataPoint> dataPoints;
     private Spinner virusOrContaminantSpinner;
-    private ArrayAdapter<CharSequence> virusOrContaminantAdapter;
     private Spinner locationSpinner;
     private ArrayAdapter<String> locationAdapter;
     private Button updateGraphButton;
@@ -50,7 +40,7 @@ public class HistoryReportsView extends AppCompatActivity implements View.OnClic
 
         graph = (GraphView) findViewById(R.id.graph);
         virusOrContaminantSpinner = (Spinner) findViewById(R.id.virusOrContaminantSpinner);
-        virusOrContaminantAdapter = ArrayAdapter.createFromResource(this, R.array.virusOrContaminant, R.layout.support_simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> virusOrContaminantAdapter = ArrayAdapter.createFromResource(this, R.array.virusOrContaminant, R.layout.support_simple_spinner_dropdown_item);
         virusOrContaminantAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         virusOrContaminantSpinner.setAdapter(virusOrContaminantAdapter);
         locationSpinner = (Spinner) findViewById(R.id.locationSpinner);
@@ -64,12 +54,12 @@ public class HistoryReportsView extends AppCompatActivity implements View.OnClic
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child: dataSnapshot.getChildren()) {
-                    PurityReport purityReport = (PurityReport) child.getValue(PurityReport.class);
+                    PurityReport purityReport = child.getValue(PurityReport.class);
                     locationHash.add(purityReport.getStreetAddress());
                 }
                 if (locationAdapter == null) {
-                    ArrayList<String> listOfLocations = new ArrayList<String>(locationHash);
-                    locationAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, listOfLocations);
+                    ArrayList<String> listOfLocations = new ArrayList<>(locationHash);
+                    locationAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, listOfLocations);
                     locationAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
                     locationSpinner.setAdapter(locationAdapter);
                 }
@@ -80,14 +70,12 @@ public class HistoryReportsView extends AppCompatActivity implements View.OnClic
 
             }
         });
-        //Chooosing not to show data until the user selects to update. Allows to dynamically update locations
+        //Choosing not to show data until the user selects to update. Allows to dynamically update locations
         //showData(String.valueOf(virusOrContaminantSpinner.getSelectedItem()), "");
 
     }
     private void showData(final String virusOrContaminant, final String address) {
         final DatabaseReference purityReference = databaseReference.child("PurityReports");
-        purityReportsArrayList = new ArrayList<>();
-        monthToVirusPPMHashMap = new HashMap<>();
         series = new PointsGraphSeries<>();
         dataPoints = new ArrayList<>();
         graph.removeAllSeries();
@@ -100,7 +88,7 @@ public class HistoryReportsView extends AppCompatActivity implements View.OnClic
 
                 int currReportPPM;
                 for (DataSnapshot child: dataSnapshot.getChildren())  {
-                    PurityReport purityReport = (PurityReport) child.getValue(PurityReport.class);
+                    PurityReport purityReport = child.getValue(PurityReport.class);
                     if (purityReport.getStreetAddress().equals(address) || address.equals("All Locations")) {
                         String reportDate = purityReport.getReportDate();
                         if (virusOrContaminant.equals("Virus PPM")) {
@@ -113,17 +101,12 @@ public class HistoryReportsView extends AppCompatActivity implements View.OnClic
 
                         int currReportMonth = Integer.valueOf(datePieces[0]);
 
-                        // This is wrong as it doesn't collect all the virusPPMs of a month...
-                        monthToVirusPPMHashMap.put(currReportMonth, currReportPPM);
-
-                        purityReportsArrayList.add(purityReport);
-
                         dataPoints.add(new DataPoint(currReportMonth, currReportPPM)) ;
                     }
                 }
                 DataPoint[] arrayConvert = new DataPoint[dataPoints.size()];
                 arrayConvert = dataPoints.toArray(arrayConvert);
-                series = new PointsGraphSeries<DataPoint>(arrayConvert);
+                series = new PointsGraphSeries<>(arrayConvert);
                 graph.addSeries(series);
             }
 

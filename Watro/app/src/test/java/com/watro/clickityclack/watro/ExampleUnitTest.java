@@ -44,4 +44,10 @@ public class ExampleUnitTest {
         //Valid email was set successfully. Now there will be an error because there is no letter between @ and .com
         person.setEmail("uchedakid@.com");
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testDate() {
+        String badDate = "022317";
+        SourceModel sourceMod = new SourceModel(badDate, "goodID", "Johny B. Good", "Georgia Tech", "Potable", "Lake");
+    }
 }
