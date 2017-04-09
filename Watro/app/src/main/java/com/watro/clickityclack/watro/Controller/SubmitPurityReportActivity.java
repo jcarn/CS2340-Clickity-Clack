@@ -167,22 +167,14 @@ public class SubmitPurityReportActivity extends AppCompatActivity implements Vie
             boolean contaminantIsNum;
             try {
                 x = Float.parseFloat(editTextVirus.getText().toString());
-                if(x < 0) {
-                    virusIsNum = false;
-                } else {
-                    virusIsNum = true;
-                }
+                virusIsNum = x >= 0;
             } catch (NumberFormatException e) {
                 virusIsNum = false;
             }
 
             try {
                 x = Float.parseFloat(editTextContaminant.getText().toString());
-                if(x < 0) {
-                    contaminantIsNum = false;
-                } else {
-                    contaminantIsNum = true;
-                }
+                contaminantIsNum = x >= 0;
             } catch (NumberFormatException e) {
                 contaminantIsNum = false;
             }

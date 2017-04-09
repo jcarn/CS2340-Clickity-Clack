@@ -35,8 +35,9 @@ public class SourceModel {
      * Setter for report date
      * @param date date report was submitted
      */
-    public void setDate(String date) {
-        if(reportDate.split("-").length == 3){
+    private void setDate(String date) {
+
+        if(date.split("-").length == 3){
             this.date = date;
         } else {
             throw new IllegalArgumentException("Date was not in valid format");
