@@ -35,8 +35,7 @@ public class SourceModel {
      * Setter for report date
      * @param date date report was submitted
      */
-    private void setDate(String date) {
-
+    public void setDate(String date) {
         if(date.split("-").length == 3){
             this.date = date;
         } else {
