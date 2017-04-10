@@ -41,17 +41,15 @@ import java.util.Locale;
 public class SubmitPurityReportActivity extends AppCompatActivity implements View.OnClickListener,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-    private FirebaseAuth firebaseAuth;
-    FirebaseUser currentUser;
+    private FirebaseUser currentUser;
     private DatabaseReference databaseReference;
 
-    protected GoogleApiClient mClient;
-    protected Location lastLocation;
-    protected double curLatitude;
-    protected double curLongitude;
-    protected final int LOCATION_REQUEST = 100;
+    private GoogleApiClient mClient;
+    private Location lastLocation;
+    private double curLatitude;
+    private double curLongitude;
+    private final int LOCATION_REQUEST = 100;
 
-    private Calendar calendar;
 
     private ImageButton returnButton;
     private Button submitButton;
@@ -59,8 +57,7 @@ public class SubmitPurityReportActivity extends AppCompatActivity implements Vie
     private EditText editTextVirus;
     private EditText editTextContaminant;
     private Spinner spinnerOverallCondition;
-    private ArrayAdapter<CharSequence> overallConditionAdapter;
-    UserSingleton singleton = UserSingleton.getInstance();
+    private final UserSingleton singleton = UserSingleton.getInstance();
 
 
     @Override
@@ -79,7 +76,7 @@ public class SubmitPurityReportActivity extends AppCompatActivity implements Vie
         }
         setContentView(R.layout.activity_submit_purity_report);
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
         currentUser = firebaseAuth.getCurrentUser();
         if (currentUser == null) {
@@ -97,7 +94,7 @@ public class SubmitPurityReportActivity extends AppCompatActivity implements Vie
         editTextVirus = (EditText) findViewById(R.id.editTextVirus);
         editTextContaminant = (EditText) findViewById(R.id.editContaminant);
         spinnerOverallCondition = (Spinner) findViewById(R.id.spinnerOverallCondition);
-        overallConditionAdapter = ArrayAdapter.createFromResource(this, R.array.overallCondition, R.layout.support_simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> overallConditionAdapter = ArrayAdapter.createFromResource(this, R.array.overallCondition, R.layout.support_simple_spinner_dropdown_item);
         overallConditionAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         spinnerOverallCondition.setAdapter(overallConditionAdapter);
 
@@ -108,7 +105,7 @@ public class SubmitPurityReportActivity extends AppCompatActivity implements Vie
         final boolean[] submitButtonPressed = {true};
         final PurityReport report = new PurityReport();
         String waterCondition = String.valueOf(spinnerOverallCondition.getSelectedItem());
-        calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
         String reportDate = calendar.get(Calendar.MONTH) + 1 + "-" + calendar.get(Calendar.DAY_OF_MONTH) + "-" + calendar.get(Calendar.YEAR);
 
         report.setReportDate(reportDate);
@@ -165,13 +162,12 @@ public class SubmitPurityReportActivity extends AppCompatActivity implements Vie
         }
 
         if (v == submitButton) {
-            float x = 0;
-            boolean virusIsNum = false;
-            boolean contaminantIsNum = false;
+            float x;
+            boolean virusIsNum;
+            boolean contaminantIsNum;
             try {
                 x = Float.parseFloat(editTextVirus.getText().toString());
                 virusIsNum = true;
-
             } catch (NumberFormatException e) {
                 virusIsNum = false;
             }
@@ -179,7 +175,6 @@ public class SubmitPurityReportActivity extends AppCompatActivity implements Vie
             try {
                 x = Float.parseFloat(editTextContaminant.getText().toString());
                 contaminantIsNum = true;
-
             } catch (NumberFormatException e) {
                 contaminantIsNum = false;
             }
@@ -200,7 +195,7 @@ public class SubmitPurityReportActivity extends AppCompatActivity implements Vie
         }
     }
 
-    protected synchronized void buildGoogleApiClient() {
+    private synchronized void buildGoogleApiClient() {
         mClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -247,7 +242,7 @@ public class SubmitPurityReportActivity extends AppCompatActivity implements Vie
                 + connectionResult.getErrorCode(), Toast.LENGTH_LONG).show();
     }
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
             case LOCATION_REQUEST: {
                 // If request is cancelled, the result arrays are empty.

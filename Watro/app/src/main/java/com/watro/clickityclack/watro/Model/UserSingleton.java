@@ -2,6 +2,7 @@ package com.watro.clickityclack.watro.Model;
 
 /**
  * Created by Uche Nkadi on 3/30/2017.
+ * This is a singleton used to store user types.
  */
 
 public class UserSingleton {

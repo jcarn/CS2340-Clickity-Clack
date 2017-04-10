@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
+//import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -37,22 +37,17 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
     private ImageButton settingsButton;
     private Button submitReportButton;
     private Button purityReportButton;
-    private ListView sourceReportListView;
-    private SourceAdapter adapter;
     private DatabaseReference databaseReference;
-    private FirebaseAuth firebaseAuth;
-    FirebaseUser currentUser;
-    ArrayList<SourceModel> models;
-    ArrayList<String> reporterIDs;
-    String reportDate;
-    String reportID;
-    String reporterID;
-    String name;
-    String location;
-    String waterType;
-    String waterCondition;
-    UserSingleton singleton = UserSingleton.getInstance();
-    SourceModel source;
+    private ArrayList<SourceModel> models;
+    private ArrayList<String> reporterIDs;
+    private String reportDate;
+    private String reportID;
+    private String reporterID;
+    private String location;
+    private String waterType;
+    private String waterCondition;
+    private final UserSingleton singleton = UserSingleton.getInstance();
+    private SourceModel source;
 
 
     @Override
@@ -71,7 +66,7 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
 
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 for (DataSnapshot child: children)  {
-                    Report report = (Report) child.getValue(Report.class);
+                    Report report = child.getValue(Report.class);
                     reportDate = report.getReportDate();
                     reportID = report.getReportID();
                     location = report.getStreetAddress();
@@ -100,7 +95,7 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
             public void onDataChange(DataSnapshot dataSnapshot) {
                 int index = 0;
                 for (String x: reporterIDs) {
-                    BasicUser user = (BasicUser) dataSnapshot.child(x).getValue(BasicUser.class);
+                    BasicUser user = dataSnapshot.child(x).getValue(BasicUser.class);
                     models.get(index).setReporterName(user.getFirstName() + " " + user.getLastName());
                     index++;
                 }
@@ -115,17 +110,17 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
         settingsButton = (ImageButton) findViewById(R.id.settingsButton);
         submitReportButton = (Button) findViewById(R.id.submitReportButton);
         purityReportButton = (Button) findViewById(R.id.purityReportButton);
-        sourceReportListView = (ListView) findViewById(R.id.sourceReportListView);
+        ListView sourceReportListView = (ListView) findViewById(R.id.sourceReportListView);
 
-        adapter = new SourceAdapter(models, getApplicationContext());
+        SourceAdapter adapter = new SourceAdapter(models, getApplicationContext());
         sourceReportListView.setAdapter(adapter);
         settingsButton.setOnClickListener(this);
         submitReportButton.setOnClickListener(this);
         purityReportButton.setOnClickListener(this);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        firebaseAuth = FirebaseAuth.getInstance();
-        currentUser = firebaseAuth.getCurrentUser();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
         if (currentUser == null) {
             purityReportButton.setVisibility(View.GONE);
@@ -155,12 +150,12 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
     }
     @Override
     public void onMapReady(final GoogleMap googleMap) {
-        HashMap<String, Report> reportHashCodeToReportHashMap = new HashMap<String,Report>();
+        //HashMap<String, Report> reportHashCodeToReportHashMap = new HashMap<>();
 
         //TODO: Henry make this actually have real values
 
         DatabaseReference reportDataBaseReference = databaseReference.child("Reports");
-        final boolean[] isHashMapReady = {false};
+        //        final boolean[] isHashMapReady = {false};
 
         reportDataBaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -210,9 +205,9 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
 
                 //TODO: replace the average with the user's current location
 
-                if (reportHashCodeToReportHashMap.size() > 0) {
-                    isHashMapReady[0] = true;
-                }
+                //                if (reportHashCodeToReportHashMap.size() > 0) {
+                //                   isHashMapReady[0] = true;
+                //                }
             }
 
             @Override

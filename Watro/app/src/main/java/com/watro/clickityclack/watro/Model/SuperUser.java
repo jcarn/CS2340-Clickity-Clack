@@ -2,13 +2,13 @@ package com.watro.clickityclack.watro.Model;
 
 public abstract class SuperUser {
     
-    protected String email;
-    protected String id;
+    private String email;
+    private String id;
 
     /**
      * Default Constructor
      */
-    public SuperUser() {
+    SuperUser() {
 
     }
     /**
@@ -16,7 +16,7 @@ public abstract class SuperUser {
      * @param email email of user in form: name@host.ext
      * @param id firebase generated ID of user
      */
-    public SuperUser(String email, String id) {
+    SuperUser(String email, String id) {
         this.email = email;
         this.id = id;
     }

@@ -2,10 +2,10 @@ package com.watro.clickityclack.watro.Model;
 
 public class BasicUser extends SuperUser {
 
-    protected String homeAddress;
-    protected String firstName;
-    protected String lastName;
-    protected String userType;
+    private String homeAddress;
+    private String firstName;
+    private String lastName;
+    private String userType;
 
     /**
      * Default Constructor

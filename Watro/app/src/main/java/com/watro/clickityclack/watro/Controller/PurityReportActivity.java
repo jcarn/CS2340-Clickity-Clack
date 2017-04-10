@@ -21,33 +21,30 @@ import com.watro.clickityclack.watro.R;
 
 import java.util.ArrayList;
 
-import static com.watro.clickityclack.watro.R.layout.activity_history_reports_view;
+//import static com.watro.clickityclack.watro.R.layout.activity_history_reports_view;
 
 public class PurityReportActivity extends AppCompatActivity implements View.OnClickListener {
     private Button submitPurityReportButton;
     private Button viewHistoryButton;
 
     private ImageButton returnButton;
-    private ListView purityReportListView;
-    private PurityAdapter adapter;
-    ArrayList<PurityModel> models;
-    ArrayList<String> workerIDs;
-    private DatabaseReference databaseReference;
-    String reportDate;
-    String reportID;
-    String workerID;
-    String location;
-    String overallCondition;
-    String virusPPM;
-    String contaminantPPM;
-    PurityModel pureModel;
+    private ArrayList<PurityModel> models;
+    private ArrayList<String> workerIDs;
+    private String reportDate;
+    private String reportID;
+    private String workerID;
+    private String location;
+    private String overallCondition;
+    private String virusPPM;
+    private String contaminantPPM;
+    private PurityModel pureModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_purity_report);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         DatabaseReference purityReference = databaseReference.child("PurityReports");
         models = new ArrayList<>();
         workerIDs = new ArrayList<>();
@@ -57,7 +54,7 @@ public class PurityReportActivity extends AppCompatActivity implements View.OnCl
 
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 for (DataSnapshot child: children)  {
-                    PurityReport pureReport = (PurityReport) child.getValue(PurityReport.class);
+                    PurityReport pureReport = child.getValue(PurityReport.class);
                     reportDate = pureReport.getReportDate();
                     reportID = pureReport.getReportID();
                     location = pureReport.getStreetAddress();
@@ -82,7 +79,7 @@ public class PurityReportActivity extends AppCompatActivity implements View.OnCl
             public void onDataChange(DataSnapshot dataSnapshot) {
                 int index = 0;
                 for (String x: workerIDs) {
-                    BasicUser user = (BasicUser) dataSnapshot.child(x).getValue(BasicUser.class);
+                    BasicUser user = dataSnapshot.child(x).getValue(BasicUser.class);
                     models.get(index).setWorkerName(user.getFirstName() + " " + user.getLastName());
                     index++;
                 }
@@ -94,13 +91,13 @@ public class PurityReportActivity extends AppCompatActivity implements View.OnCl
         });
         submitPurityReportButton = (Button) findViewById(R.id.submitPurityReportButton);
         returnButton = (ImageButton) findViewById(R.id.returnButton);
-        purityReportListView = (ListView) findViewById(R.id.purityReportListView);
+        ListView purityReportListView = (ListView) findViewById(R.id.purityReportListView);
         viewHistoryButton = (Button) findViewById(R.id.viewHistoryButton);
 
         viewHistoryButton.setOnClickListener(this);
         submitPurityReportButton.setOnClickListener(this);
         returnButton.setOnClickListener(this);
-        adapter = new PurityAdapter(models, getApplicationContext());
+        PurityAdapter adapter = new PurityAdapter(models, getApplicationContext());
         purityReportListView.setAdapter(adapter);
     }
 
