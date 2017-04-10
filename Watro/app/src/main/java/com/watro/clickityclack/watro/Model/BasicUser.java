@@ -1,5 +1,10 @@
 package com.watro.clickityclack.watro.Model;
 
+import com.watro.clickityclack.watro.R;
+
+import java.util.HashSet;
+import java.util.Set;
+
 public class BasicUser extends SuperUser {
 
     private String homeAddress;
@@ -91,6 +96,11 @@ public class BasicUser extends SuperUser {
      * @param userType user's new type
      */
     public void setUserType(String userType) {
-        this.userType = userType;
+        Set<String> userTypeSet = new HashSet<>(R.array.userTypes);
+        if (userTypeSet.contains(userType)) {
+            this.userType = userType;
+        } else {
+            throw new IllegalArgumentException("User type must be one of " + R.array.userTypes);
+        }
     }
 }
