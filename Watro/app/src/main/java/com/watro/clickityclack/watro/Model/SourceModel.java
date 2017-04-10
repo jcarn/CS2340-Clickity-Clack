@@ -2,6 +2,7 @@ package com.watro.clickityclack.watro.Model;
 
 /**
  * Created by Uche Nkadi on 3/28/2017.
+ * This class stores information that user inputs in a water source report.
  */
 
 public class SourceModel {
@@ -35,7 +36,7 @@ public class SourceModel {
      * @param date date report was submitted
      */
     public void setDate(String date) {
-        if(reportDate.split("-").length == 3){
+        if(date.split("-").length == 3){
             this.date = date;
         } else {
             throw new IllegalArgumentException("Date was not in valid format");
@@ -107,7 +108,7 @@ public class SourceModel {
     }
 
     /**
-     * Getter of WaterCondtion
+     * Getter of WaterCondition
      * @return String condition of the water
      */
     public String getWaterCondition() {
