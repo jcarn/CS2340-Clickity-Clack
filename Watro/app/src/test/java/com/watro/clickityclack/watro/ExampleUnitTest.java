@@ -1,6 +1,7 @@
 package com.watro.clickityclack.watro;
 
 import com.watro.clickityclack.watro.Model.BasicUser;
+import com.watro.clickityclack.watro.Model.SourceModel;
 
 import org.junit.Test;
 

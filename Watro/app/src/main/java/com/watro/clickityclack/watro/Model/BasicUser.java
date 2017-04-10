@@ -1,7 +1,10 @@
 package com.watro.clickityclack.watro.Model;
 
+import android.content.res.Resources;
+
 import com.watro.clickityclack.watro.R;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -96,11 +99,15 @@ public class BasicUser extends SuperUser {
      * @param userType user's new type
      */
     public void setUserType(String userType) {
-        Set<String> userTypeSet = new HashSet<>(R.array.userTypes);
-        if (userTypeSet.contains(userType)) {
-            this.userType = userType;
-        } else {
-            throw new IllegalArgumentException("User type must be one of " + R.array.userTypes);
+        switch (userType) {
+            case "User":
+            case "Worker":
+            case "Manager":
+            case "Administrator":
+                this.userType = userType;
+                break;
+            default:
+                throw new IllegalArgumentException("User type must be one of " + R.array.userTypes);
         }
     }
 }

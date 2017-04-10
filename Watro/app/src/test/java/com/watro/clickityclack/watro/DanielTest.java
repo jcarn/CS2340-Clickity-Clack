@@ -29,7 +29,7 @@ public class DanielTest {
         person.setUserType("Adminiworker");
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void testNullValue() throws IllegalArgumentException {
         BasicUser person = new BasicUser("Daniel", "Chung", "google@yahoo.com", "1", "The CULC", "User");
         person.setUserType(null);
