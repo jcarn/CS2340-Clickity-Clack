@@ -47,8 +47,14 @@ public class ExampleUnitTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testDate() {
+    public void testDateBad() {
         String badDate = "022317";
         SourceModel sourceMod = new SourceModel(badDate, "goodID", "Johny B. Good", "Georgia Tech", "Potable", "Lake");
+    }
+
+    @Test(timeout = 2000)
+    public void testDateGood() {
+        String goodDate = "02-23-17";
+        SourceModel sourceMod = new SourceModel(goodDate, "goodID", "Johny B. Good", "Georgia Tech", "Potable", "Lake");
     }
 }
