@@ -15,7 +15,11 @@ public class SourceModel {
     private String waterCondition;
 
     public SourceModel(String date, String reportId, String reporterName, String location, String waterType, String waterCondition) {
-        setDate(date);
+        try {
+            setDate(date);
+        } catch (Exception e) {
+            setDate("01-01-2017");
+        }
         this.reportId = reportId;
         this.reporterName = reporterName;
         this.location = location;

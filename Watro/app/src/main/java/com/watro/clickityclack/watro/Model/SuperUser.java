@@ -40,6 +40,20 @@ public abstract class SuperUser {
                 && (email.indexOf(".com") - email.indexOf("@")) != 1) {
             this.email = email;
         } else {
+            this.email = "ReplaceMe" + id + "@email.com";
+        }
+    }
+
+    /**
+     * Setter of email
+     * @throws IllegalArgumentException when email in wrong format
+     * @param email new email of user
+     */
+    public void setEmailTest(String email) {
+        if (email.contains("@") && email.contains(".com") && email.indexOf("@") < email.indexOf(".com")
+                && (email.indexOf(".com") - email.indexOf("@")) != 1) {
+            this.email = email;
+        } else {
             throw new IllegalArgumentException("Email has Invalid Format");
         }
     }

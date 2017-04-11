@@ -35,7 +35,11 @@ public class BasicUser extends SuperUser {
         this.firstName = firstName;
         this.lastName = lastName;
         this.homeAddress = homeAddress;
-        this.userType = userType;
+        try {
+            setUserType(userType);
+        } catch (Exception e){
+            setUserType("User");
+        }
     }
 
     /**

@@ -8,42 +8,40 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Example local unit test, which will execute on the development machine (host).
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ * Tests ensuring email error checking is working properly
  */
 public class UcheTest {
     @Test (expected = IllegalArgumentException.class)
     public void test_At_Sign_Email() {
         BasicUser person = new BasicUser("John", "Corny", "google@yahoo.com", "12345", "Wonderland", "Basic User");
         //Person was made Suceessfully. Now we are going to attempt to change email to valid value
-        person.setEmail("uche@dakid.com");
+        person.setEmailTest("uche@dakid.com");
         //Valid email was set successfully. Now there will be an error because there is no @ sign
-        person.setEmail("ucheATdakid.com");
+        person.setEmailTest("ucheATdakid.com");
     }
     @Test (expected = IllegalArgumentException.class)
     public void test_dotCom_Email() {
         BasicUser person = new BasicUser("John", "Corny", "google@yahoo.com", "12345", "Wonderland", "Basic User");
         //Person was made Suceessfully. Now we are going to attempt to change email to valid value
-        person.setEmail("uche@dakid.com");
+        person.setEmailTest("uche@dakid.com");
         //Valid email was set successfully.Now there will be an error because there is no ".com"
-        person.setEmail("uche@dakidcom");
+        person.setEmailTest("uche@dakidcom");
     }
     @Test (expected = IllegalArgumentException.class)
     public void test_atBeforedotCom_Email() {
         BasicUser person = new BasicUser("John", "Corny", "google@yahoo.com", "12345", "Wonderland", "Basic User");
         //Person was made Suceessfully. Now we are going to attempt to change email to valid value
-        person.setEmail("uche@dakid.com");
+        person.setEmailTest("uche@dakid.com");
         //Valid email was set successfully. Now there will be an error because @ does not com before .com
-        person.setEmail("uche.comdakid@");
+        person.setEmailTest("uche.comdakid@");
     }
     @Test (expected = IllegalArgumentException.class)
     public void test_letterBetween_AtanddotCom_Email() {
         BasicUser person = new BasicUser("John", "Corny", "google@yahoo.com", "12345", "Wonderland", "Basic User");
         //Person was made Suceessfully. Now we are going to attempt to change email to valid value
-        person.setEmail("uche@dakid.com");
+        person.setEmailTest("uche@dakid.com");
         //Valid email was set successfully. Now there will be an error because there is no letter between @ and .com
-        person.setEmail("uchedakid@.com");
+        person.setEmailTest("uchedakid@.com");
     }
 
     @Test(expected = IllegalArgumentException.class)
