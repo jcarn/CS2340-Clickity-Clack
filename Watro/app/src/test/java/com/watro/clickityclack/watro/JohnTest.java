@@ -11,7 +11,8 @@ public class JohnTest {
     @Test(expected = IllegalArgumentException.class)
     public void testDateBad() {
         String badDate = "022317";
-        SourceModel sourceMod = new SourceModel(badDate, "goodID", "Johny B. Good", "Georgia Tech", "Potable", "Lake");
+        SourceModel sourceMod = new SourceModel("01-01-2017", "goodID", "Johny B. Good", "Georgia Tech", "Potable", "Lake");
+        sourceMod.setDate(badDate);
     }
 
     @Test(timeout = 2000)
