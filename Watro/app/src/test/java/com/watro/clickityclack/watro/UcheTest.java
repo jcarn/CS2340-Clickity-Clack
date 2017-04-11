@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-public class ExampleUnitTest {
+public class UcheTest {
     @Test (expected = IllegalArgumentException.class)
     public void test_At_Sign_Email() {
         BasicUser person = new BasicUser("John", "Corny", "google@yahoo.com", "12345", "Wonderland", "Basic User");
