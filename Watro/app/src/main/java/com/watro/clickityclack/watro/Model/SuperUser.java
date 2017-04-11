@@ -36,8 +36,7 @@ public abstract class SuperUser {
      * @param email new email of user
      */
     public void setEmail(String email) {
-        if (email.contains("@") && email.contains(".com") && email.indexOf("@") < email.indexOf(".com")
-                && (email.indexOf(".com") - email.indexOf("@")) != 1) {
+        if (email.contains("@")) {
             this.email = email;
         } else {
             this.email = "ReplaceMe" + id + "@email.com";
