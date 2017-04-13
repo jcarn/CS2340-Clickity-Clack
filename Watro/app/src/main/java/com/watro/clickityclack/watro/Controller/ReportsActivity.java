@@ -97,6 +97,7 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
                 for (String x: reporterIDs) {
                     BasicUser user = dataSnapshot.child(x).getValue(BasicUser.class);
                     models.get(index).setReporterName(user.getFirstName() + " " + user.getLastName());
+                    models.get(index).setReporterId(user.getId());
                     index++;
                 }
             }

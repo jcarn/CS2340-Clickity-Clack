@@ -1,5 +1,7 @@
 package com.watro.clickityclack.watro.Model;
 
+import android.net.Uri;
+
 public abstract class SuperUser {
     
     private String email;
