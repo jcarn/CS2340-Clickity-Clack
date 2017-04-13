@@ -45,33 +45,3 @@ class LoginManager {
                     }
                 });
 
-//        final boolean[] loginSuccess = {true};
-//        final String[] exceptionMessage = new String[1];
-//        final boolean[] signInAttemptCompleted = {false};
-//
-//        firebaseAuth.signInWithEmailAndPassword(email, password).
-//                addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
-//            @Override
-//            public void onComplete(@NonNull Task<AuthResult> task) {
-//                signInAttemptCompleted[0] = true;
-//
-//                if (!task.isSuccessful()) {
-//                    loginSuccess[0] = false;
-//
-//                    exceptionMessage[0] = task.getException().getMessage();
-//                }
-//            }
-//        });
-//
-//        if (!loginSuccess[0] && signInAttemptCompleted[0]) {
-//            throw new Exception(exceptionMessage[0]);
-//        }
-//
-//        if (loginSuccess[0] && signInAttemptCompleted[0]) {
-//            return true;
-//        }
-//
-//        return false;
-    }
-
-}

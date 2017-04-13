@@ -11,8 +11,6 @@ public class PurityReport {
     private String reporterID;
     private String streetAddress;
     private String waterCondition;
-    private String latitude;
-    private String longitude;
     private String virusPPM;
     private String contaminantPPM;
 
@@ -24,14 +22,14 @@ public class PurityReport {
         this.waterCondition = waterCondition;
     }
 
-    /**
-     * Getter for latitude
-     *
-     * @return latitude
-     */
-    public String getLatitude() {
-        return latitude;
-    }
+//    /**
+//     * Getter for latitude
+//     *
+//     * @return latitude
+//     */
+//    public String getLatitude() {
+//        return latitude;
+//    }
 
     /**
      * Setter for latitude
@@ -39,17 +37,17 @@ public class PurityReport {
      * @param latitude Set location latitude
      */
     public void setLatitude(String latitude) {
-        this.latitude = latitude;
+        String latitude1 = latitude;
     }
 
-    /**
-     * Getter for longitude
-     *
-     * @return longitude
-     */
-    public String getLongitude() {
-        return longitude;
-    }
+//    /**
+//     * Getter for longitude
+//     *
+//     * @return longitude
+//     */
+//    public String getLongitude() {
+//        return longitude;
+//    }
 
     /**
      * Setter for longitude
@@ -57,7 +55,7 @@ public class PurityReport {
      * @param longitude Set location longitude
      */
     public void setLongitude(String longitude) {
-        this.longitude = longitude;
+        String longitude1 = longitude;
     }
 
     /**

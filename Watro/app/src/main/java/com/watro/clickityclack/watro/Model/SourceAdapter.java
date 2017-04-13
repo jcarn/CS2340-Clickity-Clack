@@ -1,6 +1,7 @@
 package com.watro.clickityclack.watro.Model;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,14 +43,15 @@ public class SourceAdapter extends ArrayAdapter<SourceModel> {
         ImageView profilePic;
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         // Get the data item for this position
         SourceModel sourceModel = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         ViewHolder viewHolder; // view lookup cache stored in tag
 
-        final View result;
+//        final View result;
 
         if (convertView == null) {
             viewHolder = new ViewHolder();
@@ -68,8 +70,11 @@ public class SourceAdapter extends ArrayAdapter<SourceModel> {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
             result = convertView;
+
         }
         //using placeholder string because it is bad practice to concatenate strings inside of setText
+
+        assert sourceModel != null;
         String placeholder = "Date: " + sourceModel.getDate();
         viewHolder.txtDate.setText("Date: " + sourceModel.getDate());
         viewHolder.txtDate.setText(placeholder);

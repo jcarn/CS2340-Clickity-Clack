@@ -1,6 +1,6 @@
 package com.watro.clickityclack.watro.Model;
 
-import com.google.firebase.auth.FirebaseAuth;
+//import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * Created by Henry Saba on 3/8/17.
@@ -14,7 +14,5 @@ class DatabaseManager {
      */
     public DatabaseManager() {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-
-
     }
 }
