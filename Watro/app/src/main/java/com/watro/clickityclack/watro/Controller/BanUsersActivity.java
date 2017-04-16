@@ -22,7 +22,9 @@ import com.watro.clickityclack.watro.Model.SuperUser;
 import com.watro.clickityclack.watro.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BanUsersActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -31,8 +33,9 @@ public class BanUsersActivity extends AppCompatActivity implements View.OnClickL
     private DatabaseReference db;
     private DatabaseReference usersReference;
     private List<String> usersList;
+    private List<BasicUser> userObjectsList;
     private ListView usersListView;
-
+    private BasicUser selectedUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,8 @@ public class BanUsersActivity extends AppCompatActivity implements View.OnClickL
         usersList = new ArrayList<>();
         usersListView = (ListView) findViewById(R.id.UsersListView);
 
+        userObjectsList = new ArrayList<>();
+
         db = FirebaseDatabase.getInstance().getReference();
         usersReference = db.child("Users");
         usersReference.addValueEventListener(new ValueEventListener() {
@@ -53,6 +58,7 @@ public class BanUsersActivity extends AppCompatActivity implements View.OnClickL
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BasicUser user = snapshot.getValue(BasicUser.class);
                     usersList.add(user.getEmail());
+                    userObjectsList.add(user);
                 }
             }
 
@@ -68,10 +74,24 @@ public class BanUsersActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
+                final DatabaseReference userReference = db.child("Users").child(userObjectsList.get(position).getId());
+                userReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        selectedUser = dataSnapshot.getValue(BasicUser.class);
+                        Map<String,Object> map = new HashMap<>();
+                        map.put("banned", "true");
+                        userReference.updateChildren(map);
+                        Toast.makeText(getApplicationContext(),
+                                "Banned " + selectedUser.getFirstName(), Toast.LENGTH_LONG)
+                                .show();
+                    }
 
-                Toast.makeText(getApplicationContext(),
-                        "Banned " + usersList.get(position), Toast.LENGTH_LONG)
-                        .show();
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
             }
         });
     }
