@@ -2,6 +2,7 @@ package com.watro.clickityclack.watro.Model;
 
 /**
  * Created by Uche Nkadi on 3/27/2017.
+ * This is the previous information holder for the purity report.
  */
 
 public class PurityReport {
@@ -10,8 +11,6 @@ public class PurityReport {
     private String reporterID;
     private String streetAddress;
     private String waterCondition;
-    private String latitude;
-    private String longitude;
     private String virusPPM;
     private String contaminantPPM;
 
@@ -23,40 +22,40 @@ public class PurityReport {
         this.waterCondition = waterCondition;
     }
 
-    /**
-     * Getter for latitude
-     *
-     * @return latitude
-     */
-    public String getLatitude() {
-        return latitude;
-    }
+//    /**
+//     * Getter for latitude
+//     *
+//     * @return latitude
+//     */
+//    public String getLatitude() {
+//        return latitude;
+//    }
 
     /**
      * Setter for latitude
      *
-     * @param latitude
+     * @param latitude Set location latitude
      */
     public void setLatitude(String latitude) {
-        this.latitude = latitude;
+        String latitude1 = latitude;
     }
 
-    /**
-     * Getter for longitude
-     *
-     * @return longitude
-     */
-    public String getLongitude() {
-        return longitude;
-    }
+//    /**
+//     * Getter for longitude
+//     *
+//     * @return longitude
+//     */
+//    public String getLongitude() {
+//        return longitude;
+//    }
 
     /**
      * Setter for longitude
      *
-     * @param longitude
+     * @param longitude Set location longitude
      */
     public void setLongitude(String longitude) {
-        this.longitude = longitude;
+        String longitude1 = longitude;
     }
 
     /**

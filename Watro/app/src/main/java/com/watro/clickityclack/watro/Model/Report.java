@@ -2,6 +2,7 @@ package com.watro.clickityclack.watro.Model;
 
 /**
  * Created by John on 2/28/2017.
+ * This is the old information holder for water source reports.
  */
 
 public class Report {
@@ -26,7 +27,7 @@ public class Report {
     /**
      * Setter for latitude
      *
-     * @param latitude
+     * @param latitude set location lat
      */
     public void setLatitude(String latitude) {
         this.latitude = latitude;
@@ -44,7 +45,7 @@ public class Report {
     /**
      * Setter for longitude
      *
-     * @param longitude
+     * @param longitude set location long
      */
     public void setLongitude(String longitude) {
         this.longitude = longitude;
