@@ -121,8 +121,10 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
         if (currentUser == null) {
             purityReportButton.setVisibility(View.GONE);
         } else if (singleton.exists()) {
-            if (singleton.getUserType().equals("User") || singleton.getUserType().equals("Administrator")) {
+            if (singleton.getUserType().equals("User")) {
                 purityReportButton.setVisibility(View.GONE);
+            } else if (singleton.getUserType().equals("Administrator")) {
+                purityReportButton.setText("Ban Users"); // adding functionality to ban users
             }
         } else {
             databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -132,8 +134,10 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     BasicUser person = dataSnapshot.getValue(BasicUser.class);
                     singleton.setUserType(person.getUserType());
-                    if (singleton.getUserType().equals("User") || singleton.getUserType().equals("Administrator")) {
+                    if (singleton.getUserType().equals("User")) {
                         purityReportButton.setVisibility(View.GONE);
+                    } else if (singleton.getUserType().equals("Administrator")) {
+                        purityReportButton.setText("Ban Users"); // adding functionality to ban users
                     }
                 }
 
@@ -223,6 +227,8 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
         if (v == purityReportButton) {
             if (singleton.getUserType().equals("Worker")) {
                 startActivity(new Intent(this, SubmitPurityReportActivity.class));
+            } else if (singleton.getUserType().equals("Administrator")) { // adding functionality to ban users
+                startActivity(new Intent(this, BanUsersActivity.class));
             } else {
                 startActivity(new Intent(this, PurityReportActivity.class));
             }
