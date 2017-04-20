@@ -77,7 +77,11 @@ public class HistoryReportsView extends AppCompatActivity implements View.OnClic
     private void showData(final String virusOrContaminant, final String address) {
         final DatabaseReference purityReference = databaseReference.child("PurityReports");
         series = new PointsGraphSeries<>();
-        dataPoints = new ArrayList<>();
+        if (dataPoints == null) {
+            dataPoints = new ArrayList<>();
+        } else {
+            dataPoints.clear();
+        }
         graph.removeAllSeries();
         graph.getGridLabelRenderer().setVerticalAxisTitle(virusOrContaminant);
         graph.getGridLabelRenderer().setHorizontalAxisTitle("Month");
@@ -86,15 +90,15 @@ public class HistoryReportsView extends AppCompatActivity implements View.OnClic
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                int currReportPPM;
+                double currReportPPM;
                 for (DataSnapshot child: dataSnapshot.getChildren())  {
                     PurityReport purityReport = child.getValue(PurityReport.class);
                     if (purityReport.getStreetAddress().equals(address) || address.equals("All Locations")) {
                         String reportDate = purityReport.getReportDate();
                         if (virusOrContaminant.equals("Virus PPM")) {
-                            currReportPPM = Integer.valueOf(purityReport.getVirusPPM());
+                            currReportPPM = Double.valueOf(purityReport.getVirusPPM());
                         } else {
-                            currReportPPM = Integer.valueOf(purityReport.getContaminantPPM());
+                            currReportPPM = Double.valueOf(purityReport.getContaminantPPM());
                         }
 
                         String[] datePieces = reportDate.split("-");

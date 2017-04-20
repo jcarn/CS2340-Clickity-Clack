@@ -64,12 +64,12 @@ public class SourceAdapter extends ArrayAdapter<SourceModel> {
             viewHolder.txtWaterType = (TextView) convertView.findViewById(R.id.waterTypeTextView);
             viewHolder.txtWaterCondition = (TextView) convertView.findViewById(R.id.waterConditionTextView);
             viewHolder.profilePic = (ImageView) convertView.findViewById(R.id.reportProfilePicImageView);
-            result=convertView;
+            //result=convertView;
 
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
-            result = convertView;
+            //result = convertView;
 
         }
         //using placeholder string because it is bad practice to concatenate strings inside of setText
