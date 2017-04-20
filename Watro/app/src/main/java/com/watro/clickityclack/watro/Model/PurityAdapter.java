@@ -1,6 +1,7 @@
 package com.watro.clickityclack.watro.Model;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,10 @@ import java.util.ArrayList;
 public class PurityAdapter extends ArrayAdapter<PurityModel> {
     public PurityAdapter(ArrayList<PurityModel> data, Context context) {
         super(context, R.layout.single_purity_report_view, data);
+<<<<<<< HEAD
         Context mContext = context;
+=======
+>>>>>>> 198ccffe02d1f1a69998b4247cd61a25424968de
     }
     // View lookup cache
     private static class ViewHolder {
@@ -31,14 +35,15 @@ public class PurityAdapter extends ArrayAdapter<PurityModel> {
         TextView txtVirusPPM;
         TextView txtContaminantPPM;
     }
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         // Get the data item for this position
         PurityModel pureModel = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         PurityAdapter.ViewHolder viewHolder; // view lookup cache stored in tag
 
-        final View result;
+//        final View result;
 
         if (convertView == null) {
 
@@ -52,14 +57,16 @@ public class PurityAdapter extends ArrayAdapter<PurityModel> {
             viewHolder.txtOverallCondition = (TextView) convertView.findViewById(R.id.overallConditionTextView);
             viewHolder.txtVirusPPM = (TextView) convertView.findViewById(R.id.virusPPMTextView);
             viewHolder.txtContaminantPPM = (TextView) convertView.findViewById(R.id.contaminantPPMTextView);
-            result=convertView;
+//            result=convertView;
 
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (PurityAdapter.ViewHolder) convertView.getTag();
-            result=convertView;
+//            result=convertView;
         }
         //using placeholder string because it is bad practice to concatenate strings inside of setText
+
+        assert pureModel != null;
         String placeholder = "Date: " + pureModel.getDate();
         viewHolder.txtDate.setText(placeholder);
         viewHolder.txtDate.setText(placeholder);

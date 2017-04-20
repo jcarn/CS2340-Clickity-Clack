@@ -167,17 +167,26 @@ public class SubmitPurityReportActivity extends AppCompatActivity implements Vie
             boolean contaminantIsNum;
             try {
                 x = Float.parseFloat(editTextVirus.getText().toString());
+<<<<<<< HEAD
                 virusIsNum = true;
+=======
+                virusIsNum = x >= 0;
+>>>>>>> 198ccffe02d1f1a69998b4247cd61a25424968de
             } catch (NumberFormatException e) {
                 virusIsNum = false;
             }
 
             try {
                 x = Float.parseFloat(editTextContaminant.getText().toString());
+<<<<<<< HEAD
                 contaminantIsNum = true;
+=======
+                contaminantIsNum = x >= 0;
+>>>>>>> 198ccffe02d1f1a69998b4247cd61a25424968de
             } catch (NumberFormatException e) {
                 contaminantIsNum = false;
             }
+
 
             if (!editTextAddress.getText().toString().equals("") && virusIsNum && contaminantIsNum) {
                 saveReport();
@@ -187,7 +196,7 @@ public class SubmitPurityReportActivity extends AppCompatActivity implements Vie
                     startActivity(new Intent(this, PurityReportActivity.class));
                 }
             } else if (!virusIsNum || !contaminantIsNum) {
-                Toast.makeText(this, "Virus and Contaminant PPM must be numbers", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Virus and Contaminant PPM must be positive numbers", Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(this, "Please fill all fields", Toast.LENGTH_LONG).show();
             }

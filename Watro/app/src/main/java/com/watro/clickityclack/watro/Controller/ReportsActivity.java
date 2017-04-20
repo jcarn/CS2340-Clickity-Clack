@@ -77,10 +77,6 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
                     reporterIDs.add(reporterID);
                     models.add(source);
                 }
-
-                //BasicUser person = (BasicUser) databaseReference.child("Users").child(reportID).getValue();
-                //String name =
-
             }
 
             @Override

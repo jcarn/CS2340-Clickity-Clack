@@ -2,9 +2,9 @@ package com.watro.clickityclack.watro.Model;
 
 public class Administrator extends SuperUser {
 
-    private String homeAddress;
     private String firstName;
     private String lastName;
+    private String homeAddress;
     private String userType;
 
     /**

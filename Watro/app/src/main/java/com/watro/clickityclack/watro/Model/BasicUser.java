@@ -1,6 +1,16 @@
 package com.watro.clickityclack.watro.Model;
 
+<<<<<<< HEAD
 import android.net.Uri;
+=======
+import android.content.res.Resources;
+
+import com.watro.clickityclack.watro.R;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+>>>>>>> 198ccffe02d1f1a69998b4247cd61a25424968de
 
 public class BasicUser extends SuperUser {
 
@@ -29,7 +39,11 @@ public class BasicUser extends SuperUser {
         this.firstName = firstName;
         this.lastName = lastName;
         this.homeAddress = homeAddress;
-        this.userType = userType;
+        try {
+            setUserType(userType);
+        } catch (Exception e){
+            setUserType("User");
+        }
     }
 
     /**
@@ -93,6 +107,15 @@ public class BasicUser extends SuperUser {
      * @param userType user's new type
      */
     public void setUserType(String userType) {
-        this.userType = userType;
+        switch (userType) {
+            case "User":
+            case "Worker":
+            case "Manager":
+            case "Administrator":
+                this.userType = userType;
+                break;
+            default:
+                throw new IllegalArgumentException("User type must be one of " + R.array.userTypes);
+        }
     }
 }

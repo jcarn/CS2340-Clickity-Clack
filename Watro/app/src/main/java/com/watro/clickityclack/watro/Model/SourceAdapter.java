@@ -1,6 +1,7 @@
 package com.watro.clickityclack.watro.Model;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,8 +29,11 @@ public class SourceAdapter extends ArrayAdapter<SourceModel> {
 
     public SourceAdapter(ArrayList<SourceModel> data, Context context) {
         super(context, R.layout.single_source_report_view, data);
+<<<<<<< HEAD
         ArrayList<SourceModel> sourceList = data;
         mContext = context;
+=======
+>>>>>>> 198ccffe02d1f1a69998b4247cd61a25424968de
     }
 
     // View lookup cache
@@ -43,14 +47,15 @@ public class SourceAdapter extends ArrayAdapter<SourceModel> {
         ImageView profilePic;
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         // Get the data item for this position
         SourceModel sourceModel = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         ViewHolder viewHolder; // view lookup cache stored in tag
 
-        final View result;
+//        final View result;
 
         if (convertView == null) {
             viewHolder = new ViewHolder();
@@ -62,15 +67,26 @@ public class SourceAdapter extends ArrayAdapter<SourceModel> {
             viewHolder.txtLocation = (TextView) convertView.findViewById(R.id.locationTextView);
             viewHolder.txtWaterType = (TextView) convertView.findViewById(R.id.waterTypeTextView);
             viewHolder.txtWaterCondition = (TextView) convertView.findViewById(R.id.waterConditionTextView);
+<<<<<<< HEAD
             viewHolder.profilePic = (ImageView) convertView.findViewById(R.id.reportProfilePicImageView);
             result=convertView;
+=======
+
+//            result=convertView;
+>>>>>>> 198ccffe02d1f1a69998b4247cd61a25424968de
 
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
+<<<<<<< HEAD
             result = convertView;
+=======
+//            result=convertView;
+>>>>>>> 198ccffe02d1f1a69998b4247cd61a25424968de
         }
         //using placeholder string because it is bad practice to concatenate strings inside of setText
+
+        assert sourceModel != null;
         String placeholder = "Date: " + sourceModel.getDate();
         viewHolder.txtDate.setText("Date: " + sourceModel.getDate());
         viewHolder.txtDate.setText(placeholder);
