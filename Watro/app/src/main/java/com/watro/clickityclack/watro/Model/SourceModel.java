@@ -13,6 +13,7 @@ public class SourceModel {
     private String location;
     private String waterType;
     private String waterCondition;
+    private String reporterId;
 
     public SourceModel(String date, String reportId, String reporterName, String location, String waterType, String waterCondition) {
         try {
@@ -125,5 +126,13 @@ public class SourceModel {
      */
     public void setWaterCondition(String waterCondition) {
         this.waterCondition = waterCondition;
+    }
+
+    public String getReporterId() {
+        return reporterId;
+    }
+
+    public void setReporterId(String reporterId) {
+        this.reporterId = reporterId;
     }
 }

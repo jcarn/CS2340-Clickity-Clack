@@ -2,6 +2,7 @@ package com.watro.clickityclack.watro.Controller;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -98,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void saveUserInformation(FirebaseUser firebaseUser) {
         final boolean[] registerButtonPressed = {true};
+        final Uri imageDownloadUri = Uri.EMPTY;
 
         String newUserEmail = String.valueOf(editTextEmail.getText()).trim();
         String newUserFirstName = valueOf(editTextFirstName.getText()).trim();
@@ -107,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         singleton.setUserType(newUserType);
 
         final SuperUser newUser = new BasicUser(newUserFirstName, newUserLastName, newUserEmail, String.valueOf(firebaseUser.getUid()), newUserHomeAddress, newUserType);
+
         DatabaseReference usersDataBaseReference = databaseReference.child("Users");
 
         usersDataBaseReference.addValueEventListener(new ValueEventListener() {

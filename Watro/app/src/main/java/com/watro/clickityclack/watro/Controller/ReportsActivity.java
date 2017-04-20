@@ -94,6 +94,7 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
                 for (String x: reporterIDs) {
                     BasicUser user = dataSnapshot.child(x).getValue(BasicUser.class);
                     models.get(index).setReporterName(user.getFirstName() + " " + user.getLastName());
+                    models.get(index).setReporterId(user.getId());
                     index++;
                 }
             }
@@ -134,11 +135,14 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     BasicUser person = dataSnapshot.getValue(BasicUser.class);
-                    singleton.setUserType(person.getUserType());
-                    if (singleton.getUserType().equals("User")) {
-                        purityReportButton.setVisibility(View.GONE);
-                    } else if (singleton.getUserType().equals("Administrator")) {
-                        purityReportButton.setText("Ban Users"); // adding functionality to ban users
+
+                    if (person != null) {
+                        singleton.setUserType(person.getUserType());
+                        if (singleton.getUserType().equals("User")) {
+                            purityReportButton.setVisibility(View.GONE);
+                        } else if (singleton.getUserType().equals("Administrator")) {
+                            purityReportButton.setText("Ban Users"); // adding functionality to ban users
+                        }
                     }
                 }
 
@@ -168,19 +172,17 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
                 for (DataSnapshot child : children) {
                     Report currReport = child.getValue(Report.class);
 
-                    // for some reason, Firebase can't retrieve the enum properties correctly from
-                    // the database. Therefore, the next few lines retrieve them.
+                    if (currReport != null) {
+                        HashMap<String, String> currReportPropertiesToValuesHashMap = (HashMap<String, String>) child.getValue();
+                        if (currReportPropertiesToValuesHashMap.get("waterType") != null) {
+                            currReport.setWaterType(currReportPropertiesToValuesHashMap.get("waterType"));
+                        }
+                        if (currReportPropertiesToValuesHashMap.get("waterCondition") != null) {
+                            currReport.setWaterCondition(currReportPropertiesToValuesHashMap.get("waterCondition"));
+                        }
 
-                    // TODO: FIX THE REASON BEHIND WHY FIREBASE KEEPS DELETING THE ENUM PROPERTIES
-                    HashMap<String, String> currReportPropertiesToValuesHashMap = (HashMap<String, String>) child.getValue();
-                    if (currReportPropertiesToValuesHashMap.get("waterType") != null) {
-                        currReport.setWaterType(currReportPropertiesToValuesHashMap.get("waterType"));
+                        reportHashCodeToReportHashMap.put(String.valueOf(currReport.getReportID()), currReport);
                     }
-                    if (currReportPropertiesToValuesHashMap.get("waterCondition") != null) {
-                        currReport.setWaterCondition(currReportPropertiesToValuesHashMap.get("waterCondition"));
-                    }
-
-                    reportHashCodeToReportHashMap.put(String.valueOf(currReport.getReportID()), currReport);
                 }
 
                 //LatLng rep;

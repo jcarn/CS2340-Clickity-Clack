@@ -51,9 +51,10 @@
             android:hint="First Name Not Available"
             android:ems="10"
             android:id="@+id/editTextFirstName"
-            android:layout_below="@+id/editTextEmail"
-            android:layout_centerHorizontal="true"
-            android:gravity="center_vertical|center_horizontal" />
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_above="@+id/editTextLastName"
+            android:layout_alignLeft="@+id/editTextEmail"
+            android:layout_alignStart="@+id/editTextEmail" />
 
         <EditText
             android:layout_width="309dp"
@@ -63,19 +64,18 @@
             android:hint="Email Not Available"
             android:ems="10"
             android:id="@+id/editTextEmail"
-            android:layout_marginTop="117dp"
-            android:layout_below="@+id/logOutButton"
-            android:layout_centerHorizontal="true"
-            android:gravity="center_vertical|center_horizontal" />
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_above="@+id/editTextFirstName"
+            android:layout_centerHorizontal="true" />
 
         <Button
             android:text="Save Changes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="63dp"
+            android:id="@+id/buttonSaveChanges"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="100dp"
-            android:id="@+id/buttonSaveChanges" />
+            android:layout_centerHorizontal="true" />
 
         <EditText
             android:layout_width="309dp"
@@ -85,7 +85,7 @@
             android:ems="10"
             android:id="@+id/editTextLastName"
             android:gravity="center_vertical|center_horizontal"
-            android:layout_below="@+id/editTextFirstName"
+            android:layout_above="@+id/editTextHomeAddress"
             android:layout_alignLeft="@+id/editTextFirstName"
             android:layout_alignStart="@+id/editTextFirstName" />
 
@@ -97,16 +97,33 @@
             android:ems="10"
             android:id="@+id/editTextHomeAddress"
             android:gravity="center_vertical|center_horizontal"
-            android:layout_below="@+id/editTextLastName"
-            android:layout_centerHorizontal="true" />
+            android:layout_above="@+id/spinnerUserType"
+            android:layout_alignLeft="@+id/editTextLastName"
+            android:layout_alignStart="@+id/editTextLastName" />
 
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="169dp"
-            android:layout_below="@+id/editTextHomeAddress"
-            android:id="@+id/spinnerUserType" />
+            android:id="@+id/spinnerUserType"
+            android:layout_above="@+id/buttonSaveChanges"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <ImageView
+            android:id="@+id/profilePicImageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_below="@+id/logOutButton"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:id="@+id/profilePicUpdateButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Change Profile Picture"
+            android:layout_above="@+id/editTextFirstName"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="47dp" />
 
     </RelativeLayout>
 
