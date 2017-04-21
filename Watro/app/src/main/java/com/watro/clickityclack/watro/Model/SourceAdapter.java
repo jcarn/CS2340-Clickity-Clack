@@ -29,11 +29,8 @@ public class SourceAdapter extends ArrayAdapter<SourceModel> {
 
     public SourceAdapter(ArrayList<SourceModel> data, Context context) {
         super(context, R.layout.single_source_report_view, data);
-<<<<<<< HEAD
         ArrayList<SourceModel> sourceList = data;
         mContext = context;
-=======
->>>>>>> 198ccffe02d1f1a69998b4247cd61a25424968de
     }
 
     // View lookup cache
@@ -55,7 +52,7 @@ public class SourceAdapter extends ArrayAdapter<SourceModel> {
         // Check if an existing view is being reused, otherwise inflate the view
         ViewHolder viewHolder; // view lookup cache stored in tag
 
-//        final View result;
+        final View result;
 
         if (convertView == null) {
             viewHolder = new ViewHolder();
@@ -67,23 +64,15 @@ public class SourceAdapter extends ArrayAdapter<SourceModel> {
             viewHolder.txtLocation = (TextView) convertView.findViewById(R.id.locationTextView);
             viewHolder.txtWaterType = (TextView) convertView.findViewById(R.id.waterTypeTextView);
             viewHolder.txtWaterCondition = (TextView) convertView.findViewById(R.id.waterConditionTextView);
-<<<<<<< HEAD
             viewHolder.profilePic = (ImageView) convertView.findViewById(R.id.reportProfilePicImageView);
-            result=convertView;
-=======
-
-//            result=convertView;
->>>>>>> 198ccffe02d1f1a69998b4247cd61a25424968de
+            result = convertView;
 
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
-<<<<<<< HEAD
             result = convertView;
-=======
-//            result=convertView;
->>>>>>> 198ccffe02d1f1a69998b4247cd61a25424968de
         }
+
         //using placeholder string because it is bad practice to concatenate strings inside of setText
 
         assert sourceModel != null;
@@ -100,8 +89,15 @@ public class SourceAdapter extends ArrayAdapter<SourceModel> {
         viewHolder.txtWaterType.setText(placeholder);
         placeholder = "Water Condition: " + sourceModel.getWaterCondition();
         viewHolder.txtWaterCondition.setText(placeholder);
-        StorageReference currProfPicStorageReference = FirebaseStorage.getInstance().getReference().child("Photos").child(sourceModel.getReporterId());
-        Glide.with(mContext).using(new FirebaseImageLoader()).load(currProfPicStorageReference).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(viewHolder.profilePic);
+        if (sourceModel.getReporterId() != null) {
+            StorageReference currProfPicStorageReference = FirebaseStorage.getInstance().getReference().child("Photos").child(sourceModel.getReporterId());
+            Glide.with(mContext)
+                    .using(new FirebaseImageLoader())
+                    .load(currProfPicStorageReference)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .into(viewHolder.profilePic);
+        }
 
         // Return the completed view to render on screen
         return convertView;

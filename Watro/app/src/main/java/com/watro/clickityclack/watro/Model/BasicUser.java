@@ -1,8 +1,6 @@
 package com.watro.clickityclack.watro.Model;
 
-<<<<<<< HEAD
 import android.net.Uri;
-=======
 import android.content.res.Resources;
 
 import com.watro.clickityclack.watro.R;
@@ -10,7 +8,6 @@ import com.watro.clickityclack.watro.R;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
->>>>>>> 198ccffe02d1f1a69998b4247cd61a25424968de
 
 public class BasicUser extends SuperUser {
 

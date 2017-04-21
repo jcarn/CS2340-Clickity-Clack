@@ -102,12 +102,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 Toast.makeText(LoginActivity.this, "Registration Failed.\n" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                             } else {
                                 Toast.makeText(LoginActivity.this, "Registration Failed.\n", Toast.LENGTH_LONG).show();
-<<<<<<< HEAD
                             }
                         }
-=======
-                            }                        }
->>>>>>> 198ccffe02d1f1a69998b4247cd61a25424968de
                     }
                 });
     }

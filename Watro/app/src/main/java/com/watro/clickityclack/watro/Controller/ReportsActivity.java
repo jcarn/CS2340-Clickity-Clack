@@ -1,5 +1,6 @@
 package com.watro.clickityclack.watro.Controller;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -29,6 +31,7 @@ import com.watro.clickityclack.watro.Model.SourceModel;
 import com.watro.clickityclack.watro.Model.UserSingleton;
 import com.watro.clickityclack.watro.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -49,11 +52,14 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
     private final UserSingleton singleton = UserSingleton.getInstance();
     private SourceModel source;
 
+//    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reports);
+
+//        mediaPlayer = MediaPlayer.create(this, R.raw.long_audio);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -193,7 +199,8 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
                     googleMap.addMarker(new MarkerOptions()
                             .position(new LatLng(Double.parseDouble(rep.getLatitude()), Double.parseDouble(rep.getLongitude())))
                             .title(reportHashCodeToReportHashMap.get(key).getStreetAddress())
-                            .snippet(reportHashCodeToReportHashMap.get(key).getWaterType() + ": " + reportHashCodeToReportHashMap.get(key).getWaterCondition()));
+                            .snippet(reportHashCodeToReportHashMap.get(key).getWaterType() + ": " + reportHashCodeToReportHashMap.get(key).getWaterCondition())
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.watro_pin)));
                 }
 
                 if (num > 0) {
@@ -215,14 +222,24 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
+//        if (!mediaPlayer.isPlaying()) {
+//            mediaPlayer.start();
+//        } else {
+//            mediaPlayer.stop();
+//        }
+
         if (v == settingsButton) {
+//            mediaPlayer.start();
             startActivity(new Intent(this, ProfileActivity.class));
         }
         if (v == submitReportButton) {
+//            mediaPlayer.start();
             startActivity(new Intent(this, SubmitActivity.class));
         }
-        //If they are even able to see the purity report button, they are a worker or manager
+
+        // If they are even able to see the purity report button, they are a worker or manager
         if (v == purityReportButton) {
+//            mediaPlayer.start();
             if (singleton.getUserType().equals("Worker")) {
                 startActivity(new Intent(this, SubmitPurityReportActivity.class));
             } else {

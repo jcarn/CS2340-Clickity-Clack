@@ -1,5 +1,8 @@
-<<<<<<< HEAD
 package com.watro.clickityclack.watro.Model;
+
+import android.app.Activity;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
@@ -45,13 +48,13 @@ class LoginManager {
                         }
                     }
                 });
+    }
+}
 
 //        final boolean[] loginSuccess = {true};
 //        final String[] exceptionMessage = new String[1];
 //        final boolean[] signInAttemptCompleted = {false};
-=======
 //package com.watro.clickityclack.watro.Model;
->>>>>>> 198ccffe02d1f1a69998b4247cd61a25424968de
 //
 //import android.app.Activity;
 //import android.support.annotation.NonNull;

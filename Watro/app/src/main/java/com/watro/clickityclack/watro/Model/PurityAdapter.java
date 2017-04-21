@@ -20,10 +20,7 @@ import java.util.ArrayList;
 public class PurityAdapter extends ArrayAdapter<PurityModel> {
     public PurityAdapter(ArrayList<PurityModel> data, Context context) {
         super(context, R.layout.single_purity_report_view, data);
-<<<<<<< HEAD
         Context mContext = context;
-=======
->>>>>>> 198ccffe02d1f1a69998b4247cd61a25424968de
     }
     // View lookup cache
     private static class ViewHolder {
