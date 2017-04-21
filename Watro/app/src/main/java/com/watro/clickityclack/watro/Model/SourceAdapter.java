@@ -64,7 +64,7 @@ public class SourceAdapter extends ArrayAdapter<SourceModel> {
             viewHolder.txtLocation = (TextView) convertView.findViewById(R.id.locationTextView);
             viewHolder.txtWaterType = (TextView) convertView.findViewById(R.id.waterTypeTextView);
             viewHolder.txtWaterCondition = (TextView) convertView.findViewById(R.id.waterConditionTextView);
-            viewHolder.profilePic = (ImageView) convertView.findViewById(R.id.reportProfilePicImageView);
+            viewHolder.profilePic = (ImageView) convertView.findViewById(R.id.sourceReportProfilePicImageView);
             result = convertView;
 
             convertView.setTag(viewHolder);
