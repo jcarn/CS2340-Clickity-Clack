@@ -52,7 +52,7 @@ public class SourceAdapter extends ArrayAdapter<SourceModel> {
         // Check if an existing view is being reused, otherwise inflate the view
         ViewHolder viewHolder; // view lookup cache stored in tag
 
-        final View result;
+//        final View result;
 
         if (convertView == null) {
             viewHolder = new ViewHolder();
@@ -64,13 +64,13 @@ public class SourceAdapter extends ArrayAdapter<SourceModel> {
             viewHolder.txtLocation = (TextView) convertView.findViewById(R.id.locationTextView);
             viewHolder.txtWaterType = (TextView) convertView.findViewById(R.id.waterTypeTextView);
             viewHolder.txtWaterCondition = (TextView) convertView.findViewById(R.id.waterConditionTextView);
-            viewHolder.profilePic = (ImageView) convertView.findViewById(R.id.sourceReportProfilePicImageView);
-            result = convertView;
+            viewHolder.profilePic = (ImageView) convertView.findViewById(R.id.reportProfilePicImageView);
 
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
-            result = convertView;
+            //result = convertView;
+
         }
 
         //using placeholder string because it is bad practice to concatenate strings inside of setText

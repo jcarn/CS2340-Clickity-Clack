@@ -15,6 +15,6 @@ class DatabaseManager {
      * Default Constructor
      */
     public DatabaseManager() {
-//        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     }
 }

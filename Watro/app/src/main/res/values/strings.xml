@@ -29,4 +29,5 @@
         <item>Virus PPM</item>
         <item>Contaminant PPM</item>
     </string-array>
+    <string name="title_activity_splash_page">SplashPage</string>
 </resources>

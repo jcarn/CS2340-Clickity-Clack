@@ -16,7 +16,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyB_BoRJybfCGGCyqAqdL5gpMhLf9Xsgvbs" />
 
-        <activity android:name=".Controller.MainActivity">
+        <activity android:name=".Controller.SplashActivity"
+            android:theme="@style/SplashTheme">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,7 +31,7 @@
         <activity android:name=".Controller.ReportsActivity" />
         <activity android:name=".Controller.PurityReportActivity" />
         <activity android:name=".Controller.SubmitPurityReportActivity" />
-        <activity android:name=".Controller.HistoryReportsView"></activity>
+        <activity android:name=".Controller.HistoryReportsView" />
     </application>
 
 </manifest>
