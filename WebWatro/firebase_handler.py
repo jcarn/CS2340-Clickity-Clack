@@ -1,44 +1,39 @@
-from firebase import firebase as fbase
+import pyrebase
+
 from model import user, report, purity_report
 class Database():
     #"https://watro-c0aaf.firebaseio.com/"
     def __init__(self, url):
-        self.firedata = fbase.FirebaseApplication(url, authentication = None)  
-        # print(self.firedata)
-        # print(self.users.keys()[0])
-    # self.firedata = firebase.get('/Users', None)
-    # for i, userID in enumerate(result):
-    #     print(result.get(result.keys()[i]).get(result.get(result.keys()[i]).keys()[0]))
+        config = {
+          "apiKey": "AIzaSyDHtZ8_XkQvC-c764cAOncFXIhPqO2p69I",
+          "authDomain":  "watro-c0aaf.firebaseapp.com",
+          "databaseURL": "https://watro-c0aaf.firebaseio.com/",
+          "storageBucket": "gs://watro-c0aaf.appspot.com"
+        }
+        firebase = pyrebase.initialize_app(config)
+        self.firedata = firebase.database()
 
     #returns list of users
     @property
     def users(self):
-        return [user.User(param_list) for param_list in self._get_objects('/Users')]
+        return [user.User(param_list) for param_list in self._get_objects(user.User)]
 
     #returns list of reports
     @property
     def reports(self):
-        return [report.Report(param_list) for param_list in self._get_objects('/Reports')]
-
+        return [report.Report(param_list) for param_list in self._get_objects(report.Report)]
+    
+    #returns list of purity_reports
     @property
     def purity_reports(self):
-        return [purity_report.PurityReport(param_list) for param_list in self._get_objects('/PurityReports')]
+        return [purity_report.PurityReport(param_list) for param_list in self._get_objects(purity_report.PurityReport)]
 
     def _get_objects(self, object_type):
-        object_dict = self.firedata.get(object_type, None)
-        object_list = []
-        #get key set of possible fields for object
-        key_set = object_dict.get(object_dict.keys()[0]).keys()
-        for i, objectID in enumerate(object_dict):
-            # for cur_field in key_set:
-            #     print(object_dict.get(objectID).get(cur_field))
-            object_list.append([(object_dict.get(objectID).get(key)) for key in key_set])
-        return object_list
-
-
+        return_list = []
+        for obj in self.firedata.child(object_type.path()).get().each():
+            return_list.append([obj.val().get(key) for key in object_type.param_list()])
+        return return_list
 
 dbase = Database("https://watro-c0aaf.firebaseio.com/")
-x = dbase.users
-y = dbase.reports
-z = dbase.purity_reports
-print z[0]
+for pr in dbase.purity_reports:
+    print(pr)
