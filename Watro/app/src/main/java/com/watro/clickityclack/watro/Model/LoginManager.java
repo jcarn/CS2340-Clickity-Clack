@@ -1,6 +1,10 @@
 package com.watro.clickityclack.watro.Model;
 
 import android.app.Activity;
+
+import com.google.firebase.auth.FirebaseAuth;
+
+import android.app.Activity;
 import android.support.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,22 +30,23 @@ class LoginManager {
 
     /**
      * Logs into firebase
+     *
      * @param activity current activity
-     * @param email email of user
+     * @param email    email of user
      * @param password password of user
      */
     public void loginWithFirebase(Activity activity, String email, String password) throws Exception {
+        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
 
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-
-                        if (!task.isSuccessful()) {
+                if (!task.isSuccessful()) {
 //                            throw new Exception("");
-                        } else {
 
-                        }
-                    }
-                });
+                } else {
 
+                }
+            }
+        });
+    }
+}

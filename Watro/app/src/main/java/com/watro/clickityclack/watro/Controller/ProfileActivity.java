@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -226,7 +227,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
                     StorageReference currProfPicStorageReference = storageReference.child("Photos").child(currentUser.getUid());
 
-                    Glide.with(ProfileActivity.this).using(new FirebaseImageLoader()).load(currProfPicStorageReference).into(profilePicImageView);
+                    Glide.with(ProfileActivity.this).using(new FirebaseImageLoader())
+                            .load(currProfPicStorageReference)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(true).into(profilePicImageView);
 
 //                    Picasso.with(ProfileActivity.this).load(imageDownloadUri).fit().centerCrop().into(profilePicImageView);
 

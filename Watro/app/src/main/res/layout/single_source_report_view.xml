@@ -14,7 +14,7 @@
     tools:context="com.watro.clickityclack.watro.Controller.ReportsActivity">
 
     <ImageView
-        android:id="@+id/reportProfilePicImageView"
+        android:id="@+id/sourceReportProfilePicImageView"
         android:layout_width="50dp"
         android:layout_height="50dp"
         app:srcCompat="@android:color/holo_blue_dark" />

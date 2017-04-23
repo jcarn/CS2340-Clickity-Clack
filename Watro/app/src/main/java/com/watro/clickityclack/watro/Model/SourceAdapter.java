@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -64,14 +65,14 @@ public class SourceAdapter extends ArrayAdapter<SourceModel> {
             viewHolder.txtWaterType = (TextView) convertView.findViewById(R.id.waterTypeTextView);
             viewHolder.txtWaterCondition = (TextView) convertView.findViewById(R.id.waterConditionTextView);
             viewHolder.profilePic = (ImageView) convertView.findViewById(R.id.reportProfilePicImageView);
-            result=convertView;
 
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
-            result = convertView;
+            //result = convertView;
 
         }
+
         //using placeholder string because it is bad practice to concatenate strings inside of setText
 
         assert sourceModel != null;
@@ -88,8 +89,15 @@ public class SourceAdapter extends ArrayAdapter<SourceModel> {
         viewHolder.txtWaterType.setText(placeholder);
         placeholder = "Water Condition: " + sourceModel.getWaterCondition();
         viewHolder.txtWaterCondition.setText(placeholder);
-        StorageReference currProfPicStorageReference = FirebaseStorage.getInstance().getReference().child("Photos").child(sourceModel.getReporterId());
-        Glide.with(mContext).using(new FirebaseImageLoader()).load(currProfPicStorageReference).into(viewHolder.profilePic);
+        if (sourceModel.getReporterId() != null) {
+            StorageReference currProfPicStorageReference = FirebaseStorage.getInstance().getReference().child("Photos").child(sourceModel.getReporterId());
+            Glide.with(mContext)
+                    .using(new FirebaseImageLoader())
+                    .load(currProfPicStorageReference)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .into(viewHolder.profilePic);
+        }
 
         // Return the completed view to render on screen
         return convertView;
