@@ -33,6 +33,7 @@
         <activity android:name=".Controller.PurityReportActivity" />
         <activity android:name=".Controller.SubmitPurityReportActivity" />
         <activity android:name=".Controller.HistoryReportsView" />
+        <activity android:name=".Controller.BanUsersActivity"></activity>
     </application>
 
 </manifest>
