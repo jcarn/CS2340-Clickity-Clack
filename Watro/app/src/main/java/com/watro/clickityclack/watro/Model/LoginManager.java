@@ -1,6 +1,10 @@
 package com.watro.clickityclack.watro.Model;
 
 import android.app.Activity;
+
+import com.google.firebase.auth.FirebaseAuth;
+
+import android.app.Activity;
 import android.support.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -38,6 +42,7 @@ class LoginManager {
 
                 if (!task.isSuccessful()) {
 //                            throw new Exception("");
+
                 } else {
 
                 }
@@ -45,4 +50,3 @@ class LoginManager {
         });
     }
 }
-
