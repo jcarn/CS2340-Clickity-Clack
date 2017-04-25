@@ -1,5 +1,6 @@
 package com.watro.clickityclack.watro.Model;
 
+import android.net.Uri;
 import android.content.res.Resources;
 
 import com.watro.clickityclack.watro.R;

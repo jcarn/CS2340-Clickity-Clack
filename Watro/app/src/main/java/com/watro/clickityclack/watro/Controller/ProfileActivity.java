@@ -1,6 +1,9 @@
 package com.watro.clickityclack.watro.Controller;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,9 +11,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -18,6 +27,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 import com.watro.clickityclack.watro.Model.Administrator;
 import com.watro.clickityclack.watro.Model.BasicUser;
 import com.watro.clickityclack.watro.Model.Manager;
@@ -53,6 +66,17 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private DatabaseReference databaseReference;
     private final UserSingleton singleton = UserSingleton.getInstance();
 
+    // Profile pic integration part 1 starts here...
+
+    private StorageReference storageReference;
+    private Button profilePicUpdateButton;
+    private static final int GALLERY_INTENT = 2;
+
+    private ImageView profilePicImageView;
+
+    private ProgressDialog progressDialog;
+    // ...profile pic integration part 1 ends here
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,19 +104,32 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         spinnerUserType.setAdapter(userTypeAdapter);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        //This is getting the specific reference to the current User using their Uid
+        // This is getting the specific reference to the current User using their Uid
         DatabaseReference currentUserReference = databaseReference.child("Users").child(currentUser.getUid());
+
+        progressDialog = new ProgressDialog(this);
+
+        progressDialog.setMessage("Loading User Information...");
+        progressDialog.show();
+
         currentUserReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // get all of the information for the current user
                 BasicUser user = dataSnapshot.getValue(BasicUser.class);
-                editTextEmail.setText(user.getEmail());
-                editTextFirstName.setText(user.getFirstName());
-                editTextLastName.setText(user.getLastName());
-                editTextHomeAddress.setText(user.getHomeAddress());
-                singleton.setUserType(user.getUserType());
-                spinnerUserType.setSelection(userTypeAdapter.getPosition(user.getUserType()));
+
+                progressDialog.dismiss();
+
+                if (user != null) {
+                    editTextEmail.setText(user.getEmail());
+                    editTextFirstName.setText(user.getFirstName());
+                    editTextLastName.setText(user.getLastName());
+                    editTextHomeAddress.setText(user.getHomeAddress());
+                    singleton.setUserType(user.getUserType());
+                    spinnerUserType.setSelection(userTypeAdapter.getPosition(user.getUserType()));
+                } else {
+                    Toast.makeText(ProfileActivity.this, "User invalid. Please log out and sign in again.", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -101,10 +138,32 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
 
+        // Profile pic integration part 2 starts here...
 
+        storageReference = FirebaseStorage.getInstance().getReference();
+
+        profilePicImageView = (ImageView) findViewById(R.id.profilePicImageView);
+
+        StorageReference currProfPicStorageReference = storageReference.child("Photos").child(currentUser.getUid());
+
+        Glide.with(ProfileActivity.this).using(new FirebaseImageLoader()).load(currProfPicStorageReference).into(profilePicImageView);
+
+        profilePicUpdateButton = (Button) findViewById(R.id.profilePicUpdateButton);
+
+        profilePicUpdateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+
+                intent.setType("image/*");
+
+                startActivityForResult(intent, GALLERY_INTENT);
+            }
+        });
+
+        // ...profile pic part 2 integration ends here
 
         returnButton = (ImageButton) findViewById(R.id.returnButton);
-
         buttonLogOut = (Button) findViewById(R.id.logOutButton);
 
         buttonLogOut.setOnClickListener(this);
@@ -142,6 +201,56 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         databaseReference.child("Users").child(firebaseUser.getUid()).setValue(currUserWithUpdatedInfo);
     }
 
+    // Profile pic integration part 3 starts here...
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK) {
+
+            progressDialog.setMessage("Updating Profile Picture");
+            progressDialog.show();
+
+            profilePicImageView.setImageResource(android.R.color.transparent);
+
+            Uri uri = data.getData();
+
+            StorageReference photoStorageReference = storageReference.child("Photos").child(currentUser.getUid());
+
+            photoStorageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    progressDialog.dismiss();
+
+                    Uri imageDownloadUri = taskSnapshot.getDownloadUrl();
+
+                    StorageReference currProfPicStorageReference = storageReference.child("Photos").child(currentUser.getUid());
+
+                    Glide.with(ProfileActivity.this).using(new FirebaseImageLoader())
+                            .load(currProfPicStorageReference)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(true).into(profilePicImageView);
+
+//                    Picasso.with(ProfileActivity.this).load(imageDownloadUri).fit().centerCrop().into(profilePicImageView);
+
+//                    DatabaseReference imageDownloadUriReference = databaseReference.child("Users").child(currentUser.getUid()).child("imageDownloadUri");
+
+//                    databaseReference.child("Users").child(currentUser.getUid()).child("imageDownloadUri").setValue("hi");
+
+                    Toast.makeText(ProfileActivity.this, "Updated Profile Pic!", Toast.LENGTH_LONG).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(ProfileActivity.this, "Profile Pic Update Failed.\n" + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+    }
+
+    // ...profile pic integration part 3 ends here...
+
     @Override
     public void onClick(View v) {
         if (v == buttonLogOut) {
@@ -156,7 +265,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         }
 
         if (v == buttonSaveChanges) {
-
             if (String.valueOf(editTextFirstName.getText()).equals("") || String.valueOf(editTextLastName.getText()).equals("") || String.valueOf(editTextEmail.getText()).equals("") || String.valueOf(editTextHomeAddress.getText()).equals("")) {
                 makeText(this, "Field cannot be left blank.", Toast.LENGTH_LONG).show();
             } else {

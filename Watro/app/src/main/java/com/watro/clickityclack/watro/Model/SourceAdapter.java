@@ -6,8 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.watro.clickityclack.watro.R;
 
 import java.util.ArrayList;
@@ -19,8 +25,12 @@ import java.util.ArrayList;
 
 public class SourceAdapter extends ArrayAdapter<SourceModel> {
 
+    Context mContext;
+
     public SourceAdapter(ArrayList<SourceModel> data, Context context) {
         super(context, R.layout.single_source_report_view, data);
+        ArrayList<SourceModel> sourceList = data;
+        mContext = context;
     }
 
     // View lookup cache
@@ -31,6 +41,7 @@ public class SourceAdapter extends ArrayAdapter<SourceModel> {
         TextView txtLocation;
         TextView txtWaterType;
         TextView txtWaterCondition;
+        ImageView profilePic;
     }
 
     @NonNull
@@ -53,14 +64,15 @@ public class SourceAdapter extends ArrayAdapter<SourceModel> {
             viewHolder.txtLocation = (TextView) convertView.findViewById(R.id.locationTextView);
             viewHolder.txtWaterType = (TextView) convertView.findViewById(R.id.waterTypeTextView);
             viewHolder.txtWaterCondition = (TextView) convertView.findViewById(R.id.waterConditionTextView);
-
-//            result=convertView;
+            viewHolder.profilePic = (ImageView) convertView.findViewById(R.id.sourceReportProfilePicImageView);
 
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
-//            result=convertView;
+            //result = convertView;
+
         }
+
         //using placeholder string because it is bad practice to concatenate strings inside of setText
 
         assert sourceModel != null;
@@ -77,6 +89,16 @@ public class SourceAdapter extends ArrayAdapter<SourceModel> {
         viewHolder.txtWaterType.setText(placeholder);
         placeholder = "Water Condition: " + sourceModel.getWaterCondition();
         viewHolder.txtWaterCondition.setText(placeholder);
+        if (sourceModel.getReporterId() != null) {
+            StorageReference currProfPicStorageReference = FirebaseStorage.getInstance().getReference().child("Photos").child(sourceModel.getReporterId());
+            Glide.with(mContext)
+                    .using(new FirebaseImageLoader())
+                    .load(currProfPicStorageReference)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .into(viewHolder.profilePic);
+        }
+
         // Return the completed view to render on screen
         return convertView;
     }

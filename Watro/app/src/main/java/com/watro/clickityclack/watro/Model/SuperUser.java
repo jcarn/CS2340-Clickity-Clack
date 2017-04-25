@@ -1,5 +1,6 @@
 package com.watro.clickityclack.watro.Model;
 
+import android.net.Uri;
 import java.util.IllegalFormatCodePointException;
 
 public abstract class SuperUser {

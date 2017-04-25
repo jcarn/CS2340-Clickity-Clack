@@ -1,17 +1,20 @@
 package com.watro.clickityclack.watro.Controller;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 //import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -29,6 +32,7 @@ import com.watro.clickityclack.watro.Model.SourceModel;
 import com.watro.clickityclack.watro.Model.UserSingleton;
 import com.watro.clickityclack.watro.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -49,11 +53,14 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
     private final UserSingleton singleton = UserSingleton.getInstance();
     private SourceModel source;
 
+//    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reports);
+
+//        mediaPlayer = MediaPlayer.create(this, R.raw.long_audio);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -93,6 +100,7 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
                 for (String x: reporterIDs) {
                     BasicUser user = dataSnapshot.child(x).getValue(BasicUser.class);
                     models.get(index).setReporterName(user.getFirstName() + " " + user.getLastName());
+                    models.get(index).setReporterId(user.getId());
                     index++;
                 }
             }
@@ -121,19 +129,26 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
         if (currentUser == null) {
             purityReportButton.setVisibility(View.GONE);
         } else if (singleton.exists()) {
-            if (singleton.getUserType().equals("User") || singleton.getUserType().equals("Administrator")) {
+            if (singleton.getUserType().equals("User")) {
                 purityReportButton.setVisibility(View.GONE);
+            } else if (singleton.getUserType().equals("Administrator")) {
+                purityReportButton.setText("Ban Users"); // adding functionality to ban users
             }
         } else {
             databaseReference = FirebaseDatabase.getInstance().getReference();
             final DatabaseReference usersDataBaseReference = databaseReference.child("Users").child(currentUser.getUid());
-            usersDataBaseReference.addValueEventListener(new ValueEventListener() {
+            usersDataBaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     BasicUser person = dataSnapshot.getValue(BasicUser.class);
-                    singleton.setUserType(person.getUserType());
-                    if (singleton.getUserType().equals("User") || singleton.getUserType().equals("Administrator")) {
-                        purityReportButton.setVisibility(View.GONE);
+
+                    if (person != null) {
+                        singleton.setUserType(person.getUserType());
+                        if (singleton.getUserType().equals("User")) {
+                            purityReportButton.setVisibility(View.GONE);
+                        } else if (singleton.getUserType().equals("Administrator")) {
+                            purityReportButton.setText("Ban Users"); // adding functionality to ban users
+                        }
                     }
                 }
 
@@ -163,19 +178,17 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
                 for (DataSnapshot child : children) {
                     Report currReport = child.getValue(Report.class);
 
-                    // for some reason, Firebase can't retrieve the enum properties correctly from
-                    // the database. Therefore, the next few lines retrieve them.
+                    if (currReport != null) {
+                        HashMap<String, String> currReportPropertiesToValuesHashMap = (HashMap<String, String>) child.getValue();
+                        if (currReportPropertiesToValuesHashMap.get("waterType") != null) {
+                            currReport.setWaterType(currReportPropertiesToValuesHashMap.get("waterType"));
+                        }
+                        if (currReportPropertiesToValuesHashMap.get("waterCondition") != null) {
+                            currReport.setWaterCondition(currReportPropertiesToValuesHashMap.get("waterCondition"));
+                        }
 
-                    // TODO: FIX THE REASON BEHIND WHY FIREBASE KEEPS DELETING THE ENUM PROPERTIES
-                    HashMap<String, String> currReportPropertiesToValuesHashMap = (HashMap<String, String>) child.getValue();
-                    if (currReportPropertiesToValuesHashMap.get("waterType") != null) {
-                        currReport.setWaterType(currReportPropertiesToValuesHashMap.get("waterType"));
+                        reportHashCodeToReportHashMap.put(String.valueOf(currReport.getReportID()), currReport);
                     }
-                    if (currReportPropertiesToValuesHashMap.get("waterCondition") != null) {
-                        currReport.setWaterCondition(currReportPropertiesToValuesHashMap.get("waterCondition"));
-                    }
-
-                    reportHashCodeToReportHashMap.put(String.valueOf(currReport.getReportID()), currReport);
                 }
 
                 //LatLng rep;
@@ -191,7 +204,8 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
                     googleMap.addMarker(new MarkerOptions()
                             .position(new LatLng(Double.parseDouble(rep.getLatitude()), Double.parseDouble(rep.getLongitude())))
                             .title(reportHashCodeToReportHashMap.get(key).getStreetAddress())
-                            .snippet(reportHashCodeToReportHashMap.get(key).getWaterType() + ": " + reportHashCodeToReportHashMap.get(key).getWaterCondition()));
+                            .snippet(reportHashCodeToReportHashMap.get(key).getWaterType() + ": " + reportHashCodeToReportHashMap.get(key).getWaterCondition())
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.watro_pin)));
                 }
 
                 if (num > 0) {
@@ -213,16 +227,45 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
+//        if (!mediaPlayer.isPlaying()) {
+//            mediaPlayer.start();
+//        } else {
+//            mediaPlayer.stop();
+//        }
+
         if (v == settingsButton) {
+//            mediaPlayer.start();
             startActivity(new Intent(this, ProfileActivity.class));
         }
         if (v == submitReportButton) {
-            startActivity(new Intent(this, SubmitActivity.class));
+
+            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+            FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+            final DatabaseReference currentUserReference = databaseReference.child("Users").child(currentUser.getUid());
+            currentUserReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.child("banned").exists() && dataSnapshot.child("banned").getValue(String.class).equals("true")) {
+                        Toast.makeText(getApplicationContext(), "You have been banned from submitting reports", Toast.LENGTH_LONG).show();
+                    } else {
+                        startActivity(new Intent(ReportsActivity.this, SubmitActivity.class));
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
         }
-        //If they are even able to see the purity report button, they are a worker or manager
+
+        // If they are even able to see the purity report button, they are a worker or manager
         if (v == purityReportButton) {
+//            mediaPlayer.start();
             if (singleton.getUserType().equals("Worker")) {
                 startActivity(new Intent(this, SubmitPurityReportActivity.class));
+            } else if (singleton.getUserType().equals("Administrator")) { // adding functionality to ban users
+                startActivity(new Intent(this, BanUsersActivity.class));
             } else {
                 startActivity(new Intent(this, PurityReportActivity.class));
             }

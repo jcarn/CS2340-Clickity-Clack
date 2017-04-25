@@ -13,6 +13,12 @@
     android:background="@drawable/gradient_background"
     tools:context="com.watro.clickityclack.watro.Controller.ReportsActivity">
 
+    <ImageView
+        android:id="@+id/sourceReportProfilePicImageView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:srcCompat="@android:color/holo_blue_dark" />
+
     <TextView
         android:id="@+id/dateTextView"
         android:layout_width="match_parent"

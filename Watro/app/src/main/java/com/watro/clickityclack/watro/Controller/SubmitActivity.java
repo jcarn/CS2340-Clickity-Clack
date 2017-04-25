@@ -1,5 +1,9 @@
 package com.watro.clickityclack.watro.Controller;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -8,8 +12,10 @@ import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -98,7 +104,6 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
         submitButton = (Button) findViewById(R.id.buttonSubmitReport);
         returnButton.setOnClickListener(this);
         submitButton.setOnClickListener(this);
-
     }
 
     private void saveReport() {
@@ -151,7 +156,20 @@ public class SubmitActivity extends AppCompatActivity implements View.OnClickLis
                 reportHashCodeToReportHashMap.put(String.valueOf(report.hashCode()), report);
 
                 if (submitButtonPressed[0]) {
+                    String longText = "Details of Report" + "\n";
+                    longText += "Location: " + report.getStreetAddress() + "\n";
+                    longText += "Water Type: " + report.getWaterType() + "\n";
+                    longText += "Water Condition: " + report.getWaterCondition();
                     databaseReference.child("Reports").setValue(reportHashCodeToReportHashMap);
+                    Notification myNotification  = new Notification.Builder(getApplicationContext())
+                            .setContentTitle("Water Source Report Submitted")
+                            .setSmallIcon(R.drawable.watrosplash)
+                            .setContentIntent(PendingIntent.getActivity(getApplicationContext(), 0, new Intent(), 0))
+                            .setStyle(new Notification.BigTextStyle().bigText(longText))
+                            .setAutoCancel(true).build();
+                    NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+                    notificationManager.notify(0, myNotification);
                     submitButtonPressed[0] = false;
                 }
             }
