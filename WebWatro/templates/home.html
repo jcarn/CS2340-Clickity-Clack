@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amy Dao - Bio Page</title>
+    <!-- <link rel="stylesheet" href="home2style.css" type="text/css" /> -->
+    <link href='https://fonts.googleapis.com/css?family=Homemade+Apple' rel='stylesheet' type='text/css'>
+</head>
+
+
+
+<body>
+    <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>
+<div class="header">
+    <h1>Amy Dao</h1>
+</div>
+
+<div class="row">
+    
+    <div class="col-tab-3 col-desk-3 menu">
+        <ul>
+            <form action="/map" method="get">
+                <button name="mapbtn" class="btn" type="submit">Map</button>
+            </form>
+            <form action="/info" method="get">
+                <button name="infopage" class="btn" type="submit">Info</button>
+            </form>
+            <!-- <button class ="mapbtn" onclick="mapHome()" type="button">Map</button> -->
+            <li>Hero</li>
+            <li>Sports</li>
+            <li>Music</li>
+            <li><a href="game.html">Game</a></li>
+            <li><a href="stock.html">Stocks</a></li>
+            <li><a href="https://webdevstuff-amydao.c9users.io/amyDAO/php/zipFind.php">City Finder</a></li>
+            <li><a href="https://webdevstuff-amydao.c9users.io/amyDAO/php/SQLzipFind.php">City Finder mySQL</a></li>
+            <li><a href="https://webdevstuff-amydao.c9users.io/amyDAO/php/pokeSignIn.php">Final Project App</a></li>
+        </ul>
+    </div>
+
+    <div class="col-tab-9 col-desk-6">
+        <h1>Biography</h1>
+        <p>Hey! My name's Amy! I'm a Second Year at Georgia Tech. At school, 
+                I am the Vice President of the Vietnamese Student Association. 
+                When I'm not stu(dying) or doing stuff for VSA, I am working in 
+                the College of Computing's Office of Outreach as a Corporate Host.
+                In my free time, I like to eat, hang out with friends, hang out 
+                with friends AND eat, play instruments, watch Netflix, and travel
+                across the land to catch and train Pokemon in hopes of becoming 
+                a Pokemon Master. </p>
+        <br>
+    </div>
+
+    <div class="col-tab-12 col-desk-3">
+        <div class="pic">
+            <!--<h2>What?</h2>-->
+            <!--<p>Lorem ipsum dolor sit amet.</p>-->
+            <!--<h2>Where?</h2>-->
+            <!--<p>Sed diam nonummy nibh euismod tincidunt ut </p>-->
+            <!--<h2>How?</h2>-->
+            <!--<p>Laoreet dolore magna aliquam erat volutpat.</p>-->
+            <img src="{{url_for('static',filename='me.jpg')}}">
+        </div>
+    </div>
+</div>    
+
+<div class="row">
+    <div class="col-tab-12 col-desk-3">
+        <div class="aside">
+            <div class="boxImg"><img src="../img/proj1-2/Aang.png"></div>
+            <h>SuperHero</h>
+            <p>He's not what you think of upon hearing 
+                "superhero," but he's a superhero nonetheless! Aang the Avatar:
+                Master of All Four Elements. I really related to Aang's background
+                and the Avatar universe so that's why Aang and his team are my 
+                favorite heroes.
+            </p>
+        </div>
+    </div>
+    
+    <div class="col-tab-12 col-desk-3">
+        <div class="aside">
+            <div class="boxImg"><img src="../img/proj1-2/gsw.png"></div>
+            <h>Sports Team</h>
+            <p>Honestly, I'm not really into sports, but my
+                good friends really like the Warriors and they're really good,
+                too. So, why not?
+            </p>
+        </div>
+    </div>
+    
+    <div class="col-tab-12 col-desk-3">
+        <div class="aside">
+            <div class="boxImg"><img src="../img/proj1-2/acoustic.jpg"></div>
+            <h>Music</h>
+            <p>I don't really have a favorite music 
+                artist/group, but my favorite kind of music is probably acoustic/
+                covers of songs. I really appreciate naturally-made music because
+                I was really involved in music programs growing up.
+            </p>
+        </div>
+    </div>
+    
+    <div class="col-tab-12 col-desk-3">
+        <div class="aside">
+            <div class="boxImg">
+                <a href="game.html">
+                        <img src="../img/proj1-2/game.png"></img>
+                </a>
+            </div>
+            <h>Game</h>
+            <p>Come play my super awesome game! :D
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    
+    <div class="col-tab-12 col-desk-3">
+        <div class="aside">
+            <div class="boxImg">
+                <a href="stock.html">
+                        <img src="../img/proj4/stocks.jpg"></img>
+                </a>
+            </div>
+            <h>Stocks</h>
+            <p>View my super cool stock page thing here.
+            </p>
+        </div>
+    </div>
+    
+    <div class="col-tab-12 col-desk-3">
+        <div class="aside">
+            <div class="boxImg">
+                <a href="https://cs2803spring16-biopage-cedrictstallworth.c9users.io/HOMEWORK/amyDAO/php/zipFind.php">
+                        <img src="../img/proj5/map.png"></img>
+                </a>
+            </div>
+            <h>CityFinder</h>
+            <p>Locate any city in the US!
+            </p>
+        </div>
+    </div>
+    
+    <div class="col-tab-12 col-desk-3">
+        <div class="aside">
+            <div class="boxImg">
+                <a href="https://cs2803spring16-biopage-cedrictstallworth.c9users.io/HOMEWORK/amyDAO/php/SQLzipFind.php">
+                        <img src="../img/proj6/RoadMap.jpg"></img>
+                </a>
+            </div>
+            <h>CityFinder mySQL</h>
+            <p>Locate any city in the US... again!
+            </p>
+        </div>
+    </div>
+    
+    <div class="col-tab-12 col-desk-3">
+        <div class="aside">
+            <div class="boxImg">
+                <a href="https://cs2803spring16-biopage-cedrictstallworth.c9users.io/HOMEWORK/amyDAO/php/pokeSignIn.php">
+                        <img src="../img/proj7/fin.jpg"></img>
+                </a>
+            </div>
+            <h>Final Project</h>
+            <p>Keep track of your Poke Ball sales!
+            </p>
+        </div>
+    </div>
+
+</div>
+
+<div class="footer">
+    <p>Contact me: amy.dao@gatech.edu</p>
+</div>
+
+</body>
+
+<style>
+/* unvisited link */
+a:link {
+    color: white;
+}
+
+/* visited link */
+a:visited {
+    color: white
+}
+
+/* mouse over link */
+a:hover {
+    color: white;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0px;
+}
+
+.row:after {
+    content: "";
+    clear: both;
+    display: block;
+}
+
+[class*="col-"] {
+    float: left;
+    padding: 15px;
+}
+
+html {
+    font-family: "Quicksand", sans-serif;
+}
+
+.header {
+    background-color: #9933cc;
+    color: #ffffff;
+    height:200px;
+    background: url("{{url_for('static',filename='atl.jpeg')}}") no-repeat;
+    background-size: cover;
+    font-family: 'Homemade Apple', cursive;
+
+}
+
+.pic {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.pic img{
+    width: 100%;
+    opacity: .75;
+}
+
+.menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu li {
+    padding: 8px;
+    margin-bottom: 7px;
+    background-color :#33b5e5;
+    color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.menu li:hover {
+    background-color: steelblue;
+}
+
+.button {
+    padding: 8px;
+    margin-bottom: 7px;
+    background-color :#33b5e5;
+    color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.button:hover {
+    background-color: steelblue;
+}
+
+.aside {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    background-color: #33b5e5;
+    padding: 15px;
+    color: #ffffff;
+    text-align: center;
+    font-size: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.aside h{
+    font-size: 20px;
+    font-weight: 900;
+}
+
+.boxImg{
+    /*float: left;*/
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.boxImg img{
+    width: 90%;
+}
+
+.footer {
+    background-color: #0099cc;
+    color: #ffffff;
+    text-align: center;
+    font-size: 12px;
+    padding: 15px;
+}
+
+
+/* Mobile */ 
+/* Mobile First - make all elements as wide as the viewport for mobile devices.
+This will cause all elements to stack of top of each other*/
+[class*="col-"] {
+    width: 100%;
+}
+
+/*Tablet*/
+@media only screen and (min-width: 680px){
+    .col-tab-1 {width: 8.33%;}
+    .col-tab-2 {width: 16.66%;}
+    .col-tab-3 {width: 25%;}
+    .col-tab-4 {width: 33.33%;}
+    .col-tab-5 {width: 41.66%;}
+    .col-tab-6 {width: 50%;}
+    .col-tab-7 {width: 58.33%;}
+    .col-tab-8 {width: 66.66%;}
+    .col-tab-9 {width: 75%;}
+    .col-tab-10 {width: 83.33%;}
+    .col-tab-11 {width: 91.66%;}
+    .col-tab-12 {width: 100%;}
+}
+
+/*Desktop*/
+@media only screen and (min-width: 768px){
+    .col-desk-1 {width: 8.33%;}
+    .col-desk-2 {width: 16.66%;}
+    .col-desk-3 {width: 25%;}
+    .col-desk-4 {width: 33.33%;}
+    .col-desk-5 {width: 41.66%;}
+    .col-desk-6 {width: 50%;}
+    .col-desk-7 {width: 58.33%;}
+    .col-desk-8 {width: 66.66%;}
+    .col-desk-9 {width: 75%;}
+    .col-desk-10 {width: 83.33%;}
+    .col-desk-11 {width: 91.66%;}
+    .col-desk-12 {width: 100%;}
+}
+
+/*Landscape*/
+/*@media only screen and (orientation: landscape) {*/
+/*    body {*/
+/*        background-color: black;*/
+/*        color: white;*/
+/*    }*/
+/*}*/
+
+</style>
+</html>
