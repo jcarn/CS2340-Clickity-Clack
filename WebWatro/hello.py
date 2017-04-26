@@ -4,7 +4,7 @@ from flask_googlemaps import Map
 import firebase_handler
 from model import user
 
-user = ""
+userFirstName = ""
 
 db = firebase_handler.Database()
 app = Flask(__name__)
@@ -22,7 +22,6 @@ def mainThing():
 #     return render_template("mapHome.html")
 def main():
 # creating a map in the view
-    user = str(db.users[0].firstName)
     reports = db.reports
     markerList = []
     
@@ -56,7 +55,7 @@ def main():
     }
     ]
     )
-    return render_template('mapHome.html', mymap=mymap, sndmap=sndmap, user=user)
+    return render_template('mapHome.html', mymap=mymap, sndmap=sndmap, user=userFirstName)
 
 #makes dictionary with marker attributes from a single report - to be added to marker list
 def mapMarkers(report):
@@ -69,30 +68,41 @@ def mapMarkers(report):
 
     return locationDict
 
-
-@app.route("/info")
-def info():
-    user = str(db.users[0])
-    amy = "I AM AMY"
-    print("Hi I am Amy " + user)
-    return render_template('info.html', user=user, amy=amy)
-
 @app.route("/login", methods = ['GET', 'POST'])
 def login():
-    global user
+    global userFirstName
 
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
         db.login(username, password)
 
-        user = db.current_user().firstName
+        userFirstName = db.current_user.firstName
 
         return redirect(url_for('main'))
     return render_template("login.html")
 
-@app.route("/register")
+@app.route("/register", methods = ['GET', 'POST'])
 def register():
+    if request.method == 'POST':
+        # get fields from UI
+        firstname = request.form['firstname']
+        lastname = request.form['lastname']
+        address = request.form['address']
+        email = request.form['email']
+        password = request.form['password']
+        usertype = request.form.get('usertype')
+
+        # create new user to pass into db
+        newUser = user.User([email, 0, firstname, lastname, usertype, address])
+        db.register_user(newUser, password)
+
+        # set the userFirstName
+        userFirstName = db.current_user.firstName
+        print(userFirstName)
+
+        # redirect to the home page
+        return redirect(url_for('main'))
     return render_template("register.html")
 
 if __name__ == "__main__":

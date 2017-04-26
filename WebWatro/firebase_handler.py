@@ -38,7 +38,7 @@ class Database():
 
     @property
     def current_user(self):
-        return self.find_user(dbase._current_user.get("localId",self._auth_token))
+        return self.find_user(self._current_user.get("localId",self._auth_token))
 
     def find_user(self, id):
         for user in self.users:
@@ -56,6 +56,7 @@ class Database():
             self.login(new_user.email, password)
         except Exception as err:
             try: 
+                
                 self.login(new_user.email, password)
             except:
                 print("Registration failed: " + str(err))

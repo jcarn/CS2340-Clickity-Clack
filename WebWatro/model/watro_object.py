@@ -6,6 +6,8 @@ class WatroObject(object):
         if (len(param_list) == len(self.field_names())):
             self._field_dict = {key: param_list[i] for i, key in enumerate(self.field_names())}
         else:
+            print(len(param_list))
+            print(len(self.field_names()))
             raise ValueError("List of params not long enough")
 
     # key errors returned mean that variable doesn't exist
