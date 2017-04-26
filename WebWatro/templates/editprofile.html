@@ -22,10 +22,14 @@
             <div class="form-group row">
                 <!-- <label for="user type" style="font-size: 12px; text-align: center;">Select a User Type:</label> -->
                 <select class="form-control" id="sel" name="usertype">
-                    <option value="user" selected="{{sel1}}">User</option>
-                    <option value="worker" selected="{{sel2}}">Worker</option>
-                    <option value="manager" selected="{{sel3}}" >Manager</option>
-                    <option value="administrator" selected="{{sel4}}">Administrator</option>
+                    <!-- <option value="User" selected="{{sel1}}">User</option>
+                    <option value="Worker" selected="{{sel2}}">Worker</option>
+                    <option value="Manager" selected="{{sel3}}" >Manager</option>
+                    <option value="Administrator" selected="{{sel4}}">Administrator</option> -->
+                    <option value="User" {{sel1}}>User</option>
+                    <option value="Worker" {{sel2}}>Worker</option>
+                    <option value="Manager" {{sel3}}>Manager</option>
+                    <option value="Administrator" {{sel4}}>Administrator</option>
                 </select>
             </div>
             <div class="form-group row">

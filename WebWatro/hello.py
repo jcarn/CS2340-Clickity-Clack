@@ -26,7 +26,7 @@ def main():
     # user = str(db.users[0].firstName)
     global curr_user
     first_name = curr_user.firstName
-
+    print("asdf " + first_name)
     reports = db.reports
     markerList = []
     
@@ -42,26 +42,10 @@ def main():
     markers=markerList
     )
 
-    sndmap = Map(
-    identifier="sndmap",
-    lat=37.4419,
-    lng=-122.1419,
-    markers=[
-    {
-    'icon': '/static/images/minimarker.png',
-    'lat': reports[0].latitude,
-    'lng': reports[0].longitude,
-    'infobox': "Hi i'm amy"
-    },
-    {
-    'icon': '/static/images/minimarker.png',
-    'lat': 37.4300,
-    'lng': -122.1400,
-    'infobox': "<b>Hello World from other place</b>"
-    }
-    ]
-    )
-    return render_template('mapHome.html', mymap=mymap, sndmap=sndmap, user=first_name)
+    if request.method == 'POST':
+        return redirect(url_for('editProf'))
+
+    return render_template('mapHome.html', mymap=mymap, name=first_name)
 
 #makes dictionary with marker attributes from a single report - to be added to marker list
 def mapMarkers(report):
