@@ -6,22 +6,21 @@
 
 </head>
 <body>
+
 <div class="container">
 <h1>Hello, {{name}}!</h1>
-
-<div class ="mapview">
-<h2> Water Reports</h2>
-{{mymap.html}}
-</div>
-
-
 <div class="form-group row">
     <form method='post'>
-        <button class="btn btn-default btn-lg col-md-4 col-md-offset-4" name="editProf" style="background: #33ccff; margin-top: 50px;" type="submit">Edit Profile</button>
+        <button class="btn btn-default btn-lg col-md-4 col-md-offset-4" name="editProf" style="background: #33ccff; margin-top: 0px;" type="submit">Edit Profile</button>
     </form>
+        <a href="{{ url_for('login') }}"><button class="btn btn-default btn-lg col-md-4 col-md-offset-4" name="logout" style="background: #33ccff; margin-top: 0px;" type="submit">Logout</button></a>
 </div>
 
 
+<h2> Water Reports</h2>
+<div class ="mapview">
+{{mymap.html}}
+</div>
 
 
 </div>
@@ -30,11 +29,22 @@
 
 
 <style>
+
 .container {
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+}
+
+.head {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.body {
     background-color: linear-gradient(#4ECDC4, #91F1FC);
     font-family: 'Montserrat', sans-serif;
-    margin-left: 32%;
-    margin-right: 25%;
+/*    margin-left: 25%;
+    margin-right: 25%;*/
+    text-align: center;
 
 }
 
@@ -43,20 +53,28 @@
 }
 
 .mapview {
+    font-family: 'Montserrat', sans-serif;
     text-align: center;
+    margin-left: 33%;
+    margin-right: 25%;
 }
 
 button {
     background-color: #33ccff;
     color: white;
     padding: 14px 20px;
-    margin: 8px 0;
+    margin: 0px 0;
     border: none;
     cursor: pointer;
-    width: 50%;
+    width: 20%;
     margin-left: 25%;
     margin-right:25%;
 
+}
+
+button:hover {
+    color: #4CAF50;
+    background-color: white; 
 }
 
 </style>
