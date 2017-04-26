@@ -4,7 +4,7 @@ from flask_googlemaps import Map
 import firebase_handler
 from model import user
 
-curr_user = ""
+curr_user = None
 
 db = firebase_handler.Database()
 app = Flask(__name__)
@@ -26,6 +26,7 @@ def main():
     # user = str(db.users[0].firstName)
     global curr_user
     first_name = curr_user.firstName
+
     reports = db.reports
     markerList = []
     
@@ -40,11 +41,27 @@ def main():
     style="height:500px;width:500px",
     markers=markerList
     )
-    
-    if request.method == 'POST':
-        return redirect(url_for('editProf'))
 
-    return render_template('mapHome.html', mymap=mymap, name=first_name)
+    sndmap = Map(
+    identifier="sndmap",
+    lat=37.4419,
+    lng=-122.1419,
+    markers=[
+    {
+    'icon': '/static/images/minimarker.png',
+    'lat': reports[0].latitude,
+    'lng': reports[0].longitude,
+    'infobox': "Hi i'm amy"
+    },
+    {
+    'icon': '/static/images/minimarker.png',
+    'lat': 37.4300,
+    'lng': -122.1400,
+    'infobox': "<b>Hello World from other place</b>"
+    }
+    ]
+    )
+    return render_template('mapHome.html', mymap=mymap, sndmap=sndmap, user=first_name)
 
 #makes dictionary with marker attributes from a single report - to be added to marker list
 def mapMarkers(report):
@@ -74,7 +91,25 @@ def login():
 
 @app.route("/register", methods = ['GET', 'POST'])
 def register():
-    #'firstname' 'lastname' 'address' 'email' 'password' 'usertype' 'registerSubmit'
+    global curr_user
+    if request.method == 'POST':
+        # get fields from UI
+        firstname = request.form['firstname']
+        lastname = request.form['lastname']
+        address = request.form['address']
+        email = request.form['email']
+        password = request.form['password']
+        usertype = request.form.get('usertype')
+
+        # create new user to pass into db
+        newUser = user.User([email, 0, firstname, lastname, usertype, address])
+        db.register_user(newUser, password)
+
+        # set the userFirstName
+        curr_user = db.current_user
+
+        # redirect to the home page
+        return redirect(url_for('main'))
     return render_template("register.html")
 
 @app.route("/editprofile", methods = ['GET', 'POST'])

@@ -56,6 +56,7 @@ class Database():
             self.login(new_user.email, password)
         except Exception as err:
             try: 
+                
                 self.login(new_user.email, password)
             except:
                 print("Registration failed: " + str(err))
