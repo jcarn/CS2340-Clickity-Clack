@@ -262,12 +262,14 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
         // If they are even able to see the purity report button, they are a worker or manager
         if (v == purityReportButton) {
 //            mediaPlayer.start();
-            if (singleton.getUserType().equals("Worker")) {
-                startActivity(new Intent(this, SubmitPurityReportActivity.class));
-            } else if (singleton.getUserType().equals("Administrator")) { // adding functionality to ban users
-                startActivity(new Intent(this, BanUsersActivity.class));
-            } else {
-                startActivity(new Intent(this, PurityReportActivity.class));
+            if (singleton.exists()) {
+                if (singleton.getUserType().equals("Worker")) {
+                    startActivity(new Intent(this, SubmitPurityReportActivity.class));
+                } else if (singleton.getUserType().equals("Administrator")) { // adding functionality to ban users
+                    startActivity(new Intent(this, BanUsersActivity.class));
+                } else {
+                    startActivity(new Intent(this, PurityReportActivity.class));
+                }
             }
         }
     }
