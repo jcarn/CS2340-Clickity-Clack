@@ -1,5 +1,8 @@
 package com.watro.clickityclack.watro.Controller;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -132,7 +135,20 @@ public class SubmitPurityReportActivity extends AppCompatActivity implements Vie
                 }
                 reportHashCodeToReportHashMap.put(String.valueOf(report.hashCode()), report);
                 if (submitButtonPressed[0]) {
+                    String longText = "Details of Report" + "\n";
+                    longText += "Location: " + report.getStreetAddress() + "\n";
+                    longText += "Virus PPM: " + report.getVirusPPM() + "\n";
+                    longText += "Contaminant PPM: " + report.getContaminantPPM();
                     databaseReference.child("PurityReports").setValue(reportHashCodeToReportHashMap);
+                    Notification myNotification  = new Notification.Builder(getApplicationContext())
+                            .setContentTitle("Water Purity Report Submitted")
+                            .setSmallIcon(R.drawable.watrosplash)
+                            .setContentIntent(PendingIntent.getActivity(getApplicationContext(), 0, new Intent(), 0))
+                            .setStyle(new Notification.BigTextStyle().bigText(longText))
+                            .setAutoCancel(true).build();
+                    NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+                    notificationManager.notify(0, myNotification);
                     submitButtonPressed[0] = false;
                 }
             }
