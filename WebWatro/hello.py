@@ -2,7 +2,7 @@ from flask import *
 from flask_googlemaps import GoogleMaps
 from flask_googlemaps import Map
 import firebase_handler
-from model import user
+from model import *
 
 curr_user = None
 
@@ -123,6 +123,34 @@ def editProf():
     # if method == 'POST':
         #insert edit profile functionality
     return render_template("editprofile.html", fname=fname, lname=lname, home=home, email=email, usertype=usertype, sel1=sel1, sel2=sel2, sel3=sel3, sel4=sel4)
+
+@app.route("/source")
+def source():
+    reports = db.reports
+    reportList = []
+
+
+    return render_template("source.html")
+
+
+def formatSourceRpt(report):
+    rptID = report.reportID
+    date = report.reportDate
+    reporter = db.find_user(report.reporterID).firstName
+    location = report.streetAddress
+    waterType = report.waterType
+    waterCond = report.waterCondition
+    pOpen = "<p style='font-size: 15px'>"
+    pClose = "</p>"
+
+    line1 = pOpen + "Report #: " + str(rptID) + " | Report Date: " + str(date) + " | Reporter: " + str(reporter) + pClose
+    line2 = pOpen + "Location: " + str(location) + pClose
+    line3 = pOpen + "Water Type: " + str(waterType) + " | Water Condition: " + str(waterCond) + pClose
+
+    view = line1 + line2 + line3
+
+    return view
+
 
 if __name__ == "__main__":
     app.run()

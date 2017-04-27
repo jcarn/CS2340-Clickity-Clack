@@ -1,27 +1,18 @@
 <html>
-    <title>Login</title>
+    <title>Water Sources</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300" rel="stylesheet">
     <div class="container">
-        <form class="formthing" method = 'post'>
-            <div class="form-group" style="height:100px;">
-                <!-- <img class = 'img-thumbnail' width="500" height="500" src="{{url_for('static', filename='images/watro.png')}}"/> -->
-                <h2 style="color:white; text-align: center;">Welcome to Watro</h2>
-            </div>
-            <div class="form-group row">
-                <input  class = "input-lg col-md-4 col-md-offset-4" type="text" name = "username" placeholder="Username" required>
-            </div>
-            <div class="form-group row">
-                <input class="input-lg col-md-4 col-md-offset-4" type="password" name="password" placeholder="Password" required>
-            </div>
-            <div class="form-group row">
-                <button class="btn btn-default btn-lg col-md-4 col-md-offset-4" name="loginSubmit" style="background: #33ccff; margin-top: 50px;" type="submit">Login</button>
-            </div>
-        </form>
+        <p style="font-size: 15px">Hi my name is Amy. :)</p>
         <p style="font-family: 'Montserrat', sans-serif;
     font-size: 12px;
     text-align: center;
-    color: white;"><a href="{{ url_for('register') }}">Create a new account here!</a></p>
+    color: white;"><a href="{{ url_for('main') }}">Back to Home</a></p>
     </div>
+
+    <!-- <p style="font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    text-align: center;
+    color: white;"><a href="{{ url_for('main') }}">Back to Home</a></p> -->
 
 </html>
 
@@ -35,6 +26,8 @@
     font-size: 2em;
     height: 100%;
     width: 85%;
+    text-align: center;
+    color: white;
 }
 
 
@@ -45,6 +38,19 @@ img {
 
 input[type=text], input[type=password] {
     width: 50%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    text-align: center;
+    margin-left: 25%;
+    margin-right:25%;
+}
+
+select {
+    width: 50%;
+    height: 41px;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
@@ -84,7 +90,7 @@ a:visited {
 
 /* mouse over link */
 a:hover {
-    color:#0033cc;
+    color: #0033cc;
 }
 
 
