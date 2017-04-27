@@ -5,3 +5,7 @@ class Report(WatroObject):
     @staticmethod
     def path():
         return "/Reports"
+
+    @property
+    def id(self):
+        return self.reportID

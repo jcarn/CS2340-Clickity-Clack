@@ -5,3 +5,7 @@ class PurityReport(WatroObject):
     @staticmethod
     def path():
         return "/PurityReports"
+
+    @property
+    def id(self):
+        return self.reportID

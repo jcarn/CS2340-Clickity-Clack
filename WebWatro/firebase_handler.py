@@ -42,7 +42,8 @@ class Database():
 
     def find_user(self, id):
         for user in self.users:
-            if user.id == id: return user
+            if user.id == id:
+                return user
 
     def login(self, email, password):
         self._current_user = self.auth.sign_in_with_email_and_password(email, password)
@@ -56,13 +57,14 @@ class Database():
             self.login(new_user.email, password)
         except Exception as err:
             try: 
-                
                 self.login(new_user.email, password)
+                return
             except:
                 print("Registration failed: " + str(err))
                 return False
         new_user.id = self._current_user.get("localId")
         self.push_object(new_user)
+        login(new_user.email, password)
         return True
 
     def update_object(self, updated_obj):
@@ -73,7 +75,6 @@ class Database():
 
     def push_object(self, obj):
         self.firedata.child(obj.path()).child(obj.id).set(obj.firebase_object(), self._auth_token)
-
 
     def _get_objects(self, object_type):
         return_list = []
