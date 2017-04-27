@@ -2,7 +2,14 @@
     <title>Water Sources</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300" rel="stylesheet">
     <div class="container">
-        <p style="font-size: 15px">Hi my name is Amy. :)</p>
+        <p style="font-size: 2em; margin-bottom: 23px;">Water Source Reports</p>
+        <a href="{{ url_for('newSource') }}"><button class="rptbtn 1" name="newsource" style="background: #33ccff; " type="submit">Add New Water Source</button></a>
+        {% for report in reports %}
+            {% for line in report %}
+                <p style='font-size: 15px'>{{line}}</p>
+            {% endfor %}
+            <br>
+        {% endfor %}
         <p style="font-family: 'Montserrat', sans-serif;
     font-size: 12px;
     text-align: center;
@@ -24,7 +31,7 @@
     background: linear-gradient(#4ECDC4, #91F1FC);
     font-family: 'Montserrat', sans-serif;
     font-size: 2em;
-    height: 100%;
+    height: auto;
     width: 85%;
     text-align: center;
     color: white;
@@ -68,9 +75,9 @@ button {
     margin: 8px 0;
     border: none;
     cursor: pointer;
-    width: 50%;
-    margin-left: 25%;
-    margin-right:25%;
+    width: 40%;
+/*    margin-left: 25%;
+    margin-right:25%;*/
 
 }
 

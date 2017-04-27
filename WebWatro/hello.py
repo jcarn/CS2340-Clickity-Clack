@@ -138,9 +138,10 @@ def source():
     reports = db.reports
     reportList = []
 
+    for report in reports:
+        reportList.append(formatSourceRpt(report))
 
-    return render_template("source.html")
-
+    return render_template("source.html", reports=reportList)
 
 def formatSourceRpt(report):
     rptID = report.reportID
@@ -149,17 +150,25 @@ def formatSourceRpt(report):
     location = report.streetAddress
     waterType = report.waterType
     waterCond = report.waterCondition
-    pOpen = "<p style='font-size: 15px'>"
-    pClose = "</p>"
+    # pOpen = "<p style='font-size: 15px'>"
+    # pClose = "</p>"
 
-    line1 = pOpen + "Report #: " + str(rptID) + " | Report Date: " + str(date) + " | Reporter: " + str(reporter) + pClose
-    line2 = pOpen + "Location: " + str(location) + pClose
-    line3 = pOpen + "Water Type: " + str(waterType) + " | Water Condition: " + str(waterCond) + pClose
+    viewList = []
 
-    view = line1 + line2 + line3
+    line1 = "Report #: " + str(rptID) + " | Report Date: " + str(date) + " | Reporter: " + str(reporter) + "\n"
+    line2 = "Location: " + str(location) + "\n"
+    line3 = "Water Type: " + str(waterType) + " | Water Condition: " + str(waterCond)
 
-    return view
+    viewList.append(line1)
+    viewList.append(line2)
+    viewList.append(line3)
 
+    return viewList
+
+@app.route("/newwatersource", methods=['GET','POST'])
+def newSource():
+
+    return render_template("newSource.html")
 
 if __name__ == "__main__":
     app.run()
