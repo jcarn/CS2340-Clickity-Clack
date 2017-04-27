@@ -1,10 +1,12 @@
 package com.watro.clickityclack.watro.Controller;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import com.google.firebase.database.DataSnapshot;
@@ -32,7 +34,7 @@ public class HistoryReportsView extends AppCompatActivity implements View.OnClic
     private ArrayAdapter<String> locationAdapter;
     private Button updateGraphButton;
     private HashSet<String> locationHash;
-
+    private ImageButton backButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +48,8 @@ public class HistoryReportsView extends AppCompatActivity implements View.OnClic
         locationSpinner = (Spinner) findViewById(R.id.locationSpinner);
         updateGraphButton = (Button) findViewById(R.id.updateGraphButton);
         updateGraphButton.setOnClickListener(this);
+        backButton = (ImageButton) findViewById(R.id.backButton);
+        backButton.setOnClickListener(this);
         databaseReference = FirebaseDatabase.getInstance().getReference();
         locationHash = new HashSet<>();
         locationHash.add("All Locations");
@@ -124,6 +128,9 @@ public class HistoryReportsView extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
         if (v == updateGraphButton) {
             showData(String.valueOf(virusOrContaminantSpinner.getSelectedItem()), String.valueOf(locationSpinner.getSelectedItem()));
+        }
+        if (v == backButton) {
+            startActivity(new Intent(this, PurityReportActivity.class));
         }
     }
 
