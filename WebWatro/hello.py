@@ -25,6 +25,7 @@ def main():
 # creating a map in the view
     # user = str(db.users[0].firstName)
     global curr_user
+    curr_user = db.current_user # do this to get the first name properly
     first_name = curr_user.firstName
     print("asdf " + first_name)
     reports = db.reports
@@ -62,7 +63,6 @@ def mapMarkers(report):
 @app.route("/login", methods = ['GET', 'POST'])
 def login():
     global curr_user
-
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -99,6 +99,7 @@ def register():
 @app.route("/editprofile", methods = ['GET', 'POST'])
 def editProf():
     global curr_user
+    curr_user = db.current_user # do this to get the user information properly
     fname = curr_user.firstName
     lname = curr_user.lastName
     home = curr_user.homeAddress
@@ -120,8 +121,16 @@ def editProf():
     elif str(usertype) == "Administrator":
         sel4 = "selected"
 
-    # if method == 'POST':
-        #insert edit profile functionality
+    if request.method == 'POST':
+        firstname = request.form['firstname']
+        lastname = request.form['lastname']
+        address = request.form['address']
+        usertype = request.form.get('usertype')
+        print(firstname)
+        editedUser = user.User([email, curr_user.id, firstname, lastname, usertype, address])
+        db.update_object(editedUser)
+        return redirect(url_for('main'))
+
     return render_template("editprofile.html", fname=fname, lname=lname, home=home, email=email, usertype=usertype, sel1=sel1, sel2=sel2, sel3=sel3, sel4=sel4)
 
 @app.route("/source")
