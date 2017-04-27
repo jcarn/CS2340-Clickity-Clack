@@ -16,7 +16,7 @@ GoogleMaps(app)
 @app.route("/")
 def mainThing():
     # return "Hello World!"
-    return render_template("home.html")
+    return render_template("login.html")
 
 @app.route("/main", methods = ['GET', 'POST'])
 # def mapHome():
@@ -158,8 +158,47 @@ def formatSourceRpt(report):
 
 @app.route("/newwatersource", methods=['GET','POST'])
 def newSource():
-
+    # add functionality to submit new water report
     return render_template("newSource.html")
+
+@app.route("/purity")
+def purity():
+    reports = db.purity_reports
+    reportList = []
+
+    for report in reports:
+        reportList.append(formatPurityRpt(report))
+
+    return render_template("purity.html", reports=reportList)
+
+def formatPurityRpt(report):
+    rptID = report.reportID
+    date = report.reportDate
+    reporter = db.find_user(report.reporterID).firstName
+    location = report.streetAddress
+    waterCond = report.waterCondition
+    virus = report.virusPPM
+    contaminant = report.contaminantPPM
+    # pOpen = "<p style='font-size: 15px'>"
+    # pClose = "</p>"
+
+    viewList = []
+
+    line1 = "Report #: " + str(rptID) + " | Report Date: " + str(date) + " | Reporter: " + str(reporter) + "\n"
+    line2 = "Location: " + str(location) + " | Water Condition: " + str(waterCond) + "\n"
+    line3 = "VirusPPM: " + str(virus) + " | ContaminantPPM: " + str(contaminant)
+
+    viewList.append(line1)
+    viewList.append(line2)
+    viewList.append(line3)
+
+    return viewList
+
+
+@app.route("/newpurityreport", methods=['GET','POST'])
+def newPurity():
+    # add functionality to submit new water report
+    return render_template("newPurity.html")
 
 if __name__ == "__main__":
     app.run()
