@@ -1,0 +1,105 @@
+<html>
+    <title>Water Sources</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300" rel="stylesheet">
+    <div class="container">
+        <p style="font-size: 2em; margin-bottom: 23px;">Water Source Reports</p>
+        <a href="{{ url_for('newSource') }}"><button class="rptbtn 1" name="newsource" style="background: #33ccff; " type="submit">Add New Water Source</button></a>
+        <p style="font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    text-align: center; margin-bottom: 23px;
+    color: white;"><a href="{{ url_for('main') }}">Back to Home</a></p>
+        {% for report in reports %}
+            {% for line in report %}
+                <p style='font-size: 15px'>{{line}}</p>
+            {% endfor %}
+            <br>
+        {% endfor %}
+        
+    </div>
+
+    <!-- <p style="font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    text-align: center;
+    color: white;"><a href="{{ url_for('main') }}">Back to Home</a></p> -->
+
+</html>
+
+<style>
+
+
+.container {
+    padding: 100px;
+    background: linear-gradient(#4ECDC4, #91F1FC);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2em;
+    height: auto;
+    width: 85%;
+    text-align: center;
+    color: white;
+}
+
+
+img {
+    margin-left: 31.5%;
+    margin-right:30%;
+}
+
+input[type=text], input[type=password] {
+    width: 50%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    text-align: center;
+    margin-left: 25%;
+    margin-right:25%;
+}
+
+select {
+    width: 50%;
+    height: 41px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    text-align: center;
+    margin-left: 25%;
+    margin-right:25%;
+}
+
+button {
+    background-color: #33ccff;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 40%;
+/*    margin-left: 25%;
+    margin-right:25%;*/
+
+}
+
+button:hover {
+    color: #0033cc;
+    background-color: white; 
+}
+
+a:link {
+    color: white;
+}
+
+/* visited link */
+a:visited {
+    color: white
+}
+
+/* mouse over link */
+a:hover {
+    color: #0033cc;
+}
+
+
+</style>

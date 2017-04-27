@@ -1,0 +1,118 @@
+<html>
+    <title>New Purity Report</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300" rel="stylesheet">
+    <div class="container">
+        <form class="formthing" method = 'post'>
+            <div class="form-group" style="height:100px;">
+                <!-- <img class = 'img-thumbnail' width="500" height="500" src="{{url_for('static', filename='images/watro.png')}}"/> -->
+                <h2 style="color:white; text-align: center;">Report on Water Purity</h2>
+            </div>
+            <div class="form-group row">
+                <input  class = "input-lg col-md-4 col-md-offset-4" type="text" name = "location" placeholder="Location of Water Source" required>
+            </div>
+            <div class="form-group row">
+                <input  class = "input-lg col-md-4 col-md-offset-4" type="text" name = "virus" placeholder="VirusPPM" required>
+            </div>
+            <div class="form-group row">
+                <input  class = "input-lg col-md-4 col-md-offset-4" type="text" name = "contaminant" placeholder="ContaminantPPM" required>
+            </div>
+            <div class="form-group row">
+                <!-- <label for="user type" style="font-size: 12px; text-align: center;">Select a User Type:</label> -->
+                <select class="form-control" id="sel2" name="waterCondition">
+
+                    <option value="Safe">Safe</option>
+                    <option value="Treatable">Treatable</option>
+                    <option value="Unsafe">Unsafe</option>
+
+                </select>
+            </div>
+            <div class="form-group row">
+                <button class="btn btn-default btn-lg col-md-4 col-md-offset-4" name="sourceSubmit" style="background: #33ccff; margin-top: 50px;" type="submit">Add Purity Report</button>
+            </div>
+        </form>
+        <p style="font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    text-align: center;
+    color: white;"><a href="{{ url_for('source') }}">Back to Purity Reports</a></p>
+    </div>
+
+
+</html>
+
+<style>
+
+
+.container {
+    padding: 100px;
+    background: linear-gradient(#4ECDC4, #91F1FC);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2em;
+    height: 100%;
+    width: 85%;
+}
+
+
+img {
+    margin-left: 31.5%;
+    margin-right:30%;
+}
+
+input[type=text], input[type=password] {
+    width: 50%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    text-align: center;
+    margin-left: 25%;
+    margin-right:25%;
+}
+
+select {
+    width: 50%;
+    height: 41px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    text-align: center;
+    margin-left: 25%;
+    margin-right:25%;
+}
+
+button {
+    background-color: #33ccff;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 50%;
+    margin-left: 25%;
+    margin-right:25%;
+
+}
+
+button:hover {
+    color: #0033cc;
+    background-color: white; 
+}
+
+a:link {
+    color: white;
+}
+
+/* visited link */
+a:visited {
+    color: white
+}
+
+/* mouse over link */
+a:hover {
+    color: #0033cc;
+}
+
+
+</style>

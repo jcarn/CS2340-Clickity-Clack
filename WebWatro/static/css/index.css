@@ -1,0 +1,100 @@
+/* Created by Michael Chen */
+body {
+    background-color: #111;
+    font-family: 'PT Sans', sans-serif;
+}
+
+.jumbotron {
+    background-color: #111 ! important;
+}
+
+h1, h3, h4, li {
+    text-align: center;
+    color: #FFC9C5 ! important;
+}
+
+#map {
+   height: 400px;
+   width: 100%;
+}
+
+.pink {
+    color: #FFC9C5 ! important;
+}
+
+#map {
+   height: 400px;
+   width: 100%;
+}
+
+.login-div {
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+    horizontal-align: center;
+}
+
+.home-header {
+    margin-bottom:50px;
+}
+
+.blk {
+    border-style: solid;
+    border-width:5px;
+    border-color: #111;
+}
+
+.category {
+    ..background-image: url(../images/randompic-fade.jpg);
+    background-position: 500px 300px;
+    height: 200px;
+    ..background-color: #8B81B2;
+    background-color: #AAA;
+    border-style: solid;
+    border-width: 2px;
+    ..border-color: #343042;
+    ..border-color: #FFC9C5
+    border-color: #111;
+
+}
+
+.category a {
+    color: #333333;
+}
+
+.resource {
+    margin-bottom: 20px;
+}
+
+.open .dropdown-menu {
+    display:block;
+}
+
+.profile-div {
+    background-image: url(../atlanta.jpeg);
+    width:200px;
+    height:300px;
+    background-repeat: no-repeat;
+
+
+.profile-div .edit-pic {
+    position: relative;
+    float: right;
+    opacity: 0.5;
+    width: 200px;
+    background: #999999;
+    display: none;
+    z-index: 3;
+}
+
+.profile-div: hover {
+    opacity:0.6;
+}
+
+.profile-div:hover .edit-pic {
+    display: inline;
+}
+
+.container {
+    display:flex;
+}

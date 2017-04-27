@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "watro-c0aaf",
+  "private_key_id": "eb70941f0251554b045dadbcd9e25f6728a80861",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDGy4fBMYR+PVfd\nCzSfDCO5p0fhDTDSqI3wCHi9Z6Mspl3R+q/GIiJb9orulh51h3cW6wHZiZ7OxOR+\nnLtUsp6f5jlTRvp9O/vTYVuadiWpi3i+WUM4CfFFYMp/01UnkXqe7iNPiyHUJGQx\nQsveZ1NpbTnfLl2+QXwiPfiJ+7WPHMX5dMd0QKGkLPSEzZ7qAkPUJqp/ttgjT8ls\nT1V/hIfGrQBghspwnMojPuGvyccCaDphHCjeM7nImR06olXxlwkWZ7EaoBiqsxkM\nSfEhDty/DVUrTjkOBhgZ7sx66XQ0ZY6DyfIVrHLKV3oapQDqMbhNlTEPuqfwHwAd\ntbKPZnYFAgMBAAECggEAdRPHFuOX2VU9WuRPkF/w5lT7gzJmj5pPRY9ntHzF3/T3\nCkRuouzVeX3AovTsaWFnpKqxQzHGwpW40Ex0E1TDEP7gwgfqXDkofXw4G8b7NVf7\nu3cMnINWgfqYKCIJY61NHy62wxD40lzAWTaypIAL4uo+DA/di8A7YFtI9dK1Qduw\nlqn60M3AA0s3anNV4eLJiHBM3yEMmk8PDQecBf7KJZeTG1dPCZv+pXBCf9nUNx/b\nvjX0wjrobZhIY2iRgq3vtHUzEstOJQvdz7zFqI6N/7v9qmd7Sqg6jH21w2WCM17z\nVTpi+8Lno9AM4d+Fn+iRa6gbR873VUt7zvM4fUX5/QKBgQD1wiR/Jtl7bZP8c/Sa\nLZs4gjh93NB/NeC8POBuKAx51ocBo1F/8PIlFms+sG4Ymee3T3+bC/8JcMaN+ix4\nxi/lFD9lMLxbVC/fXb7Ixw03t5CySC29huucPmoEJUUVYu80HB/QiSK8lw1uLdkH\ndrNK5kYdf91q/Xm9rdJdLzXKCwKBgQDPFFzJ1SZABvePG0M7PCEj2kkIZ++nnV+a\nCRKBB3lTtEwdZwBBAFU8Cg4M/+ZbJ9cECIv1lmh8Qp6vkWziRmh1P7+tJ6Fd/3+5\nZw2ZYFAJ7Ey7kj9cB0aYnKIGMJjTXHLCnaSSTYkE7oESryTJ7puORExe5xai0RsC\nEjBDOAvaLwKBgBMoiFnVOH0TxMaYb4gZaBFWrXq6XRKdq6BhConr21UgMTQifDcC\nHI5hmgiwDlUiolq6+tKmc8JTpVbqGs9re85a7ro/u19PR9Ac6cOTKOegCsqrL82n\nl/R9NRyPnzwUk1s3mg9SsX+MMwLU1idrzHxZSTwBfMxbaEMuKskS5hmTAoGAZBdG\nhjPlihsT+3LE+1Oj/Q1cMZjzSIQTmoN6Ey3GogPKqoeHouODT0LY6cWi1TqbfhKX\ne7wYgr88rkXPaEt53/pRLmOyZpnBZZ7+/ryD01gI+rzErTnDEK7czbsdk0PjIFhM\nHH8nlF+nuZ04XfZb79bpRxHRah9CO60I8OSdLfcCgYBW8gxRDMWQvxMe7+0CHG1h\nNoRU1ea/9bJfGcV534SJoWzNJbncoEnDjPGRJqIdsN2jk177/kWcCD0TiM71o/4p\noHBTjtjw86adPHAy5zkCoXHtsuIbpKk+l5xPnx7M5pjlRS0Gp0J5L8Nfma31tO2E\nK6cTATe35uM+HZOvGhjnkg==\n-----END PRIVATE KEY-----\n",
+  "client_email": "python-backend@watro-c0aaf.iam.gserviceaccount.com",
+  "client_id": "107902006616954348905",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/python-backend%40watro-c0aaf.iam.gserviceaccount.com"
+}
